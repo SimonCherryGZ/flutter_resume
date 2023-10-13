@@ -64,6 +64,7 @@ class _WelcomeAdSkipButtonState extends State<WelcomeAdSkipButton> {
           final remainSecond = widget.maxSecond - counter;
           final showSkip = remainSecond <= widget.allowSkipSecond;
           return GestureDetector(
+            behavior: HitTestBehavior.opaque,
             onTap: () {
               if (!showSkip) return;
               widget.clickSkipCallback?.call();
