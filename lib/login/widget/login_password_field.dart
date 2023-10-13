@@ -16,21 +16,26 @@ class LoginPasswordField extends StatelessWidget {
         return TextField(
           maxLines: 1,
           obscureText: !passwordShowing,
-          style: TextStyle(fontSize: 12.ss()),
+          style: TextStyle(fontSize: 14.ss()),
           decoration: InputDecoration(
-            icon: const Icon(Icons.key),
+            icon: Icon(
+              Icons.key,
+              size: 20.ss(),
+            ),
             hintText: '请输入密码',
-            hintStyle: TextStyle(fontSize: 12.ss()),
-            suffixIcon: IconButton(
-              onPressed: () {
-                if (passwordShowing) {
-                  bloc.add(HidePassword());
-                } else {
-                  bloc.add(ShowPassword());
-                }
-              },
-              icon: Icon(
-                passwordShowing ? Icons.visibility : Icons.visibility_off,
+            hintStyle: TextStyle(fontSize: 14.ss()),
+            suffixIcon: FittedBox(
+              child: IconButton(
+                onPressed: () {
+                  if (passwordShowing) {
+                    bloc.add(HidePassword());
+                  } else {
+                    bloc.add(ShowPassword());
+                  }
+                },
+                icon: Icon(
+                  passwordShowing ? Icons.visibility : Icons.visibility_off,
+                ),
               ),
             ),
           ),
@@ -38,6 +43,7 @@ class LoginPasswordField extends StatelessWidget {
             bloc.add(FocusPasswordField());
           },
           onTapOutside: (_) {
+            FocusManager.instance.primaryFocus?.unfocus();
             bloc.add(UnFocusPasswordField());
           },
           onChanged: (text) {

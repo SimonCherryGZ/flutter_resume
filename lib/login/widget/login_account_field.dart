@@ -10,16 +10,22 @@ class LoginAccountField extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.read<LoginBloc>();
     return TextField(
+      textInputAction: TextInputAction.next,
       maxLines: 1,
-      keyboardType: TextInputType.number,
-      style: TextStyle(fontSize: 12.ss()),
+      style: TextStyle(fontSize: 14.ss()),
       decoration: InputDecoration(
-        icon: const Icon(Icons.person),
+        icon: Icon(
+          Icons.person,
+          size: 20.ss(),
+        ),
         hintText: '请输入昵称或邮箱',
-        hintStyle: TextStyle(fontSize: 12.ss()),
+        hintStyle: TextStyle(fontSize: 14.ss()),
       ),
       onTap: () {
         bloc.add(UnFocusPasswordField());
+      },
+      onTapOutside: (_) {
+        FocusManager.instance.primaryFocus?.unfocus();
       },
       onChanged: (text) {
         bloc.add(UpdateAccount(text));

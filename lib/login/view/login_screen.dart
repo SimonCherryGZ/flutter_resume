@@ -8,34 +8,31 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    final panelWidth = 300.ss();
-    final panelHeight = 400.ss();
-    final headSize = 80.ss();
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
+      resizeToAvoidBottomInset: false,
       body: BlocProvider<LoginBloc>(
         create: (context) => LoginBloc(),
         child: Builder(
           builder: (context) {
-            return Stack(
-              children: [
-                Center(
-                  child: Container(
-                    width: panelWidth,
-                    height: panelHeight,
+            return Center(
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  Container(
+                    width: 300.ss(),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20.ss()),
                     ),
                     padding: EdgeInsets.symmetric(horizontal: 30.ss()),
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        SizedBox(height: headSize / 2 + 10.ss()),
+                        SizedBox(height: 60.ss()),
                         const LoginAccountField(),
                         SizedBox(height: 20.ss()),
                         const LoginPasswordField(),
-                        SizedBox(height: 10.ss()),
                         const Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -48,17 +45,16 @@ class LoginScreen extends StatelessWidget {
                         const LoginButtonDivider(),
                         SizedBox(height: 20.ss()),
                         const LoginRegisterButton(),
+                        SizedBox(height: 20.ss()),
                       ],
                     ),
                   ),
-                ),
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  top: (screenSize.height - panelHeight) / 2 - headSize / 2,
-                  child: const LoginMonkeyHead(),
-                ),
-              ],
+                  Transform.translate(
+                    offset: Offset(0, -40.ss()),
+                    child: const LoginMonkeyHead(),
+                  ),
+                ],
+              ),
             );
           },
         ),

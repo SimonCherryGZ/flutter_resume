@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/utils/utils.dart';
 
 class LoginForgetPasswordButton extends StatelessWidget {
   const LoginForgetPasswordButton({super.key});
@@ -13,6 +14,7 @@ class LoginForgetPasswordButton extends StatelessWidget {
         '忘记密码？',
         style: TextStyle(
           color: Theme.of(context).primaryColor,
+          fontSize: 12.ss(),
         ),
       ),
     );
