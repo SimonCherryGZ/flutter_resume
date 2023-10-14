@@ -5,11 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_resume/app/bloc/app_bloc.dart';
 import 'package:flutter_resume/config.dart';
+import 'package:flutter_resume/data/data.dart';
+import 'package:flutter_resume/domain/domain.dart';
 import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:flutter_resume/router/router.dart';
 import 'package:flutter_resume/utils/utils.dart';
+import 'package:provider/provider.dart';
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
@@ -52,10 +56,18 @@ class MyApp extends StatelessWidget {
       },
     );
     app = OKToast(child: app);
-    return MultiBlocProvider(
+    return MultiProvider(
       providers: [
         BlocProvider(
           create: (context) => AppLocale(L10nDelegate.defaultLocale),
+          lazy: false,
+        ),
+        BlocProvider(
+          create: (context) => AppBloc(),
+          lazy: false,
+        ),
+        RepositoryProvider<UserRepository>(
+          create: (context) => UserRepositoryImpl(),
           lazy: false,
         ),
       ],

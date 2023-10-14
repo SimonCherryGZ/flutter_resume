@@ -21,3 +21,5 @@ class UpdatePassword extends LoginEvent {
 
   UpdatePassword(this.password);
 }
+
+class Login extends LoginEvent {}

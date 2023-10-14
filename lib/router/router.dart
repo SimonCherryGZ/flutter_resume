@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_resume/home/home.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_resume/login/login.dart';
 import 'package:flutter_resume/welcome/welcome.dart';
@@ -16,13 +18,22 @@ class AppRouter {
     routes: [
       GoRoute(
         path: root,
-        pageBuilder: (context, state) => const NoTransitionPage(
+        pageBuilder: (_, __) => const NoTransitionPage(
           child: WelcomeScreen(),
         ),
       ),
       GoRoute(
         path: login,
-        builder: (context, state) => const LoginScreen(),
+        pageBuilder: (context, state) => CustomTransitionPage<void>(
+          key: state.pageKey,
+          child: const LoginScreen(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(opacity: animation, child: child),
+        ),
+      ),
+      GoRoute(
+        path: home,
+        builder: (_, __) => const HomeScreen(),
       ),
     ],
   );

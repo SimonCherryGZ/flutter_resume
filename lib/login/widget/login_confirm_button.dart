@@ -8,15 +8,16 @@ class LoginConfirmButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.read<LoginBloc>();
     return BlocBuilder<LoginBloc, LoginState>(
       buildWhen: (p, c) => p.account != c.account || p.password != c.password,
       builder: (context, state) {
-        final enable = (state.account?.isNotEmpty ?? false) && (state.password?.isNotEmpty ?? false);
+        final enable = (state.account?.isNotEmpty ?? false) &&
+            (state.password?.isNotEmpty ?? false);
         return GestureDetector(
           onTap: () {
             if (enable) {
-              // todo
-              debugPrint('点击登录');
+              bloc.add(Login());
             }
           },
           child: Container(
@@ -24,7 +25,8 @@ class LoginConfirmButton extends StatelessWidget {
             height: 40.ss(),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.ss()),
-              color: Theme.of(context).primaryColor.withOpacity(enable ? 1 : 0.3),
+              color:
+                  Theme.of(context).primaryColor.withOpacity(enable ? 1 : 0.3),
             ),
             child: Center(
               child: Text(
