@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_resume/utils/utils.dart';
-import 'package:flutter_resume/welcome/welcome.dart';
+import 'package:flutter_resume/presentation/welcome/welcome.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class WelcomeAdView extends StatelessWidget {

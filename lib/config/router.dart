@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_resume/home/home.dart';
+import 'package:flutter_resume/presentation/home/home.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_resume/login/login.dart';
-import 'package:flutter_resume/welcome/welcome.dart';
+import 'package:flutter_resume/presentation/login/login.dart';
+import 'package:flutter_resume/presentation/welcome/welcome.dart';
 
 class AppRouter {
   static const String root = '/';

@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_resume/app/app.dart';
+import 'package:flutter_resume/presentation/app/app.dart';
 import 'package:flutter_resume/domain/domain.dart';
 
 part 'login_event.dart';

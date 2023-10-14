@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_resume/router/router.dart';
-import 'package:flutter_resume/welcome/welcome.dart';
+import 'package:flutter_resume/config/router.dart';
+import 'package:flutter_resume/presentation/welcome/welcome.dart';
 import 'package:go_router/go_router.dart';
 
 class WelcomeScreen extends StatelessWidget {
