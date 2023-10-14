@@ -5,4 +5,8 @@ abstract class UserRepository {
     required String account,
     required String password,
   });
+
+  Future<User?> loadSignedUser();
+
+  Future<void> saveSignedUser(User? user);
 }

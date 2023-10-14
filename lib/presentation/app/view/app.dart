@@ -62,10 +62,6 @@ class MyApp extends StatelessWidget {
           create: (context) => AppLocale(L10nDelegate.defaultLocale),
           lazy: false,
         ),
-        BlocProvider(
-          create: (context) => AppBloc(),
-          lazy: false,
-        ),
         RepositoryProvider<UserRepository>(
           create: (context) => UserRepositoryImpl(),
           lazy: false,
@@ -75,7 +71,20 @@ class MyApp extends StatelessWidget {
           lazy: false,
         ),
       ],
-      child: app,
+      child: Builder(
+        builder: (context) {
+          return MultiProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => AppBloc(context.read<UserRepository>())
+                  ..add(InitSignedInUser()),
+                lazy: false,
+              ),
+            ],
+            child: app,
+          );
+        },
+      ),
     );
   }
 }

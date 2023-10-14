@@ -22,8 +22,7 @@ class WelcomeScreen extends StatelessWidget {
             switch (adStatus) {
               case WelcomeAdStatus.failed:
               case WelcomeAdStatus.closed:
-                // todo
-                context.go(AppRouter.login);
+                context.go(AppRouter.home);
                 break;
               default:
                 break;

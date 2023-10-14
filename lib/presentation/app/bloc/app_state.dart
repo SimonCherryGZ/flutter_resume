@@ -1,17 +1,19 @@
 part of 'app_bloc.dart';
 
 class AppState {
-  final User? currentUser;
+  final User? signedInUser;
 
   AppState({
-    this.currentUser,
+    this.signedInUser,
   });
 
   AppState copyWith({
-    User? currentUser,
+    User? signedInUser,
   }) {
     return AppState(
-      currentUser: currentUser ?? this.currentUser,
+      signedInUser: signedInUser ?? this.signedInUser,
     );
   }
+
+  bool get isSignedIn => signedInUser != null;
 }

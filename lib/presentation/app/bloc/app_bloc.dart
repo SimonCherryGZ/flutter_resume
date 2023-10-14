@@ -6,11 +6,22 @@ part 'app_event.dart';
 part 'app_state.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
-  AppBloc() : super(AppState()) {
-    on<UpdateCurrentUser>(_onUpdateCurrentUser);
+  final UserRepository _userRepository;
+
+  AppBloc(this._userRepository) : super(AppState()) {
+    on<InitSignedInUser>(_onInitSignedInUser);
+    on<UpdateSignedInUser>(_onUpdateSignedInUser);
   }
 
-  void _onUpdateCurrentUser(UpdateCurrentUser event, Emitter<AppState> emit) {
-    emit(state.copyWith(currentUser: event.user));
+  void _onInitSignedInUser(
+      InitSignedInUser event, Emitter<AppState> emit) async {
+    final user = await _userRepository.loadSignedUser();
+    emit(state.copyWith(signedInUser: user));
+  }
+
+  void _onUpdateSignedInUser(
+      UpdateSignedInUser event, Emitter<AppState> emit) async {
+    final user = event.user;
+    emit(state.copyWith(signedInUser: user));
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_resume/presentation/app/app.dart';
 import 'package:flutter_resume/presentation/home/home.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_resume/presentation/login/login.dart';
@@ -34,6 +36,13 @@ class AppRouter {
       GoRoute(
         path: home,
         builder: (_, __) => const HomeScreen(),
+        redirect: (context, state) {
+          final isSignedIn = context.read<AppBloc>().state.isSignedIn;
+          if (!isSignedIn) {
+            return login;
+          }
+          return null;
+        },
       ),
     ],
   );

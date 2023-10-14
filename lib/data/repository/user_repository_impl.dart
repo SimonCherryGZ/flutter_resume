@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter_resume/domain/domain.dart';
+import 'package:flutter_resume/utils/utils.dart';
 
 class UserRepositoryImpl implements UserRepository {
   @override
@@ -13,5 +16,23 @@ class UserRepositoryImpl implements UserRepository {
       nickname: account,
       email: '$account@example.com',
     );
+  }
+
+  @override
+  Future<User?> loadSignedUser() async {
+    final sp = await SpUtil.getInstance();
+    final json = sp.getString('user');
+    final user = null == json ? null : User.fromJson(jsonDecode(json));
+    return user;
+  }
+
+  @override
+  Future<void> saveSignedUser(User? user) async {
+    final sp = await SpUtil.getInstance();
+    if (user == null) {
+      await sp.remove('user');
+      return;
+    }
+    await sp.putString('user', jsonEncode(user.toJson()));
   }
 }

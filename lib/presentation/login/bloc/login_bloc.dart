@@ -66,7 +66,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       // todo
       return;
     }
-    _appBloc.add(UpdateCurrentUser(user));
+    _appBloc.add(UpdateSignedInUser(user));
+    await _userRepository.saveSignedUser(user);
     emit(state.copyWith(isLoginSuccess: true));
   }
 }
