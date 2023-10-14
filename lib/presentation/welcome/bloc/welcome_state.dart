@@ -8,22 +8,22 @@ enum WelcomeAdStatus {
 }
 
 class WelcomeState {
-  final ByteData? adImageBytes;
+  final SplashAd? splashAd;
   final WelcomeAdStatus adStatus;
 
   WelcomeState({
-    this.adImageBytes,
+    this.splashAd,
     this.adStatus = WelcomeAdStatus.initial,
   });
 
   WelcomeState.initial() : this();
 
   WelcomeState copyWith({
-    ByteData? adImageBytes,
+    SplashAd? splashAd,
     WelcomeAdStatus? adStatus,
   }) {
     return WelcomeState(
-      adImageBytes: adImageBytes ?? this.adImageBytes,
+      splashAd: splashAd ?? this.splashAd,
       adStatus: adStatus ?? this.adStatus,
     );
   }

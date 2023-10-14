@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_resume/utils/utils.dart';
 
 class WelcomeAdJumpButton extends StatefulWidget {
+  final String buttonText;
   final VoidCallback? clickJumpCallback;
 
   const WelcomeAdJumpButton({
     super.key,
+    required this.buttonText,
     this.clickJumpCallback,
   });
 
@@ -38,15 +40,22 @@ class _WelcomeAdJumpButtonState extends State<WelcomeAdJumpButton>
   Widget build(BuildContext context) {
     return ScaleTransition(
       scale: _animationController.view,
-      child: _InnerJumpButton(widget.clickJumpCallback),
+      child: _InnerJumpButton(
+        widget.buttonText,
+        widget.clickJumpCallback,
+      ),
     );
   }
 }
 
 class _InnerJumpButton extends StatelessWidget {
+  final String buttonText;
   final VoidCallback? clickJumpCallback;
 
-  const _InnerJumpButton(this.clickJumpCallback);
+  const _InnerJumpButton(
+    this.buttonText,
+    this.clickJumpCallback,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +82,7 @@ class _InnerJumpButton extends StatelessWidget {
             children: [
               SizedBox(width: 40.ss()),
               Text(
-                '立即抢购',
+                buttonText,
                 style: TextStyle(
                   color: Colors.deepOrange,
                   fontSize: 20.ss(),

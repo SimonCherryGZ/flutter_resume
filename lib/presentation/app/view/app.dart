@@ -70,6 +70,10 @@ class MyApp extends StatelessWidget {
           create: (context) => UserRepositoryImpl(),
           lazy: false,
         ),
+        RepositoryProvider<AdRepository>(
+          create: (context) => AdRepositoryImpl(),
+          lazy: false,
+        ),
       ],
       child: app,
     );
