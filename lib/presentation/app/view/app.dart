@@ -76,8 +76,7 @@ class MyApp extends StatelessWidget {
           return MultiProvider(
             providers: [
               BlocProvider(
-                create: (context) => AppBloc(context.read<UserRepository>())
-                  ..add(InitSignedInUser()),
+                create: (context) => AppCubit(context.read<UserRepository>()),
                 lazy: false,
               ),
             ],

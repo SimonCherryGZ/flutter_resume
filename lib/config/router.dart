@@ -38,8 +38,8 @@ class AppRouter {
       GoRoute(
         path: home,
         builder: (_, __) => const HomeScreen(),
-        redirect: (context, state) {
-          final isSignedIn = context.read<AppBloc>().state.isSignedIn;
+        redirect: (context, state) async {
+          final isSignedIn = context.read<AppCubit>().state.isSignedIn;
           if (!isSignedIn) {
             return login;
           }

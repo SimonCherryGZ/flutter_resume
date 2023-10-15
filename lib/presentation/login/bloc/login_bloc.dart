@@ -1,18 +1,15 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_resume/presentation/app/app.dart';
-import 'package:flutter_resume/domain/domain.dart';
 
 part 'login_event.dart';
 
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final UserRepository _userRepository;
-  final AppBloc _appBloc;
+  final AppCubit _appCubit;
 
   LoginBloc(
-    this._userRepository,
-    this._appBloc,
+    this._appCubit,
   ) : super(LoginState.initial()) {
     on<FocusPasswordField>(_onFocusPasswordField);
     on<UnFocusPasswordField>(_onUnFocusPasswordField);
@@ -57,17 +54,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       return;
     }
     emit(state.copyWith(isShowLoading: true));
-    final user = await _userRepository.login(
+    final result = await _appCubit.login(
       account: account,
       password: password,
     );
     emit(state.copyWith(isShowLoading: false));
-    if (user == null) {
+    if (!result) {
       // todo
       return;
     }
-    _appBloc.add(UpdateSignedInUser(user));
-    await _userRepository.saveSignedUser(user);
     emit(state.copyWith(isLoginSuccess: true));
   }
 }

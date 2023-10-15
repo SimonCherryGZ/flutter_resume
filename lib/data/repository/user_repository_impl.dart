@@ -19,6 +19,13 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
+  Future<bool> logout() async {
+    // 模拟退出登录
+    await Future.delayed(const Duration(seconds: 2));
+    return true;
+  }
+
+  @override
   Future<User?> loadSignedUser() async {
     final sp = await SpUtil.getInstance();
     final json = sp.getString('user');
@@ -34,5 +41,11 @@ class UserRepositoryImpl implements UserRepository {
       return;
     }
     await sp.putString('user', jsonEncode(user.toJson()));
+  }
+
+  @override
+  Future<void> clearSignedUser() async {
+    final sp = await SpUtil.getInstance();
+    await sp.remove('user');
   }
 }

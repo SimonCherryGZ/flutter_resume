@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_resume/config/router.dart';
+import 'package:flutter_resume/presentation/app/app.dart';
 import 'package:flutter_resume/presentation/common/common.dart';
 import 'package:flutter_resume/presentation/home/home.dart';
 import 'package:flutter_resume/presentation/profile/profile.dart';
+import 'package:go_router/go_router.dart';
 import 'package:oktoast/oktoast.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -33,35 +37,43 @@ class _HomeScreenState extends State<HomeScreen> {
       onWillPop: () {
         return _showExitConfirmDialog(context);
       },
-      child: Scaffold(
-        body: ValueListenableBuilder(
-            valueListenable: _indexNotifier,
-            builder: (context, index, child) {
-              return IndexedStack(
-                index: index,
-                children: const [
-                  Center(
-                    child: Text('首页'),
-                  ),
-                  Center(
-                    child: Text('功能'),
-                  ),
-                  Center(
-                    child: Text('消息'),
-                  ),
-                  ProfileScreen(),
-                ],
-              );
-            }),
-        bottomNavigationBar: HomeBottomNavigationBar(
-          itemConfigs: _bottomNavigationItems,
-          onTapItem: (index) {
-            _indexNotifier.value = index;
-          },
-          onTapActionButton: () {
-            // todo
-            showToast('TODO: Center Action Button');
-          },
+      child: BlocListener<AppCubit, AppState>(
+        listenWhen: (p, c) {
+          return p.isSignedIn != c.isSignedIn && !c.isSignedIn;
+        },
+        listener: (context, state) {
+          context.go(AppRouter.login);
+        },
+        child: Scaffold(
+          body: ValueListenableBuilder(
+              valueListenable: _indexNotifier,
+              builder: (context, index, child) {
+                return IndexedStack(
+                  index: index,
+                  children: const [
+                    Center(
+                      child: Text('首页'),
+                    ),
+                    Center(
+                      child: Text('功能'),
+                    ),
+                    Center(
+                      child: Text('消息'),
+                    ),
+                    ProfileScreen(),
+                  ],
+                );
+              }),
+          bottomNavigationBar: HomeBottomNavigationBar(
+            itemConfigs: _bottomNavigationItems,
+            onTapItem: (index) {
+              _indexNotifier.value = index;
+            },
+            onTapActionButton: () {
+              // todo
+              showToast('TODO: Center Action Button');
+            },
+          ),
         ),
       ),
     );

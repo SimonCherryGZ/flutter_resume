@@ -5,23 +5,37 @@ part 'app_event.dart';
 
 part 'app_state.dart';
 
-class AppBloc extends Bloc<AppEvent, AppState> {
+class AppCubit extends Cubit<AppState> {
   final UserRepository _userRepository;
 
-  AppBloc(this._userRepository) : super(AppState()) {
-    on<InitSignedInUser>(_onInitSignedInUser);
-    on<UpdateSignedInUser>(_onUpdateSignedInUser);
-  }
+  AppCubit(this._userRepository) : super(AppState());
 
-  void _onInitSignedInUser(
-      InitSignedInUser event, Emitter<AppState> emit) async {
+  Future<void> init() async {
     final user = await _userRepository.loadSignedUser();
     emit(state.copyWith(signedInUser: user));
   }
 
-  void _onUpdateSignedInUser(
-      UpdateSignedInUser event, Emitter<AppState> emit) async {
-    final user = event.user;
+  Future<bool> login({
+    required String account,
+    required String password,
+  }) async {
+    final user = await _userRepository.login(
+      account: account,
+      password: password,
+    );
+    if (user != null) {
+      await _userRepository.saveSignedUser(user);
+    }
     emit(state.copyWith(signedInUser: user));
+    return user != null;
+  }
+
+  Future<bool> logout() async {
+    final result = await _userRepository.logout();
+    if (result) {
+      await _userRepository.clearSignedUser();
+      emit(state.copyWith(signedInUser: null));
+    }
+    return result;
   }
 }

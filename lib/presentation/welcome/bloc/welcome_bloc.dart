@@ -4,15 +4,20 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_resume/domain/domain.dart';
+import 'package:flutter_resume/presentation/app/app.dart';
 
 part 'welcome_event.dart';
 
 part 'welcome_state.dart';
 
 class WelcomeBloc extends Bloc<WelcomeEvent, WelcomeState> {
+  final AppCubit _appCubit;
   final AdRepository _adRepository;
 
-  WelcomeBloc(this._adRepository) : super(WelcomeState.initial()) {
+  WelcomeBloc(
+    this._appCubit,
+    this._adRepository,
+  ) : super(WelcomeState.initial()) {
     on<LoadAd>(_onLoadAd);
     on<CloseAd>(_onCloseAd);
   }
@@ -41,8 +46,13 @@ class WelcomeBloc extends Bloc<WelcomeEvent, WelcomeState> {
         completer.complete(null);
       }
     });
-
-    final splashAd = await completer.future;
+    // 加载过程中，顺便初始化用户数据
+    // Dart Future.wait for multiple futures and get back results of different types
+    // https://stackoverflow.com/a/71178612
+    final (_, splashAd) = await (
+      _appCubit.init(),
+      completer.future,
+    ).wait;
     if (splashAd == null) {
       emit(state.copyWith(adStatus: WelcomeAdStatus.failed));
       return;

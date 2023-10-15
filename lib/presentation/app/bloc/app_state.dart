@@ -11,7 +11,7 @@ class AppState {
     User? signedInUser,
   }) {
     return AppState(
-      signedInUser: signedInUser ?? this.signedInUser,
+      signedInUser: signedInUser,
     );
   }
 

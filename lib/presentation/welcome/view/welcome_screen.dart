@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_resume/config/router.dart';
 import 'package:flutter_resume/domain/domain.dart';
+import 'package:flutter_resume/presentation/app/app.dart';
 import 'package:flutter_resume/presentation/welcome/welcome.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,8 +13,10 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider<WelcomeBloc>(
-        create: (context) =>
-            WelcomeBloc(context.read<AdRepository>())..add(LoadAd()),
+        create: (context) => WelcomeBloc(
+          context.read<AppCubit>(),
+          context.read<AdRepository>(),
+        )..add(LoadAd()),
         lazy: false,
         child: BlocListener<WelcomeBloc, WelcomeState>(
           listenWhen: (p, c) => p.adStatus != c.adStatus,
