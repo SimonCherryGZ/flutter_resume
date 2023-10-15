@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_resume/presentation/common/common.dart';
 import 'package:flutter_resume/presentation/home/home.dart';
+import 'package:flutter_resume/presentation/profile/profile.dart';
 import 'package:oktoast/oktoast.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -38,11 +39,18 @@ class _HomeScreenState extends State<HomeScreen> {
             builder: (context, index, child) {
               return IndexedStack(
                 index: index,
-                children: _bottomNavigationItems
-                    .map((e) => Center(
-                          child: Text(e.key),
-                        ))
-                    .toList(),
+                children: const [
+                  Center(
+                    child: Text('首页'),
+                  ),
+                  Center(
+                    child: Text('功能'),
+                  ),
+                  Center(
+                    child: Text('消息'),
+                  ),
+                  ProfileScreen(),
+                ],
               );
             }),
         bottomNavigationBar: HomeBottomNavigationBar(

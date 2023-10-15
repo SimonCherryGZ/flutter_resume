@@ -35,7 +35,7 @@ class AppRouter {
       ),
       GoRoute(
         path: home,
-        builder: (_, __) => HomeScreen(),
+        builder: (_, __) => const HomeScreen(),
         redirect: (context, state) {
           final isSignedIn = context.read<AppBloc>().state.isSignedIn;
           if (!isSignedIn) {
