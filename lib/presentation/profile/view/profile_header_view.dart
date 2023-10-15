@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/config/router.dart';
 import 'package:flutter_resume/utils/utils.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileHeaderView extends StatelessWidget {
   final List<String> tabs;
@@ -21,7 +23,7 @@ class ProfileHeaderView extends StatelessWidget {
           const Spacer(),
           IconButton(
             onPressed: () {
-              // todo
+              context.push(AppRouter.setting);
             },
             icon: const Icon(Icons.settings),
           ),

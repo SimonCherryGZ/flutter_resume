@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_resume/presentation/app/app.dart';
 import 'package:flutter_resume/presentation/home/home.dart';
+import 'package:flutter_resume/presentation/setting/setting.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_resume/presentation/login/login.dart';
 import 'package:flutter_resume/presentation/welcome/welcome.dart';
@@ -10,6 +11,7 @@ class AppRouter {
   static const String root = '/';
   static const String login = '/login';
   static const String home = '/home';
+  static const String setting = '/setting';
 
   AppRouter._();
 
@@ -43,6 +45,10 @@ class AppRouter {
           }
           return null;
         },
+      ),
+      GoRoute(
+        path: setting,
+        builder: (_, __) => const SettingScreen(),
       ),
     ],
   );
