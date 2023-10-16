@@ -10,4 +10,7 @@ class BuildConfig {
 
   static bool isMouseDraggableForWebAndDesktop =
       kDebugMode || Platform.isMacOS || Platform.isWindows || Platform.isLinux;
+
+  // todo
+  static String multiAvatarApiKey = '';
 }

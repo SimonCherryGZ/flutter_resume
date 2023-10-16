@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_resume/config/router.dart';
 import 'package:flutter_resume/presentation/app/app.dart';
 import 'package:flutter_resume/presentation/common/common.dart';
+import 'package:flutter_resume/presentation/feed/feed.dart';
 import 'package:flutter_resume/presentation/home/home.dart';
 import 'package:flutter_resume/presentation/profile/profile.dart';
 import 'package:go_router/go_router.dart';
@@ -51,9 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 return IndexedStack(
                   index: index,
                   children: const [
-                    Center(
-                      child: Text('首页'),
-                    ),
+                    FeedScreen(),
                     Center(
                       child: Text('功能'),
                     ),

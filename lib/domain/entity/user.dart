@@ -7,11 +7,13 @@ class User {
   final String id;
   final String nickname;
   final String email;
+  final String avatar;
 
   User({
     required this.id,
     required this.nickname,
     required this.email,
+    required this.avatar,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

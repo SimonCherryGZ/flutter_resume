@@ -70,6 +70,10 @@ class MyApp extends StatelessWidget {
           create: (context) => AdRepositoryImpl(),
           lazy: false,
         ),
+        RepositoryProvider<FeedRepository>(
+          create: (context) => FeedRepositoryImpl(),
+          lazy: false,
+        ),
       ],
       child: Builder(
         builder: (context) {

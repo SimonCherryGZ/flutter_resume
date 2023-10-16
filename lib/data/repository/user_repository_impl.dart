@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_resume/config/config.dart';
 import 'package:flutter_resume/domain/domain.dart';
 import 'package:flutter_resume/utils/utils.dart';
 
@@ -15,6 +16,8 @@ class UserRepositoryImpl implements UserRepository {
       id: '1024',
       nickname: account,
       email: '$account@example.com',
+      avatar:
+          'https://api.multiavatar.com/$account.png?apikey=${BuildConfig.multiAvatarApiKey}',
     );
   }
 
