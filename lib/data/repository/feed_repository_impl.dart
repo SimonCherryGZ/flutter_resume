@@ -20,16 +20,6 @@ class FeedRepositoryImpl implements FeedRepository {
     required int page,
     required int count,
   }) async {
-    // if (_feeds.isEmpty) {
-    //   List<Future<Feed>> tasks = [];
-    //   for (int i = 0; i < _maxCount; i++) {
-    //     final imageUrl =
-    //         'https://cdn.seovx.com/d//img/momcn-2D%20(${i + 1}).jpg';
-    //     final task = _getFeed(imageUrl);
-    //     tasks.add(task);
-    //   }
-    //   _feeds.addAll(await Future.wait(tasks));
-    // }
     page = max(page, 1);
     count = max(count, 1);
     int start = (page - 1) * count;
@@ -47,6 +37,7 @@ class FeedRepositoryImpl implements FeedRepository {
           title: _faker.title(),
           imageUrl: imageUrl,
           author: _faker.user(),
+          content: _faker.content(),
         );
         tasks.add(task);
       }
@@ -59,6 +50,7 @@ class FeedRepositoryImpl implements FeedRepository {
     required String title,
     required String imageUrl,
     required User author,
+    required String content,
   }) {
     Completer<Feed> completer = Completer();
     Image image = Image(image: CachedNetworkImageProvider(imageUrl));
@@ -74,6 +66,7 @@ class FeedRepositoryImpl implements FeedRepository {
                 imageWidth: size.width.toInt(),
                 imageHeight: size.height.toInt(),
                 author: author,
+                content: content,
               );
               completer.complete(feed);
             },
@@ -84,6 +77,7 @@ class FeedRepositoryImpl implements FeedRepository {
                 imageWidth: 1,
                 imageHeight: 1,
                 author: author,
+                content: content,
               );
               completer.complete(feed);
             },

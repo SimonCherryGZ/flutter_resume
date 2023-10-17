@@ -44,6 +44,8 @@ class Faker {
 
   String title() => _randomElement(titles);
 
+  String content() => _randomElement(contents);
+
   T _randomElement<T>(List<T> list) {
     return list[_random.nextInt(list.length)];
   }

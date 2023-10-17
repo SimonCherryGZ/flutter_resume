@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/presentation/discover/discover.dart';
 import 'package:flutter_resume/presentation/trend/trend.dart';
 
 class FeedScreen extends StatelessWidget {
@@ -24,7 +25,7 @@ class FeedScreen extends StatelessWidget {
                 child: TabBarView(
                   children: [
                     TrendScreen(),
-                    Center(child: Text('发现')),
+                    DiscoverScreen(),
                     Center(child: Text('关注')),
                   ],
                 ),

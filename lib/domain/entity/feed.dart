@@ -6,6 +6,7 @@ class Feed {
   final int imageWidth;
   final int imageHeight;
   final User author;
+  final String content;
 
   Feed({
     required this.title,
@@ -13,6 +14,7 @@ class Feed {
     required this.imageWidth,
     required this.imageHeight,
     required this.author,
+    required this.content,
   });
 
   Feed copyWith({
@@ -21,6 +23,7 @@ class Feed {
     int? imageWidth,
     int? imageHeight,
     User? author,
+    String? content,
   }) {
     return Feed(
       title: title ?? this.title,
@@ -28,6 +31,7 @@ class Feed {
       imageWidth: imageWidth ?? this.imageWidth,
       imageHeight: imageHeight ?? this.imageHeight,
       author: author ?? this.author,
+      content: content ?? this.content,
     );
   }
 }
