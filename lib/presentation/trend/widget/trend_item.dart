@@ -15,6 +15,7 @@ class TrendItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () async {
         // todo
@@ -28,10 +29,21 @@ class TrendItem extends StatelessWidget {
               child: CachedNetworkImage(
                 imageUrl: feed.imageUrl,
                 fit: BoxFit.cover,
+                memCacheWidth: (screenSize.width / 2).round(),
                 fadeInDuration: const Duration(milliseconds: 100),
                 fadeOutDuration: const Duration(milliseconds: 200),
                 placeholder: (_, __) {
                   return Container(color: Colors.grey.shade300);
+                },
+                errorWidget: (context, url, error) {
+                  return Center(
+                    child: Text(
+                      'Oops...图片加载不出来',
+                      style: TextStyle(
+                        fontSize: 12.ss(),
+                      ),
+                    ),
+                  );
                 },
               ),
             ),
