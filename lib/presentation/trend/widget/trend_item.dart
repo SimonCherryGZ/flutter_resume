@@ -5,17 +5,18 @@ import 'package:flutter_resume/utils/utils.dart';
 
 class TrendItem extends StatelessWidget {
   final Feed feed;
-  final double itemHeight;
 
   const TrendItem({
     required this.feed,
-    required this.itemHeight,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
+    final itemWidth = screenSize.width / 2 - 4.ss();
+    final aspectRatio = feed.imageWidth * 1.0 / feed.imageHeight;
+    final itemHeight = itemWidth / aspectRatio;
     return GestureDetector(
       onTap: () async {
         // todo

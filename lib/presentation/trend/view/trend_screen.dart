@@ -34,7 +34,6 @@ class TrendScreen extends StatelessWidget {
                 final feed = feeds[index];
                 return TrendItem(
                   feed: feed,
-                  itemHeight: (index % 3 + 1) * 100.ss(),
                 );
               },
             ),
