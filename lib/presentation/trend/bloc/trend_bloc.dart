@@ -13,12 +13,17 @@ class TrendBloc extends Bloc<TrendEvent, TrendState> {
   }
 
   void _onFetchData(FetchData event, Emitter<TrendState> emit) async {
+    if (state.isFetching) {
+      return;
+    }
+    emit(state.copyWith(isFetching: true));
     final isRefresh = event.isRefresh;
     final page = isRefresh ? 1 : state.page;
     final newFeeds = await _feedRepository.fetchData(
       page: page,
       count: 20,
     );
+    emit(state.copyWith(isFetching: false));
     if (newFeeds == null) {
       // todo
       return;

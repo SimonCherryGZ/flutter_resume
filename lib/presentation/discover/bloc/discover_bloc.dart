@@ -13,12 +13,17 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
   }
 
   void _onFetchData(FetchData event, Emitter<DiscoverState> emit) async {
+    if (state.isFetching) {
+      return;
+    }
+    emit(state.copyWith(isFetching: true));
     final isRefresh = event.isRefresh;
     final page = isRefresh ? 1 : state.page;
     final newFeeds = await _feedRepository.fetchData(
       page: page,
       count: 10,
     );
+    emit(state.copyWith(isFetching: false));
     if (newFeeds == null) {
       // todo
       return;

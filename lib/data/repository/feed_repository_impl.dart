@@ -27,8 +27,8 @@ class FeedRepositoryImpl implements FeedRepository {
       return [];
     }
     int end = min(start + count, _maxCount);
-    int total = start + end;
-    if (_feeds.length < total) {
+    if (_feeds.length < end) {
+      int count = end - _feeds.length;
       List<Future<Feed>> tasks = [];
       for (int i = 0; i < count; i++) {
         int index = start + i + 1;
