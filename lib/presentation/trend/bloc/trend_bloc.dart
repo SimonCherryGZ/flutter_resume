@@ -1,41 +1,16 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter_resume/domain/domain.dart';
+import 'package:flutter_resume/presentation/common/common.dart';
 
-part 'trend_event.dart';
-
-part 'trend_state.dart';
-
-class TrendBloc extends Bloc<TrendEvent, TrendState> {
+class TrendBloc extends AbsPagingLoadBloc<Feed> {
   final FeedRepository _feedRepository;
 
-  TrendBloc(this._feedRepository) : super(TrendState.initial()) {
-    on<FetchData>(_onFetchData);
-  }
+  TrendBloc(this._feedRepository) : super(countPerPage: 20);
 
-  void _onFetchData(FetchData event, Emitter<TrendState> emit) async {
-    if (state.isFetching) {
-      return;
-    }
-    emit(state.copyWith(isFetching: true));
-    final isRefresh = event.isRefresh;
-    final page = isRefresh ? 1 : state.page;
-    final newFeeds = await _feedRepository.fetchData(
+  @override
+  Future<List<Feed>?> fetchData({required int page, required int count}) {
+    return _feedRepository.fetchData(
       page: page,
-      count: 20,
+      count: count,
     );
-    emit(state.copyWith(isFetching: false));
-    if (newFeeds == null) {
-      // todo
-      return;
-    }
-    if (newFeeds.isEmpty) {
-      return;
-    }
-    final List<Feed> feeds =
-        isRefresh ? newFeeds : (List.from(state.feeds)..addAll(newFeeds));
-    emit(state.copyWith(
-      feeds: feeds,
-      page: page + 1,
-    ));
   }
 }

@@ -1,7 +1,7 @@
-import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_resume/domain/domain.dart';
+import 'package:flutter_resume/presentation/common/common.dart';
 import 'package:flutter_resume/presentation/discover/discover.dart';
 
 class DiscoverScreen extends StatelessWidget {
@@ -10,29 +10,18 @@ class DiscoverScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          DiscoverBloc(context.read<FeedRepository>())..add(FetchData()),
-      child: BlocBuilder<DiscoverBloc, DiscoverState>(
-        builder: (context, state) {
-          final feeds = state.feeds;
-          final bloc = context.read<DiscoverBloc>();
-          return EasyRefresh(
-            onRefresh: () {
-              bloc.add(FetchData(isRefresh: true));
+      create: (context) => DiscoverBloc(context.read<FeedRepository>()),
+      child: PagingLoadWidget<DiscoverBloc, Feed>(
+        builder: (context, data) {
+          return SliverList.separated(
+            itemCount: data.length,
+            itemBuilder: (context, index) {
+              final feed = data[index];
+              return DiscoverItem(feed: feed);
             },
-            onLoad: () {
-              bloc.add(FetchData());
+            separatorBuilder: (context, index) {
+              return const Divider();
             },
-            child: ListView.separated(
-              itemCount: feeds.length,
-              itemBuilder: (context, index) {
-                final feed = feeds[index];
-                return DiscoverItem(feed: feed);
-              },
-              separatorBuilder: (context, index) {
-                return const Divider();
-              },
-            ),
           );
         },
       ),
