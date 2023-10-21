@@ -14,6 +14,7 @@ class AppRouter {
   static const String home = '/home';
   static const String setting = '/setting';
   static const String sampleAsync = '/sample/async';
+  static const String sampleKey = '/sample/key';
 
   AppRouter._();
 
@@ -55,6 +56,10 @@ class AppRouter {
       GoRoute(
         path: sampleAsync,
         builder: (_, __) => const SampleAsyncScreen(),
+      ),
+      GoRoute(
+        path: sampleKey,
+        builder: (_, __) => const SampleKeyScreen(),
       ),
     ],
   );
