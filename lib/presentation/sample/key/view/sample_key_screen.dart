@@ -10,16 +10,18 @@ class SampleKeyScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Key Sample'),
       ),
-      body: const Center(
+      body: Center(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SwapStatelessShowcaseWidget(),
-              Divider(),
-              SwapStatefulShowcaseWidget(useKey: false),
-              Divider(),
-              SwapStatefulShowcaseWidget(useKey: true),
+              const SwapStatelessShowcaseWidget(),
+              const Divider(),
+              const SwapStatefulShowcaseWidget(useKey: false),
+              const Divider(),
+              const SwapStatefulShowcaseWidget(useKey: true),
+              const Divider(),
+              GlobalKeyShowcaseWidget(globalKey: GlobalKey()),
             ],
           ),
         ),
