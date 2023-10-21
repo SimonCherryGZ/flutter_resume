@@ -7,7 +7,7 @@ class FeedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = <String>['热门', '发现', '关注'];
+    final tabs = <String>['热门', '发现'];
     return DefaultTabController(
       length: tabs.length,
       child: SafeArea(
@@ -26,7 +26,6 @@ class FeedScreen extends StatelessWidget {
                   children: [
                     TrendScreen(),
                     DiscoverScreen(),
-                    Center(child: Text('关注')),
                   ],
                 ),
               ),

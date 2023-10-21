@@ -6,11 +6,18 @@ import 'package:flutter_resume/presentation/trend/trend.dart';
 import 'package:flutter_resume/utils/utils.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class TrendScreen extends StatelessWidget {
+class TrendScreen extends StatefulWidget {
   const TrendScreen({super.key});
 
   @override
+  State<TrendScreen> createState() => _TrendScreenState();
+}
+
+class _TrendScreenState extends State<TrendScreen>
+    with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocProvider(
       create: (context) => TrendBloc(context.read<FeedRepository>()),
       child: PagingLoadWidget<TrendBloc, Feed>(
@@ -31,4 +38,7 @@ class TrendScreen extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
