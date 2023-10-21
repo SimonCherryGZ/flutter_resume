@@ -6,6 +6,7 @@ import 'package:flutter_resume/presentation/common/common.dart';
 import 'package:flutter_resume/presentation/feed/feed.dart';
 import 'package:flutter_resume/presentation/home/home.dart';
 import 'package:flutter_resume/presentation/profile/profile.dart';
+import 'package:flutter_resume/presentation/sample/sample.dart';
 import 'package:go_router/go_router.dart';
 import 'package:oktoast/oktoast.dart';
 
@@ -17,11 +18,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final _bottomNavigationItems = [
-    const MapEntry('首页', Icons.home),
-    const MapEntry('功能', Icons.dashboard),
-    const MapEntry('消息', Icons.message),
-    const MapEntry('我的', Icons.person),
+  static const _bottomNavigationItems = [
+    MapEntry('首页', Icons.home),
+    MapEntry('示例', Icons.dashboard),
+    MapEntry('消息', Icons.message),
+    MapEntry('我的', Icons.person),
   ];
 
   final ValueNotifier<int> _indexNotifier = ValueNotifier(0);
@@ -53,9 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   index: index,
                   children: const [
                     FeedScreen(),
-                    Center(
-                      child: Text('功能'),
-                    ),
+                    SampleScreen(),
                     Center(
                       child: Text('消息'),
                     ),
