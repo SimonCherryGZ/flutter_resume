@@ -34,7 +34,7 @@ class ShowcaseWidget extends StatelessWidget {
               color: Colors.grey,
             ),
           ),
-          SizedBox(height: 50.ss()),
+          SizedBox(height: 30.ss()),
           builder(context),
         ],
       ),
