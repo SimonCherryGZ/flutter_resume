@@ -10,6 +10,7 @@ class SampleScreen extends StatelessWidget {
   static const _items = {
     'Async': AppRouter.sampleAsync,
     'Key': AppRouter.sampleKey,
+    'Lifecycle': AppRouter.sampleLifecycle,
   };
 
   @override
