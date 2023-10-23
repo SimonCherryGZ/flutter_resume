@@ -5,6 +5,7 @@ class LifecycleCallbackWidget extends StatefulWidget {
   final VoidCallback? didChangeDependenciesCallback;
   final VoidCallback? buildCallback;
   final VoidCallback? didUpdateWidgetCallback;
+  final VoidCallback? activateCallback;
   final VoidCallback? deactivateCallback;
   final VoidCallback? disposeCallback;
   final WidgetBuilder builder;
@@ -15,6 +16,7 @@ class LifecycleCallbackWidget extends StatefulWidget {
     this.didChangeDependenciesCallback,
     this.buildCallback,
     this.didUpdateWidgetCallback,
+    this.activateCallback,
     this.deactivateCallback,
     this.disposeCallback,
     required this.builder,
@@ -48,6 +50,12 @@ class _LifecycleCallbackWidgetState extends State<LifecycleCallbackWidget> {
   void didUpdateWidget(covariant LifecycleCallbackWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     widget.didUpdateWidgetCallback?.call();
+  }
+
+  @override
+  void activate() {
+    super.activate();
+    widget.activateCallback?.call();
   }
 
   @override

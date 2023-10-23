@@ -28,6 +28,9 @@ class LifecycleCallbackWidgetWrapper extends StatelessWidget {
       didUpdateWidgetCallback: () {
         _callback(LifecycleState.didUpdateWidget);
       },
+      activateCallback: () {
+        _callback(LifecycleState.activate);
+      },
       deactivateCallback: () {
         _callback(LifecycleState.deactivate);
       },

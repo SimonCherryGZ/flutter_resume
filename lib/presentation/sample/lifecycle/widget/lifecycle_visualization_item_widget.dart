@@ -57,7 +57,7 @@ class _LifecycleVisualizationItemWidgetState
       builder: (context, child) {
         final value = _animation.value;
         return Container(
-          width: 200.ss(),
+          width: double.infinity,
           height: 50.ss(),
           decoration: BoxDecoration(
             color: Color.lerp(Colors.white, Colors.yellow, value),
@@ -68,7 +68,12 @@ class _LifecycleVisualizationItemWidgetState
             ),
           ),
           child: Center(
-            child: Text(widget.label),
+            child: Text(
+              widget.label,
+              style: const TextStyle(
+                fontSize: 12,
+              ),
+            ),
           ),
         );
       },
