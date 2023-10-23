@@ -16,6 +16,8 @@ class SampleAnimationScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               AnimationControllerShowcaseWidget(),
+              Divider(),
+              ImplicitAnimationShowcaseWidget(),
             ],
           ),
         ),
