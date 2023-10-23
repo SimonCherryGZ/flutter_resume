@@ -137,7 +137,7 @@ class _LifecycleVisualizationWidgetState
                   SizedBox(height: 75.ss()),
                   const Icon(Icons.arrow_back),
                   SizedBox(height: 50.ss()),
-                  const Icon(Icons.arrow_back),
+                  const Icon(Icons.arrow_forward),
                 ],
               ),
               Expanded(
