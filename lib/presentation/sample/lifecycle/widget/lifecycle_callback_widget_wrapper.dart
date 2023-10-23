@@ -1,57 +1,38 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
+
+typedef StateCallback = void Function(LifecycleState state);
 
 class LifecycleCallbackWidgetWrapper extends StatelessWidget {
   const LifecycleCallbackWidgetWrapper({
     super.key,
-    this.stateController,
+    this.stateCallback,
     this.color,
   });
 
-  final StreamController<LifecycleState>? stateController;
+  final StateCallback? stateCallback;
   final Color? color;
 
   @override
   Widget build(BuildContext context) {
-    final controller = stateController;
     return LifecycleCallbackWidget(
       initStateCallback: () {
-        if (controller != null) {
-          debugPrint('initState');
-          controller.add(LifecycleState.initState);
-        }
+        _callback(LifecycleState.initState);
       },
       didChangeDependenciesCallback: () {
-        if (controller != null) {
-          debugPrint('didChangeDependencies');
-          controller.add(LifecycleState.didChangeDependencies);
-        }
+        _callback(LifecycleState.didChangeDependencies);
       },
       buildCallback: () {
-        if (controller != null) {
-          debugPrint('build');
-          controller.add(LifecycleState.build);
-        }
+        _callback(LifecycleState.build);
       },
       didUpdateWidgetCallback: () {
-        if (controller != null) {
-          debugPrint('didUpdateWidget');
-          controller.add(LifecycleState.didUpdateWidget);
-        }
+        _callback(LifecycleState.didUpdateWidget);
       },
       deactivateCallback: () {
-        if (controller != null) {
-          debugPrint('deactivate');
-          controller.add(LifecycleState.deactivate);
-        }
+        _callback(LifecycleState.deactivate);
       },
       disposeCallback: () {
-        if (controller != null) {
-          debugPrint('dispose');
-          controller.add(LifecycleState.dispose);
-        }
+        _callback(LifecycleState.dispose);
       },
       builder: (context) {
         return Container(
@@ -69,5 +50,12 @@ class LifecycleCallbackWidgetWrapper extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _callback(LifecycleState state) {
+    if (stateCallback != null) {
+      debugPrint(state.toString());
+      stateCallback!(state);
+    }
   }
 }

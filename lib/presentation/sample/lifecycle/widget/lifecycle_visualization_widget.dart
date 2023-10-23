@@ -1,10 +1,10 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
-import 'package:rxdart/rxdart.dart';
 
 class LifecycleVisualizationWidget extends StatefulWidget {
   const LifecycleVisualizationWidget({super.key});
@@ -20,13 +20,13 @@ class _LifecycleVisualizationWidgetState
   late Stream<LifecycleState> _stateStream;
   final _random = Random();
   final _globalKey = GlobalKey();
+  final _stateQueue = Queue<LifecycleState>();
 
   @override
   void initState() {
     super.initState();
     _stateController = StreamController<LifecycleState>.broadcast();
-    _stateStream =
-        _stateController.stream.interval(const Duration(milliseconds: 500));
+    _stateStream = _stateController.stream;
   }
 
   @override
@@ -46,7 +46,7 @@ class _LifecycleVisualizationWidgetState
               final widget = Center(
                 child: LifecycleCallbackWidgetWrapper(
                   key: _globalKey,
-                  stateController: _stateController,
+                  stateCallback: _handleStateCallback,
                   color: state.color,
                 ),
               );
@@ -152,6 +152,26 @@ class _LifecycleVisualizationWidgetState
         ],
       ),
     );
+  }
+
+  void _handleStateCallback(LifecycleState state) async {
+    if (_stateQueue.isNotEmpty) {
+      await Future.delayed(const Duration(milliseconds: 500));
+    }
+    _stateQueue.add(state);
+    _handleStateQueue();
+  }
+
+  void _handleStateQueue() async {
+    if (_stateQueue.isEmpty) {
+      return;
+    }
+    await Future.delayed(const Duration(milliseconds: 50));
+    final state = _stateQueue.removeFirst();
+    if (_stateController.isClosed) {
+      return;
+    }
+    _stateController.add(state);
   }
 }
 
