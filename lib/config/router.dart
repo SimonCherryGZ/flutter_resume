@@ -16,7 +16,8 @@ class AppRouter {
   static const String sampleAsync = '/sample/async';
   static const String sampleKey = '/sample/key';
   static const String sampleGlobalKeyAccess = '/sample/globalKeyAccess';
-  static const String sampleLifecycle = '/sample/sampleLifecycle';
+  static const String sampleLifecycle = '/sample/lifecycle';
+  static const String sampleAnimation = '/sample/animation';
 
   AppRouter._();
 
@@ -72,6 +73,10 @@ class AppRouter {
       GoRoute(
         path: sampleLifecycle,
         builder: (_, __) => const SampleLifecycleScreen(),
+      ),
+      GoRoute(
+        path: sampleAnimation,
+        builder: (_, __) => const SampleAnimationScreen(),
       ),
     ],
   );
