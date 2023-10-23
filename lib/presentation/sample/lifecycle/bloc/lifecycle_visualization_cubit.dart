@@ -37,4 +37,14 @@ class LifecycleVisualizationCubit extends Cubit<LifecycleVisualizationState> {
       color: color,
     ));
   }
+
+  switchIconData() {
+    emit(state.copyWith(
+      iconData: switch (state.iconData) {
+        Icons.flutter_dash => Icons.access_alarm,
+        Icons.access_alarm => Icons.ac_unit,
+        _ => Icons.flutter_dash,
+      },
+    ));
+  }
 }

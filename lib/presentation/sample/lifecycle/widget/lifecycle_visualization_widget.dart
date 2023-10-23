@@ -46,37 +46,48 @@ class _LifecycleVisualizationWidgetState
       child: Column(
         children: [
           BlocBuilder<LifecycleVisualizationCubit, LifecycleVisualizationState>(
+            buildWhen: (p, c) => p.iconData != c.iconData,
             builder: (context, state) {
-              final widget = Center(
-                child: LifecycleCallbackWidgetWrapper(
-                  key: _globalKey,
-                  stateCallback: _handleStateCallback,
-                  color: state.color,
+              return InheritedIconDataWidget(
+                state.iconData,
+                child: BlocBuilder<LifecycleVisualizationCubit,
+                    LifecycleVisualizationState>(
+                  buildWhen: (p, c) =>
+                      (p.position != c.position || p.color != c.color),
+                  builder: (context, state) {
+                    final widget = Center(
+                      child: LifecycleCallbackWidgetWrapper(
+                        key: _globalKey,
+                        stateCallback: _handleStateCallback,
+                        color: state.color,
+                      ),
+                    );
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 80,
+                          height: 80,
+                          color: Colors.grey.shade300,
+                          child: (LifecycleVisualizationWidgetPosition.left ==
+                                  state.position)
+                              ? widget
+                              : null,
+                        ),
+                        const SizedBox(width: 40),
+                        Container(
+                          width: 80,
+                          height: 80,
+                          color: Colors.grey.shade300,
+                          child: (LifecycleVisualizationWidgetPosition.right ==
+                                  state.position)
+                              ? widget
+                              : null,
+                        ),
+                      ],
+                    );
+                  },
                 ),
-              );
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 80,
-                    height: 80,
-                    color: Colors.grey.shade300,
-                    child: (LifecycleVisualizationWidgetPosition.left ==
-                            state.position)
-                        ? widget
-                        : null,
-                  ),
-                  const SizedBox(width: 40),
-                  Container(
-                    width: 80,
-                    height: 80,
-                    color: Colors.grey.shade300,
-                    child: (LifecycleVisualizationWidgetPosition.right ==
-                            state.position)
-                        ? widget
-                        : null,
-                  ),
-                ],
               );
             },
           ),
@@ -153,6 +164,7 @@ class _LifecycleVisualizationWidgetState
           ),
           const SizedBox(height: 30),
           BlocBuilder<LifecycleVisualizationCubit, LifecycleVisualizationState>(
+            buildWhen: (p, c) => p.position != c.position,
             builder: (context, state) {
               final cubit = context.read<LifecycleVisualizationCubit>();
               return Row(
@@ -176,6 +188,12 @@ class _LifecycleVisualizationWidgetState
                         cubit.updateColor(color);
                       },
                       child: const Text('Update'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        cubit.switchIconData();
+                      },
+                      child: const Text('Depend'),
                     ),
                     ElevatedButton(
                       onPressed: () {

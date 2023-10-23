@@ -38,6 +38,7 @@ class LifecycleCallbackWidgetWrapper extends StatelessWidget {
         _callback(LifecycleState.dispose);
       },
       builder: (context) {
+        final iconData = InheritedIconDataWidget.of(context).iconData;
         return Container(
           width: 60,
           height: 60,
@@ -45,8 +46,8 @@ class LifecycleCallbackWidgetWrapper extends StatelessWidget {
             shape: BoxShape.circle,
             color: color,
           ),
-          child: const Icon(
-            Icons.flutter_dash,
+          child: Icon(
+            iconData,
             color: Colors.white,
             size: 40,
           ),
