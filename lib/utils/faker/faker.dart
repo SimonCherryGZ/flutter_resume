@@ -17,6 +17,8 @@ class Faker {
   final Random _random;
   int _incrementIndex = 0;
 
+  int nextInt(int max) => _random.nextInt(max);
+
   User user() {
     final name = nickname();
     const regex =
@@ -45,6 +47,14 @@ class Faker {
   String title() => _randomElement(titles);
 
   String content() => _randomElement(contents);
+
+  Comment comment() {
+    return Comment(
+      author: user(),
+      content: _randomElement(comments),
+      replies: [],
+    );
+  }
 
   T _randomElement<T>(List<T> list) {
     return list[_random.nextInt(list.length)];
