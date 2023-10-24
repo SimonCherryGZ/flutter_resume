@@ -158,6 +158,8 @@ class PostScreen extends StatelessWidget {
                     final comment = state.comments[index];
                     return PostCommentItem(
                       comment: comment,
+                      avatarSize: 30.ss(),
+                      showReply: true,
                     );
                   },
                   separatorBuilder: (context, index) {

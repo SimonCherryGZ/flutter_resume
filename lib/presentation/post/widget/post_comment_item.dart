@@ -7,9 +7,13 @@ class PostCommentItem extends StatelessWidget {
   const PostCommentItem({
     super.key,
     required this.comment,
+    required this.avatarSize,
+    this.showReply = false,
   });
 
   final Comment comment;
+  final double avatarSize;
+  final bool showReply;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +23,7 @@ class PostCommentItem extends StatelessWidget {
         SizedBox(width: 15.ss()),
         CommonAvatarWidget(
           imageUrl: comment.author.avatar,
-          size: 30.ss(),
+          size: avatarSize,
         ),
         SizedBox(width: 10.ss()),
         Expanded(
@@ -38,6 +42,16 @@ class PostCommentItem extends StatelessWidget {
               Text(
                 comment.content,
               ),
+              if (showReply && comment.replies.isNotEmpty)
+                ...comment.replies.map((reply) {
+                  return Padding(
+                    padding: EdgeInsets.only(top: 15.ss()),
+                    child: PostCommentItem(
+                      comment: reply,
+                      avatarSize: 20.ss(),
+                    ),
+                  );
+                }).toList(),
             ],
           ),
         ),
