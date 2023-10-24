@@ -1,7 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/config/router.dart';
 import 'package:flutter_resume/domain/domain.dart';
+import 'package:flutter_resume/presentation/common/common.dart';
 import 'package:flutter_resume/utils/utils.dart';
+import 'package:go_router/go_router.dart';
 
 class TrendItem extends StatelessWidget {
   final Feed feed;
@@ -17,9 +19,18 @@ class TrendItem extends StatelessWidget {
     final itemWidth = screenSize.width / 2 - 4.ss();
     final aspectRatio = feed.imageWidth * 1.0 / feed.imageHeight;
     final itemHeight = itemWidth / aspectRatio;
+    final heroTag = 'trend_${feed.id}';
     return GestureDetector(
       onTap: () async {
-        // todo
+        context.push(
+          Uri(
+            path: AppRouter.post,
+            queryParameters: {
+              'heroTag': heroTag,
+            },
+          ).toString(),
+          extra: feed,
+        );
       },
       child: SizedBox(
         height: itemHeight + 80.ss(),
@@ -27,31 +38,20 @@ class TrendItem extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Expanded(
-              child: CachedNetworkImage(
-                imageUrl: feed.imageUrl,
-                fit: BoxFit.cover,
-                memCacheWidth: (screenSize.width / 2).round(),
-                fadeInDuration: const Duration(milliseconds: 100),
-                fadeOutDuration: const Duration(milliseconds: 200),
-                placeholder: (_, __) {
-                  return Container(color: Colors.grey.shade300);
-                },
-                errorWidget: (context, url, error) {
-                  return Center(
-                    child: Text(
-                      'Oops...图片加载不出来',
-                      style: TextStyle(
-                        fontSize: 12.ss(),
-                      ),
-                    ),
-                  );
-                },
+              child: Hero(
+                tag: heroTag,
+                child: CommonFeedImageWidget(
+                  imageUrl: feed.imageUrl,
+                  imageWidth: screenSize.width ~/ 2,
+                ),
               ),
             ),
             Container(
               height: 40.ss(),
-              padding:
-                  EdgeInsets.symmetric(horizontal: 10.ss(), vertical: 5.ss()),
+              padding: EdgeInsets.symmetric(
+                horizontal: 10.ss(),
+                vertical: 5.ss(),
+              ),
               child: Text(
                 feed.title,
                 maxLines: 2,
@@ -65,17 +65,9 @@ class TrendItem extends StatelessWidget {
               child: Row(
                 children: [
                   SizedBox(width: 5.ss()),
-                  CircleAvatar(
-                    radius: 10.ss(),
-                    backgroundColor: Colors.grey,
-                    child: CachedNetworkImage(
-                      imageUrl: feed.author.avatar,
-                      width: 20.ss(),
-                      height: 20.ss(),
-                      fit: BoxFit.cover,
-                      fadeInDuration: const Duration(milliseconds: 100),
-                      fadeOutDuration: const Duration(milliseconds: 200),
-                    ),
+                  CommonAvatarWidget(
+                    imageUrl: feed.author.avatar,
+                    size: 20.ss(),
                   ),
                   SizedBox(width: 5.ss()),
                   Expanded(

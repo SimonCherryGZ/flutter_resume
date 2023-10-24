@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_resume/domain/domain.dart';
 import 'package:flutter_resume/presentation/app/app.dart';
 import 'package:flutter_resume/presentation/home/home.dart';
+import 'package:flutter_resume/presentation/post/post.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 import 'package:flutter_resume/presentation/setting/setting.dart';
 import 'package:go_router/go_router.dart';
@@ -13,6 +15,7 @@ class AppRouter {
   static const String login = '/login';
   static const String home = '/home';
   static const String setting = '/setting';
+  static const String post = '/post';
   static const String sampleAsync = '/sample/async';
   static const String sampleKey = '/sample/key';
   static const String sampleGlobalKeyAccess = '/sample/globalKeyAccess';
@@ -56,6 +59,13 @@ class AppRouter {
       GoRoute(
         path: setting,
         builder: (_, __) => const SettingScreen(),
+      ),
+      GoRoute(
+        path: post,
+        builder: (_, state) => PostScreen(
+          feed: state.extra as Feed,
+          heroTag: state.queryParameters['heroTag'] ?? '',
+        ),
       ),
       GoRoute(
         path: sampleAsync,

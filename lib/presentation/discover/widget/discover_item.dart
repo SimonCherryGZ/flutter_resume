@@ -1,7 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/config/router.dart';
 import 'package:flutter_resume/domain/domain.dart';
+import 'package:flutter_resume/presentation/common/common.dart';
 import 'package:flutter_resume/utils/utils.dart';
+import 'package:go_router/go_router.dart';
 
 class DiscoverItem extends StatelessWidget {
   final Feed feed;
@@ -17,85 +19,78 @@ class DiscoverItem extends StatelessWidget {
     final imageWidth = screenSize.width;
     final aspectRatio = feed.imageWidth * 1.0 / feed.imageHeight;
     final imageHeight = imageWidth / aspectRatio;
-    return SizedBox(
-      height: imageHeight + 150.ss(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              SizedBox(width: 10.ss()),
-              CircleAvatar(
-                radius: 15.ss(),
-                backgroundColor: Colors.grey,
-                child: CachedNetworkImage(
-                  imageUrl: feed.author.avatar,
-                  width: 30.ss(),
-                  height: 30.ss(),
-                  fit: BoxFit.cover,
-                  fadeInDuration: const Duration(milliseconds: 100),
-                  fadeOutDuration: const Duration(milliseconds: 200),
-                ),
-              ),
-              SizedBox(width: 10.ss()),
-              Text(
-                feed.author.nickname,
-                style: TextStyle(
-                  fontSize: 12.ss(),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 10.ss()),
-          CachedNetworkImage(
-            imageUrl: feed.imageUrl,
-            fit: BoxFit.cover,
-            memCacheWidth: imageWidth.toInt(),
-            memCacheHeight: imageHeight.toInt(),
-            fadeInDuration: const Duration(milliseconds: 100),
-            fadeOutDuration: const Duration(milliseconds: 200),
-            placeholder: (_, __) {
-              return Container(color: Colors.grey.shade300);
+    final heroTag = 'discover_${feed.id}';
+    return GestureDetector(
+      onTap: () {
+        context.push(
+          Uri(
+            path: AppRouter.post,
+            queryParameters: {
+              'heroTag': heroTag,
             },
-            errorWidget: (context, url, error) {
-              return Center(
-                child: Text(
-                  'Oops...图片加载不出来',
+          ).toString(),
+          extra: feed,
+        );
+      },
+      child: SizedBox(
+        height: imageHeight + 150.ss(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                SizedBox(width: 10.ss()),
+                CommonAvatarWidget(
+                  imageUrl: feed.author.avatar,
+                  size: 30.ss(),
+                ),
+                SizedBox(width: 10.ss()),
+                Text(
+                  feed.author.nickname,
                   style: TextStyle(
                     fontSize: 12.ss(),
                   ),
                 ),
-              );
-            },
-          ),
-          SizedBox(height: 15.ss()),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.ss()),
-            child: Text(
-              feed.title,
-              maxLines: 1,
-              style: TextStyle(
-                fontSize: 15.ss(),
-                fontWeight: FontWeight.w500,
+              ],
+            ),
+            SizedBox(height: 10.ss()),
+            Hero(
+              tag: heroTag,
+              child: CommonFeedImageWidget(
+                imageUrl: feed.imageUrl,
+                imageWidth: imageWidth.toInt(),
+                imageHeight: imageHeight.toInt(),
               ),
             ),
-          ),
-          SizedBox(height: 10.ss()),
-          Expanded(
-            child: Padding(
+            SizedBox(height: 15.ss()),
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.ss()),
               child: Text(
-                feed.content,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+                feed.title,
+                maxLines: 1,
                 style: TextStyle(
-                  fontSize: 14.ss(),
-                  color: Colors.grey,
+                  fontSize: 15.ss(),
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
-          ),
-        ],
+            SizedBox(height: 10.ss()),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.ss()),
+                child: Text(
+                  feed.content,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 14.ss(),
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

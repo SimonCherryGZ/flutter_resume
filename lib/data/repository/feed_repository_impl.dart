@@ -34,6 +34,7 @@ class FeedRepositoryImpl implements FeedRepository {
         int index = start + i + 1;
         final imageUrl = 'https://cdn.seovx.com/d//img/momcn-2D%20($index).jpg';
         final task = _getFeed(
+          index: index,
           title: _faker.title(),
           imageUrl: imageUrl,
           author: _faker.user(),
@@ -47,6 +48,7 @@ class FeedRepositoryImpl implements FeedRepository {
   }
 
   Future<Feed> _getFeed({
+    required int index,
     required String title,
     required String imageUrl,
     required User author,
@@ -61,6 +63,7 @@ class FeedRepositoryImpl implements FeedRepository {
               Size size =
                   Size(myImage.width.toDouble(), myImage.height.toDouble());
               final feed = Feed(
+                id: '$index',
                 title: title,
                 imageUrl: imageUrl,
                 imageWidth: size.width.toInt(),
@@ -72,6 +75,7 @@ class FeedRepositoryImpl implements FeedRepository {
             },
             onError: (_, __) {
               final feed = Feed(
+                id: '$index',
                 title: title,
                 imageUrl: imageUrl,
                 imageWidth: 1,
