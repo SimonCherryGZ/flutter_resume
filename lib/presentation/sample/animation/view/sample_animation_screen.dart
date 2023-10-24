@@ -20,6 +20,8 @@ class SampleAnimationScreen extends StatelessWidget {
               ImplicitAnimationShowcaseWidget(),
               Divider(),
               CurveShowcaseWidget(),
+              Divider(),
+              HeroShowcaseWidget(),
             ],
           ),
         ),

@@ -18,6 +18,7 @@ class AppRouter {
   static const String sampleGlobalKeyAccess = '/sample/globalKeyAccess';
   static const String sampleLifecycle = '/sample/lifecycle';
   static const String sampleAnimation = '/sample/animation';
+  static const String sampleHeroAnimation = '/sample/heroAnimation';
 
   AppRouter._();
 
@@ -77,6 +78,10 @@ class AppRouter {
       GoRoute(
         path: sampleAnimation,
         builder: (_, __) => const SampleAnimationScreen(),
+      ),
+      GoRoute(
+        path: sampleHeroAnimation,
+        builder: (_, __) => const SampleHeroAnimationScreen(),
       ),
     ],
   );
