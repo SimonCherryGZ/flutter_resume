@@ -22,6 +22,8 @@ class SampleAnimationScreen extends StatelessWidget {
               CurveShowcaseWidget(),
               Divider(),
               HeroShowcaseWidget(),
+              Divider(),
+              StaggeredAnimationShowcaseWidget(),
             ],
           ),
         ),
