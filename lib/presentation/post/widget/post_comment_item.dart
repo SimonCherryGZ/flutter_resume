@@ -1,48 +1,38 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_resume/domain/domain.dart';
 import 'package:flutter_resume/presentation/common/common.dart';
+import 'package:flutter_resume/presentation/post/post.dart';
 import 'package:flutter_resume/utils/utils.dart';
 
-class PostCommentItem extends StatefulWidget {
+class PostCommentItem extends StatelessWidget {
   const PostCommentItem({
     super.key,
+    required this.index,
     required this.comment,
     required this.avatarSize,
     this.showReply = false,
   });
 
+  final int index;
   final Comment comment;
   final double avatarSize;
   final bool showReply;
 
   @override
-  State<PostCommentItem> createState() => _PostCommentItemState();
-}
-
-class _PostCommentItemState extends State<PostCommentItem> {
-  int _totalReplyCount = 0;
-  int _showReplyCount = 0;
-  int _remainReplyCount = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _totalReplyCount = widget.comment.replies.length;
-    _showReplyCount = min(3, _totalReplyCount);
-    _remainReplyCount = max(0, _totalReplyCount - _showReplyCount);
-  }
-
-  @override
   Widget build(BuildContext context) {
+    int totalReplyCount = comment.replies.length;
+    int showReplyCount = min(max(3, comment.showReplyCount), totalReplyCount);
+    int remainReplyCount = max(0, totalReplyCount - showReplyCount);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(width: 15.ss()),
         CommonAvatarWidget(
-          imageUrl: widget.comment.author.avatar,
-          size: widget.avatarSize,
+          imageUrl: comment.author.avatar,
+          size: avatarSize,
         ),
         SizedBox(width: 10.ss()),
         Expanded(
@@ -50,7 +40,7 @@ class _PostCommentItemState extends State<PostCommentItem> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget.comment.author.nickname,
+                comment.author.nickname,
                 maxLines: 1,
                 style: TextStyle(
                   fontSize: 12.ss(),
@@ -59,22 +49,23 @@ class _PostCommentItemState extends State<PostCommentItem> {
               ),
               SizedBox(height: 10.ss()),
               Text(
-                widget.comment.content,
+                comment.content,
               ),
-              if (widget.showReply && _showReplyCount > 0)
-                ...(_showReplyCount < _totalReplyCount
-                        ? widget.comment.replies.sublist(0, _showReplyCount)
-                        : widget.comment.replies)
+              if (showReply && showReplyCount > 0)
+                ...(showReplyCount < totalReplyCount
+                        ? comment.replies.sublist(0, showReplyCount)
+                        : comment.replies)
                     .map((reply) {
                   return Padding(
                     padding: EdgeInsets.only(top: 15.ss()),
                     child: PostCommentItem(
+                      index: -1,
                       comment: reply,
                       avatarSize: 20.ss(),
                     ),
                   );
                 }).toList(),
-              if (widget.showReply && _remainReplyCount > 0) ...[
+              if (showReply && remainReplyCount > 0) ...[
                 Padding(
                   padding: EdgeInsets.only(
                     left: 40.ss(),
@@ -82,12 +73,7 @@ class _PostCommentItemState extends State<PostCommentItem> {
                   ),
                   child: TextButton(
                     onPressed: () {
-                      setState(() {
-                        _showReplyCount += 3;
-                        _showReplyCount =
-                            min(_totalReplyCount, _showReplyCount);
-                        _remainReplyCount = _totalReplyCount - _showReplyCount;
-                      });
+                      context.read<PostBloc>().add(ExpandReply(index));
                     },
                     child: const Text(
                       '展开更多回复',

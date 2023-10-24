@@ -7,3 +7,9 @@ class FetchComments extends PostEvent {
 
   FetchComments(this.feed);
 }
+
+class ExpandReply extends PostEvent {
+  final int index;
+
+  ExpandReply(this.index);
+}

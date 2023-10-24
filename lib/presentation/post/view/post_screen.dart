@@ -157,6 +157,7 @@ class PostScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final comment = state.comments[index];
                     return PostCommentItem(
+                      index: index,
                       comment: comment,
                       avatarSize: 30.ss(),
                       showReply: true,
