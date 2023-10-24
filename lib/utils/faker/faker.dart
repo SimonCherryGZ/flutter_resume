@@ -53,7 +53,7 @@ class Faker {
       author: user(),
       content: _randomElement(comments),
       replies: List.generate(
-        _random.nextInt(10) > 7 ? _random.nextInt(3) : 0,
+        _random.nextInt(10) > 7 ? _random.nextInt(10) : 0,
         (_) => comment(),
       ),
     );
