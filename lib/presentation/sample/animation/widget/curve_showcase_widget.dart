@@ -47,29 +47,59 @@ class _CurveShowcaseWidgetState extends State<CurveShowcaseWidget>
       title: 'Curve',
       content: '演示动画曲线',
       builder: (context) {
+        const gridPaperSize = 200.0;
+        const ballSize = 15.0;
         return Column(
           children: [
-            SizedBox(
-              width: 200,
-              height: 200,
-              child: GridPaper(
-                color: Colors.black.withOpacity(0.5),
-                divisions: 1,
-                subdivisions: 5,
-                child: ValueListenableBuilder(
-                  valueListenable: _curveNotifier,
-                  builder: (context, map, child) {
-                    return CustomPaint(
-                      painter: DrawCurvePainter(
-                        curve: map.value,
-                        progress: _controller.view,
-                        color: Colors.black,
-                        strokeWidth: 2,
-                      ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                SizedBox(
+                  width: gridPaperSize,
+                  height: gridPaperSize,
+                  child: GridPaper(
+                    color: Colors.black.withOpacity(0.5),
+                    divisions: 1,
+                    subdivisions: 5,
+                    child: ValueListenableBuilder(
+                      valueListenable: _curveNotifier,
+                      builder: (context, map, child) {
+                        return CustomPaint(
+                          painter: DrawCurvePainter(
+                            curve: map.value,
+                            progress: _controller.view,
+                            color: Colors.black,
+                            strokeWidth: 2,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(width: 30.ss()),
+                AnimatedBuilder(
+                  animation: _controller.view,
+                  builder: (context, child) {
+                    final offsetY = _curveNotifier.value.value
+                                .transform(_controller.value) *
+                            gridPaperSize -
+                        (ballSize / 2);
+                    return Transform.translate(
+                      offset: Offset(0, -offsetY),
+                      child: child,
                     );
                   },
+                  child: Container(
+                    width: ballSize,
+                    height: ballSize,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
             SizedBox(
               height: 70.ss(),
