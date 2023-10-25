@@ -4,7 +4,7 @@ import 'package:flutter_resume/domain/domain.dart';
 import 'package:flutter_resume/presentation/profile/profile.dart';
 import 'package:flutter_resume/utils/utils.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({
     super.key,
     required this.user,
@@ -13,14 +13,34 @@ class ProfileScreen extends StatelessWidget {
   final User user;
 
   @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  late final ScrollController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final tabs = <String>['功能', '动态', '收藏'];
+    final tabs = <String>['动态', '收藏'];
     return BlocProvider(
       create: (context) => ProfileBloc(),
       child: DefaultTabController(
         length: tabs.length,
         child: Scaffold(
           body: NestedScrollView(
+            controller: _controller,
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
@@ -28,9 +48,10 @@ class ProfileScreen extends StatelessWidget {
                   handle:
                       NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                   sliver: ProfileHeaderView(
-                    user: user,
+                    user: widget.user,
                     tabs: tabs,
                     innerBoxIsScrolled: innerBoxIsScrolled,
+                    scrollController: _controller,
                   ),
                 ),
               ];
