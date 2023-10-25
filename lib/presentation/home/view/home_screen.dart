@@ -52,13 +52,15 @@ class _HomeScreenState extends State<HomeScreen> {
               builder: (context, index, child) {
                 return IndexedStack(
                   index: index,
-                  children: const [
-                    FeedScreen(),
-                    SampleScreen(),
-                    Center(
+                  children: [
+                    const FeedScreen(),
+                    const SampleScreen(),
+                    const Center(
                       child: Text('消息'),
                     ),
-                    ProfileScreen(),
+                    ProfileScreen(
+                      user: context.read<AppCubit>().state.signedInUser!,
+                    ),
                   ],
                 );
               }),

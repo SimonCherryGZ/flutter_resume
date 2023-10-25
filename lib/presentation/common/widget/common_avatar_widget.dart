@@ -15,7 +15,7 @@ class CommonAvatarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CircleAvatar(
       radius: size / 2,
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.grey.shade300,
       child: CachedNetworkImage(
         imageUrl: imageUrl,
         width: size,
@@ -23,6 +23,12 @@ class CommonAvatarWidget extends StatelessWidget {
         fit: BoxFit.cover,
         fadeInDuration: const Duration(milliseconds: 100),
         fadeOutDuration: const Duration(milliseconds: 200),
+        errorWidget: (context, url, error) {
+          return Icon(
+            Icons.mood_bad,
+            size: size / 2,
+          );
+        },
       ),
     );
   }

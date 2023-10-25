@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_resume/domain/domain.dart';
 import 'package:flutter_resume/presentation/profile/profile.dart';
 import 'package:flutter_resume/utils/utils.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  const ProfileScreen({
+    super.key,
+    required this.user,
+  });
+
+  final User user;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +28,7 @@ class ProfileScreen extends StatelessWidget {
                   handle:
                       NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                   sliver: ProfileHeaderView(
+                    user: user,
                     tabs: tabs,
                     innerBoxIsScrolled: innerBoxIsScrolled,
                   ),
