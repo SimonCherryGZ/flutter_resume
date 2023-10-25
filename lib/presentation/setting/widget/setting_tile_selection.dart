@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_resume/presentation/setting/setting.dart';
+import 'package:flutter_resume/utils/utils.dart';
 
 class SettingTileSelection extends StatefulWidget {
   final double height;
@@ -45,9 +46,15 @@ class _SettingTileSelectionState extends State<SettingTileSelection> {
       prefixWidget: widget.prefixWidget,
       suffixWidget: Row(
         children: [
-          Text(
-            _selection,
-            style: widget.selectionStyle,
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: 150.ss(),
+            ),
+            child: Text(
+              _selection,
+              style: widget.selectionStyle,
+              maxLines: 1,
+            ),
           ),
           if (widget.suffixWidget != null) ...[
             widget.suffixWidget!,

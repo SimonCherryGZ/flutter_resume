@@ -24,8 +24,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget app = BlocBuilder<AppLocale, Locale?>(
-      builder: (context, locale) {
+    Widget app = BlocBuilder<AppCubit, AppState>(
+      buildWhen: (p, c) => p.themeColor != c.themeColor || p.locale != c.locale,
+      builder: (context, state) {
         return MaterialApp.router(
           title: 'FlutterResume',
           onGenerateTitle: (context) {
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: L10nDelegate.supportedLocales,
-          locale: locale,
+          locale: state.locale,
           builder: (context, child) {
             ScreenUtil.getInstance()
                 .initFromMediaQueryData(MediaQuery.of(context));
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
               ? CustomScrollBehavior()
               : null,
           theme: ThemeData(
-            primarySwatch: Colors.purple,
+            primarySwatch: state.themeColor,
           ),
         );
       },
@@ -58,8 +59,8 @@ class MyApp extends StatelessWidget {
     app = OKToast(child: app);
     return MultiProvider(
       providers: [
-        BlocProvider(
-          create: (context) => AppLocale(L10nDelegate.defaultLocale),
+        RepositoryProvider<SettingRepository>(
+          create: (context) => SettingRepositoryImpl(),
           lazy: false,
         ),
         RepositoryProvider<UserRepository>(
@@ -84,7 +85,10 @@ class MyApp extends StatelessWidget {
           return MultiProvider(
             providers: [
               BlocProvider(
-                create: (context) => AppCubit(context.read<UserRepository>()),
+                create: (context) => AppCubit(
+                  context.read<UserRepository>(),
+                  context.read<SettingRepository>(),
+                ),
                 lazy: false,
               ),
             ],

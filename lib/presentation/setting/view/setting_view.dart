@@ -1,13 +1,21 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_resume/domain/domain.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/setting/setting.dart';
 import 'package:flutter_resume/utils/utils.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 
 class SettingView extends StatelessWidget {
-  const SettingView({super.key});
+  const SettingView({
+    super.key,
+    required this.currentLocale,
+    required this.currentThemeColor,
+  });
+
+  final Locale currentLocale;
+  final MaterialColor currentThemeColor;
 
   @override
   Widget build(BuildContext context) {
@@ -39,30 +47,26 @@ class SettingView extends StatelessWidget {
           settings: [
             SettingSelection(
               title: '语言',
-              initSelection: '中文',
+              initSelection: currentLocale.toString(),
               onPerformAction: <String>(value) async {
-                // todo
-                if ('中文' == value) {
-                  return SynchronousFuture('English' as String);
+                final result = await _showLocaleSelection(context);
+                if (result == null) {
+                  return value;
                 }
-                if ('English' == value) {
-                  return SynchronousFuture('中文' as String);
-                }
-                return value;
+                bloc.add(ChangeLocale(result));
+                return SynchronousFuture(result.toString() as String);
               },
             ),
             SettingSelection(
               title: '主题色',
-              initSelection: '紫色',
+              initSelection: currentThemeColor.value.toString(),
               onPerformAction: <String>(value) async {
-                // todo
-                if ('紫色' == value) {
-                  return SynchronousFuture('青色' as String);
+                final result = await _showThemeColorSelection(context);
+                if (result == null) {
+                  return value;
                 }
-                if ('青色' == value) {
-                  return SynchronousFuture('紫色' as String);
-                }
-                return value;
+                bloc.add(ChangeThemeColor(result));
+                return SynchronousFuture(result.value.toString() as String);
               },
             ),
           ],
@@ -117,6 +121,59 @@ class SettingView extends StatelessWidget {
           },
         ),
       ],
+    );
+  }
+
+  Future<Locale?> _showLocaleSelection(BuildContext context) async {
+    final supportedLocales = L10nDelegate.supportedLocales;
+    return showDialog<Locale>(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: ListView.separated(
+            itemCount: supportedLocales.length,
+            itemBuilder: (context, index) {
+              final locale = supportedLocales[index];
+              return ListTile(
+                title: Text(locale.toString()),
+                onTap: () {
+                  Navigator.of(context).pop(locale);
+                },
+              );
+            },
+            separatorBuilder: (context, index) {
+              return const Divider();
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  Future<MaterialColor?> _showThemeColorSelection(
+    BuildContext context,
+  ) {
+    return showDialog<MaterialColor>(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: ListView.separated(
+            itemCount: Colors.primaries.length,
+            itemBuilder: (context, index) {
+              final color = Colors.primaries[index];
+              return ListTile(
+                title: Text(color.value.toString()),
+                onTap: () {
+                  Navigator.of(context).pop(color);
+                },
+              );
+            },
+            separatorBuilder: (context, index) {
+              return const Divider();
+            },
+          ),
+        );
+      },
     );
   }
 }

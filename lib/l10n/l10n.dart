@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
@@ -25,9 +24,6 @@ class L10nDelegate extends LocalizationsDelegate<AppLocalizations> {
   const L10nDelegate._();
 
   static const instance = L10nDelegate._();
-
-  /// 设置默认语言和用户选择的语言
-  static Locale? defaultLocale;
 
   /// App 支持的语言列表
   static List<Locale> get supportedLocales => [
@@ -82,19 +78,4 @@ class L10nDelegate extends LocalizationsDelegate<AppLocalizations> {
 
   @override
   bool shouldReload(L10nDelegate old) => false;
-}
-
-class AppLocale extends Cubit<Locale?> {
-  static AppLocale of(BuildContext context) {
-    return context.read<AppLocale>();
-  }
-
-  AppLocale(super.initialState);
-
-  void update(Locale locale) {
-    L10nDelegate.defaultLocale = locale;
-    // todo
-    // PreferencesUtil.setAppLocale(locale);
-    emit(locale);
-  }
 }

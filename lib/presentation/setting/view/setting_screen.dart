@@ -9,8 +9,9 @@ class SettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appCubit = context.read<AppCubit>();
     return BlocProvider(
-      create: (context) => SettingBloc(context.read<AppCubit>()),
+      create: (context) => SettingBloc(appCubit),
       child: Scaffold(
         backgroundColor: Colors.grey.shade200,
         appBar: AppBar(
@@ -30,7 +31,10 @@ class SettingScreen extends StatelessWidget {
               },
             ),
           ],
-          child: const SettingView(),
+          child: SettingView(
+            currentLocale: appCubit.state.locale,
+            currentThemeColor: appCubit.state.themeColor,
+          ),
         ),
       ),
     );
