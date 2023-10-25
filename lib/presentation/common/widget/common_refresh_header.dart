@@ -7,7 +7,7 @@ class CommonRefreshHeader extends Header {
       : super(
           triggerOffset: 50.ss(),
           clamping: false,
-          position: IndicatorPosition.behind,
+          position: IndicatorPosition.locator,
           processedDuration: const Duration(milliseconds: 300),
         );
 

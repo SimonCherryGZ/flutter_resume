@@ -13,9 +13,11 @@ class PagingLoadWidget<A extends AbsPagingLoadBloc<B>, B>
   const PagingLoadWidget({
     super.key,
     required this.builder,
+    this.headerBuilder,
   });
 
   final PagingLoadWidgetBuilder<B> builder;
+  final WidgetBuilder? headerBuilder;
 
   @override
   State<PagingLoadWidget> createState() => _PagingLoadWidgetState<A, B>();
@@ -23,23 +25,25 @@ class PagingLoadWidget<A extends AbsPagingLoadBloc<B>, B>
 
 class _PagingLoadWidgetState<A extends AbsPagingLoadBloc<B>, B>
     extends State<PagingLoadWidget<A, B>> {
-  final _controller = EasyRefreshController(
-    controlFinishRefresh: true,
-    controlFinishLoad: true,
-  );
+  late final EasyRefreshController _refreshController;
 
   @override
   void initState() {
     super.initState();
+    _refreshController = EasyRefreshController(
+      controlFinishRefresh: true,
+      controlFinishLoad: true,
+    );
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _controller.callRefresh();
+      _refreshController.callRefresh();
     });
   }
 
   @override
   void dispose() {
     super.dispose();
-    _controller.dispose();
+    _refreshController.dispose();
   }
 
   @override
@@ -50,7 +54,7 @@ class _PagingLoadWidgetState<A extends AbsPagingLoadBloc<B>, B>
           listenWhen: (p, c) => p.isRefreshing != c.isRefreshing,
           listener: (context, state) {
             if (!state.isRefreshing) {
-              _controller.finishRefresh();
+              _refreshController.finishRefresh();
             }
           },
         ),
@@ -58,7 +62,7 @@ class _PagingLoadWidgetState<A extends AbsPagingLoadBloc<B>, B>
           listenWhen: (p, c) => p.isLoading != c.isLoading,
           listener: (context, state) {
             if (!state.isLoading) {
-              _controller.finishLoad(state.isNoMoreData
+              _refreshController.finishLoad(state.isNoMoreData
                   ? IndicatorResult.noMore
                   : IndicatorResult.success);
             }
@@ -70,7 +74,7 @@ class _PagingLoadWidgetState<A extends AbsPagingLoadBloc<B>, B>
           final data = state.data;
           final bloc = context.read<A>();
           return EasyRefresh(
-            controller: _controller,
+            controller: _refreshController,
             header: CommonRefreshHeader(),
             footer: CommonLoadFooter(),
             onRefresh: () {
@@ -81,6 +85,10 @@ class _PagingLoadWidgetState<A extends AbsPagingLoadBloc<B>, B>
             },
             child: CustomScrollView(
               slivers: [
+                if (widget.headerBuilder != null) ...[
+                  widget.headerBuilder!(context),
+                ],
+                const HeaderLocator.sliver(),
                 widget.builder(context, data),
                 const FooterLocator.sliver(),
               ],

@@ -6,12 +6,14 @@ import 'package:flutter_resume/utils/utils.dart';
 import 'package:go_router/go_router.dart';
 
 class TrendItem extends StatelessWidget {
-  final Feed feed;
-
   const TrendItem({
     required this.feed,
+    this.heroTagPrefix = 'trend',
     super.key,
   });
+
+  final Feed feed;
+  final String heroTagPrefix;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class TrendItem extends StatelessWidget {
     final itemWidth = screenSize.width / 2 - 4.ss();
     final aspectRatio = feed.imageWidth * 1.0 / feed.imageHeight;
     final itemHeight = itemWidth / aspectRatio;
-    final heroTag = 'trend_${feed.id}';
+    final heroTag = '${heroTagPrefix}_${feed.id}';
     return GestureDetector(
       onTap: () async {
         context.push(
