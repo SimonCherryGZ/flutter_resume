@@ -69,8 +69,7 @@ class Faker {
     );
   }
 
-  Message message(User currentUser) {
-    final otherUser = user();
+  Message message(User currentUser, User otherUser) {
     final flag = _random.nextBool();
     return Message(
       id: (_messageIncrementIndex++).toString(),
@@ -82,12 +81,13 @@ class Faker {
   }
 
   Conversation conversation(User currentUser) {
+    final otherUser = user();
     return Conversation(
       id: (_conversationIncrementIndex++).toString(),
       ownerId: currentUser.id,
       messages: List.generate(
         _random.nextInt(10) + 1,
-        (_) => message(currentUser),
+        (_) => message(currentUser, otherUser),
       ),
     );
   }

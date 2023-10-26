@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_resume/config/router.dart';
 import 'package:flutter_resume/domain/domain.dart';
 import 'package:flutter_resume/presentation/app/app.dart';
 import 'package:flutter_resume/presentation/message/message.dart';
 import 'package:flutter_resume/utils/utils.dart';
+import 'package:go_router/go_router.dart';
 
 class MessageScreen extends StatelessWidget {
   const MessageScreen({super.key});
@@ -36,6 +38,12 @@ class MessageScreen extends StatelessWidget {
                 return MessageItem(
                   message: message,
                   currentUser: currentUser,
+                  onTap: () {
+                    context.push(
+                      AppRouter.conversation,
+                      extra: conversation,
+                    );
+                  },
                 );
               },
               separatorBuilder: (context, index) {
