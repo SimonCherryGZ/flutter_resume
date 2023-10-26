@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_resume/domain/domain.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/common/common.dart';
 import 'package:flutter_resume/presentation/post/post.dart';
 import 'package:flutter_resume/utils/utils.dart';
@@ -26,6 +27,7 @@ class PostCommentItem extends StatelessWidget {
     int totalReplyCount = comment.replies.length;
     int showReplyCount = min(max(3, comment.showReplyCount), totalReplyCount);
     int remainReplyCount = max(0, totalReplyCount - showReplyCount);
+    final l10n = L10nDelegate.l10n(context);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -75,9 +77,9 @@ class PostCommentItem extends StatelessWidget {
                     onPressed: () {
                       context.read<PostBloc>().add(ExpandReply(index));
                     },
-                    child: const Text(
-                      '展开更多回复',
-                      style: TextStyle(
+                    child: Text(
+                      l10n.postExpandMoreReplies,
+                      style: const TextStyle(
                         color: Colors.pinkAccent,
                       ),
                     ),

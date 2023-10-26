@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/utils/utils.dart';
 
 class LoginRegisterButton extends StatelessWidget {
@@ -6,6 +7,7 @@ class LoginRegisterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     return GestureDetector(
       onTap: () {
         // todo
@@ -23,7 +25,7 @@ class LoginRegisterButton extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            '创建新账号',
+            l10n.loginRegisterButton,
             style: TextStyle(
               color: Colors.black87,
               fontSize: 14.ss(),

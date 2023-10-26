@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/login/login.dart';
 import 'package:flutter_resume/utils/utils.dart';
 
@@ -9,6 +10,7 @@ class LoginPasswordField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<LoginBloc>();
+    final l10n = L10nDelegate.l10n(context);
     return BlocBuilder<LoginBloc, LoginState>(
       buildWhen: (p, c) => p.isShowPassword != c.isShowPassword,
       builder: (context, state) {
@@ -22,7 +24,7 @@ class LoginPasswordField extends StatelessWidget {
               Icons.key,
               size: 20.ss(),
             ),
-            hintText: '请输入密码',
+            hintText: l10n.loginInputPasswordTips,
             hintStyle: TextStyle(fontSize: 14.ss()),
             suffixIcon: FittedBox(
               child: IconButton(

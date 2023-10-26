@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_resume/domain/domain.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/profile/profile.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -32,7 +33,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = <String>['动态', '收藏'];
+    final l10n = L10nDelegate.l10n(context);
+    final tabs = <String>[
+      l10n.profileTabTrend,
+      l10n.profileTabCollection,
+    ];
     return BlocProvider(
       create: (context) => ProfileBloc(),
       child: DefaultTabController(

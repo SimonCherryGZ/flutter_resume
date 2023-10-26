@@ -8,6 +8,7 @@ import 'package:flutter_resume/presentation/setting/setting.dart';
 import 'package:flutter_resume/utils/utils.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingView extends StatelessWidget {
   const SettingView({
@@ -23,6 +24,7 @@ class SettingView extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.read<SettingBloc>();
     final localeNames = LocaleNames.of(context)!;
+    final l10n = L10nDelegate.l10n(context);
     return SettingList(
       sectionColor: Colors.white,
       sectionBorderRadius: 10.ss(),
@@ -46,10 +48,10 @@ class SettingView extends StatelessWidget {
       tileSelectionStyle: const TextStyle(color: Colors.grey),
       settings: [
         SettingGroup(
-          title: '通用',
+          title: l10n.settingGroupTitleCommon,
           settings: [
             SettingSelection(
-              title: '语言',
+              title: l10n.settingOptionLanguage,
               initSelection: localeNames.nameOf(currentLocale.toString())!,
               onPerformAction: <String>(value) async {
                 final result = await _showLocaleSelection(context);
@@ -62,31 +64,31 @@ class SettingView extends StatelessWidget {
               },
             ),
             SettingSelection(
-              title: '主题色',
-              initSelection: _getColorName(currentThemeColor),
+              title: l10n.settingOptionThemeColor,
+              initSelection: _getColorName(currentThemeColor, l10n),
               onPerformAction: <String>(value) async {
-                final result = await _showThemeColorSelection(context);
+                final result = await _showThemeColorSelection(context, l10n);
                 if (result == null) {
                   return value;
                 }
                 bloc.add(ChangeThemeColor(result));
-                return SynchronousFuture(_getColorName(result) as String);
+                return SynchronousFuture(_getColorName(result, l10n) as String);
               },
             ),
           ],
         ),
         SettingGroup(
-          title: '账号',
+          title: l10n.settingGroupTitleAccount,
           settings: [
             SettingButton(
-              title: '修改密码',
+              title: l10n.settingOptionChangePassword,
               onTap: () {
                 // todo
                 showToast('TODO: 修改密码');
               },
             ),
             SettingButton(
-              title: '注销账号',
+              title: l10n.settingOptionDeleteAccount,
               onTap: () {
                 // todo
                 showToast('TODO: 注销账号');
@@ -95,10 +97,10 @@ class SettingView extends StatelessWidget {
           ],
         ),
         SettingGroup(
-          title: '测试',
+          title: '测试占位',
           settings: [
             SettingSwitch(
-              title: '测试1',
+              title: '测试占位1',
               initValue: false,
               onPerformAction: <bool>(value) async {
                 // todo
@@ -107,7 +109,7 @@ class SettingView extends StatelessWidget {
               },
             ),
             SettingSwitch(
-              title: '测试2',
+              title: '测试占位2',
               initValue: false,
               onPerformAction: <bool>(value) async {
                 // todo
@@ -157,6 +159,7 @@ class SettingView extends StatelessWidget {
 
   Future<MaterialColor?> _showThemeColorSelection(
     BuildContext context,
+    AppLocalizations l10n,
   ) {
     return showDialog<MaterialColor>(
       context: context,
@@ -172,7 +175,7 @@ class SettingView extends StatelessWidget {
                   height: 40.ss(),
                   child: Center(
                     child: Text(
-                      _getColorName(color),
+                      _getColorName(color, l10n),
                       style: const TextStyle(
                         color: Colors.white,
                         shadows: [
@@ -199,23 +202,23 @@ class SettingView extends StatelessWidget {
     );
   }
 
-  String _getColorName(MaterialColor color) {
+  String _getColorName(MaterialColor color, AppLocalizations l10n) {
     assert(themeColors.contains(color));
     switch (color) {
       case Colors.red:
-        return '红色';
+        return l10n.colorRed;
       case Colors.orange:
-        return '橙色';
+        return l10n.colorOrange;
       case Colors.yellow:
-        return '黄色';
+        return l10n.colorYellow;
       case Colors.green:
-        return '绿色';
+        return l10n.colorGreen;
       case Colors.cyan:
-        return '青色';
+        return l10n.colorCyan;
       case Colors.blue:
-        return '蓝色';
+        return l10n.colorBlue;
       case Colors.purple:
-        return '紫色';
+        return l10n.colorPurple;
       default:
         return '';
     }

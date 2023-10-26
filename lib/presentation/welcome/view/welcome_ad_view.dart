@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_resume/domain/domain.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/utils/utils.dart';
 import 'package:flutter_resume/presentation/welcome/welcome.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -17,6 +18,7 @@ class WelcomeAdView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.sizeOf(context);
+    final l10n = L10nDelegate.l10n(context);
     return Container(
       color: Colors.white,
       child: Stack(
@@ -66,7 +68,7 @@ class WelcomeAdView extends StatelessWidget {
                     color: Colors.white,
                     child: Center(
                       child: Text(
-                        '假装这是开屏广告',
+                        l10n.splashAdTips,
                         style: TextStyle(
                           fontSize: 20.ss(),
                           fontWeight: FontWeight.bold,

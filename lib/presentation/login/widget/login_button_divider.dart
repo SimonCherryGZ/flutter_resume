@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/utils/utils.dart';
 
 class LoginButtonDivider extends StatelessWidget {
@@ -6,6 +7,7 @@ class LoginButtonDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     return Row(
       children: [
         Expanded(
@@ -15,9 +17,9 @@ class LoginButtonDivider extends StatelessWidget {
           ),
         ),
         SizedBox(width: 10.ss()),
-        const Text(
-          'or',
-          style: TextStyle(
+        Text(
+          l10n.loginDivider,
+          style: const TextStyle(
             color: Colors.grey,
           ),
         ),

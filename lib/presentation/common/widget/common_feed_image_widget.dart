@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/utils/utils.dart';
 
 class CommonFeedImageWidget extends StatelessWidget {
@@ -16,6 +17,7 @@ class CommonFeedImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     return CachedNetworkImage(
       imageUrl: imageUrl,
       fit: BoxFit.cover,
@@ -29,7 +31,7 @@ class CommonFeedImageWidget extends StatelessWidget {
       errorWidget: (context, url, error) {
         return Center(
           child: Text(
-            'Oops...图片加载不出来',
+            l10n.imageLoadFailedHint,
             style: TextStyle(
               fontSize: 12.ss(),
             ),

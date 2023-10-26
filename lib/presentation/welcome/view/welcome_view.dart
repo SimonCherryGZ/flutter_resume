@@ -7,6 +7,7 @@ class WelcomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -26,7 +27,7 @@ class WelcomeView extends StatelessWidget {
           ),
           SizedBox(height: 10.ss()),
           Text(
-            '测试中...',
+            l10n.welcomeScreenDescription,
             style: TextStyle(
               color: Colors.grey,
               fontSize: 10.ss(),

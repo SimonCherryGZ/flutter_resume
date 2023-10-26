@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/login/login.dart';
 import 'package:flutter_resume/utils/utils.dart';
 
@@ -9,6 +10,7 @@ class LoginAccountField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<LoginBloc>();
+    final l10n = L10nDelegate.l10n(context);
     return TextField(
       textInputAction: TextInputAction.next,
       maxLines: 1,
@@ -18,7 +20,7 @@ class LoginAccountField extends StatelessWidget {
           Icons.person,
           size: 20.ss(),
         ),
-        hintText: '请输入昵称或邮箱',
+        hintText: l10n.loginInputAccountTips,
         hintStyle: TextStyle(fontSize: 14.ss()),
       ),
       onTap: () {

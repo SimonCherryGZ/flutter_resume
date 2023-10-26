@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/utils/utils.dart';
 
 class LoginForgetPasswordButton extends StatelessWidget {
@@ -6,12 +7,13 @@ class LoginForgetPasswordButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     return TextButton(
       onPressed: () {
         // todo
       },
       child: Text(
-        '忘记密码？',
+        l10n.loginForgetPasswordButton,
         style: TextStyle(
           color: Theme.of(context).primaryColor,
           fontSize: 12.ss(),

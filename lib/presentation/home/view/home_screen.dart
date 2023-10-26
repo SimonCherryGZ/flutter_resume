@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_resume/config/router.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/app/app.dart';
 import 'package:flutter_resume/presentation/common/common.dart';
 import 'package:flutter_resume/presentation/feed/feed.dart';
@@ -18,13 +19,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  static const _bottomNavigationItems = [
-    MapEntry('首页', Icons.home),
-    MapEntry('示例', Icons.dashboard),
-    MapEntry('消息', Icons.message),
-    MapEntry('我的', Icons.person),
-  ];
-
   final ValueNotifier<int> _indexNotifier = ValueNotifier(0);
 
   @override
@@ -35,6 +29,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
+    final bottomNavigationItems = [
+      MapEntry(l10n.homeBottomNavigationBarItemHome, Icons.home),
+      MapEntry(l10n.homeBottomNavigationBarItemSample, Icons.dashboard),
+      MapEntry(l10n.homeBottomNavigationBarItemMessage, Icons.message),
+      MapEntry(l10n.homeBottomNavigationBarItemProfile, Icons.person),
+    ];
     return WillPopScope(
       onWillPop: () {
         return _showExitConfirmDialog(context);
@@ -56,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const FeedScreen(),
                     const SampleScreen(),
                     const Center(
-                      child: Text('消息'),
+                      child: Text('TODO: 消息'),
                     ),
                     ProfileScreen(
                       user: context.read<AppCubit>().state.signedInUser!,
@@ -65,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               }),
           bottomNavigationBar: HomeBottomNavigationBar(
-            itemConfigs: _bottomNavigationItems,
+            itemConfigs: bottomNavigationItems,
             onTapItem: (index) {
               _indexNotifier.value = index;
             },
@@ -80,12 +81,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<bool> _showExitConfirmDialog(BuildContext context) async {
+    final l10n = L10nDelegate.l10n(context);
     return CommonDialog.show(
       context,
-      title: '提示',
-      content: '确定退出 App ?',
-      negativeButtonText: '取消',
-      positiveButtonText: '确认退出',
+      title: l10n.exitConfirmDialogTitle,
+      content: l10n.exitConfirmDialogContent,
+      negativeButtonText: l10n.exitConfirmDialogNegativeButtonText,
+      positiveButtonText: l10n.exitConfirmDialogPositiveButtonText,
     );
   }
 }

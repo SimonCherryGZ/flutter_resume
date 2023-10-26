@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/utils/utils.dart';
 
 class WelcomeAdSkipButton extends StatefulWidget {
@@ -46,6 +47,7 @@ class _WelcomeAdSkipButtonState extends State<WelcomeAdSkipButton> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     return Container(
       width: 80.ss(),
       height: 30.ss(),
@@ -75,7 +77,7 @@ class _WelcomeAdSkipButtonState extends State<WelcomeAdSkipButton> {
               children: [
                 if (showSkip) ...[
                   Text(
-                    '跳过',
+                    l10n.splashAdSkip,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 12.ss(),

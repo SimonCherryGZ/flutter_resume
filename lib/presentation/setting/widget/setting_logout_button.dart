@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/utils/utils.dart';
 
 class SettingLogoutButton extends StatelessWidget {
@@ -11,6 +12,7 @@ class SettingLogoutButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     return GestureDetector(
       onTap: () {
         onTap();
@@ -22,8 +24,8 @@ class SettingLogoutButton extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(10.ss()),
         ),
-        child: const Center(
-          child: Text('退出登录'),
+        child: Center(
+          child: Text(l10n.settingLogoutButton),
         ),
       ),
     );

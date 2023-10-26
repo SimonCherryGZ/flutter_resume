@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/discover/discover.dart';
 import 'package:flutter_resume/presentation/trend/trend.dart';
 
@@ -7,7 +8,8 @@ class FeedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tabs = <String>['热门', '发现'];
+    final l10n = L10nDelegate.l10n(context);
+    final tabs = <String>[l10n.feedTabTrend, l10n.feedTabDiscover];
     return DefaultTabController(
       length: tabs.length,
       child: SafeArea(

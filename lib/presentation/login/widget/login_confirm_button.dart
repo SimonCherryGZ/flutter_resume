@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/login/login.dart';
 import 'package:flutter_resume/utils/utils.dart';
 
@@ -9,6 +10,7 @@ class LoginConfirmButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<LoginBloc>();
+    final l10n = L10nDelegate.l10n(context);
     return BlocBuilder<LoginBloc, LoginState>(
       buildWhen: (p, c) => p.account != c.account || p.password != c.password,
       builder: (context, state) {
@@ -30,7 +32,7 @@ class LoginConfirmButton extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                '登录',
+                l10n.loginConfirmButton,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 14.ss(),

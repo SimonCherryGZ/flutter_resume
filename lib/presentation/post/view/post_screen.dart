@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_resume/domain/domain.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/common/common.dart';
 import 'package:flutter_resume/presentation/post/post.dart';
 import 'package:flutter_resume/utils/utils.dart';
@@ -22,6 +23,7 @@ class PostScreen extends StatelessWidget {
     final imageWidth = screenSize.width;
     final aspectRatio = feed.imageWidth * 1.0 / feed.imageHeight;
     final imageHeight = imageWidth / aspectRatio;
+    final l10n = L10nDelegate.l10n(context);
     return BlocProvider(
       create: (context) =>
           PostBloc(context.read<PostRepository>())..add(FetchComments(feed)),
@@ -115,7 +117,9 @@ class PostScreen extends StatelessWidget {
                     bottom: 20.ss(),
                   ),
                   sliver: SliverToBoxAdapter(
-                    child: Text('共 ${state.comments.length} 条评论'),
+                    child: Text(
+                      l10n.postCommentsInTotal(state.comments.length),
+                    ),
                   ),
                 );
               },
@@ -141,9 +145,9 @@ class PostScreen extends StatelessWidget {
                             color: Colors.grey,
                           ),
                           SizedBox(height: 10.ss()),
-                          const Text(
-                            '暂无评论',
-                            style: TextStyle(
+                          Text(
+                            l10n.postNoReplies,
+                            style: const TextStyle(
                               color: Colors.grey,
                             ),
                           ),
