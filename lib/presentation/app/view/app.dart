@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_resume/config/config.dart';
 import 'package:flutter_resume/data/data.dart';
 import 'package:flutter_resume/domain/domain.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
+            LocaleNamesLocalizationsDelegate(),
           ],
           supportedLocales: L10nDelegate.supportedLocales,
           locale: state.locale,

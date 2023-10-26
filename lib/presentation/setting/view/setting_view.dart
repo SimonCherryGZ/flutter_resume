@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_resume/config/constants.dart';
 import 'package:flutter_resume/domain/domain.dart';
 import 'package:flutter_resume/l10n/l10n.dart';
@@ -21,6 +22,7 @@ class SettingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<SettingBloc>();
+    final localeNames = LocaleNames.of(context)!;
     return SettingList(
       sectionColor: Colors.white,
       sectionBorderRadius: 10.ss(),
@@ -48,14 +50,15 @@ class SettingView extends StatelessWidget {
           settings: [
             SettingSelection(
               title: '语言',
-              initSelection: currentLocale.toString(),
+              initSelection: localeNames.nameOf(currentLocale.toString())!,
               onPerformAction: <String>(value) async {
                 final result = await _showLocaleSelection(context);
                 if (result == null) {
                   return value;
                 }
                 bloc.add(ChangeLocale(result));
-                return SynchronousFuture(result.toString() as String);
+                return SynchronousFuture(
+                    localeNames.nameOf(result.toString()) as String);
               },
             ),
             SettingSelection(
@@ -127,6 +130,7 @@ class SettingView extends StatelessWidget {
 
   Future<Locale?> _showLocaleSelection(BuildContext context) async {
     final supportedLocales = L10nDelegate.supportedLocales;
+    final localeNames = LocaleNames.of(context)!;
     return showDialog<Locale>(
       context: context,
       builder: (context) {
@@ -136,7 +140,7 @@ class SettingView extends StatelessWidget {
             itemBuilder: (context, index) {
               final locale = supportedLocales[index];
               return ListTile(
-                title: Text(locale.toString()),
+                title: Text(localeNames.nameOf(locale.toString())!),
                 onTap: () {
                   Navigator.of(context).pop(locale);
                 },
