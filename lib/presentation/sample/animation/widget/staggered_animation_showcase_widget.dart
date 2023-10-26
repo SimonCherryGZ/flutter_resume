@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 
 class StaggeredAnimationShowcaseWidget extends StatefulWidget {
@@ -96,9 +97,10 @@ class _StaggeredAnimationShowcaseWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     return ShowcaseWidget(
-      title: 'Staggered Animation',
-      content: '演示交错动画\n【0.0 - 1.0】：位移\n【0.4 - 0.7】：旋转\n【0.0 - 0.5】：缩放',
+      title: l10n.staggeredAnimationShowcaseTitle,
+      content: l10n.staggeredAnimationShowcaseContent,
       builder: (context) {
         return Column(
           children: [

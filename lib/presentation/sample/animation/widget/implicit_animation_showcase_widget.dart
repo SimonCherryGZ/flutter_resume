@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 import 'package:flutter_resume/utils/utils.dart';
 
@@ -8,9 +9,10 @@ class ImplicitAnimationShowcaseWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     return ShowcaseWidget(
-      title: 'Implicit Animation',
-      content: '演示隐式动画',
+      title: l10n.implicitAnimationShowcaseTitle,
+      content: l10n.implicitAnimationShowcaseContent,
       builder: (context) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -28,6 +30,7 @@ class ImplicitAnimationShowcaseWidget extends StatelessWidget {
 class _AnimatedContainerShowcase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     return BlocProvider(
       create: (context) => AnimatedContainerCubit(),
       child: Builder(
@@ -60,7 +63,7 @@ class _AnimatedContainerShowcase extends StatelessWidget {
                 onPressed: () {
                   context.read<AnimatedContainerCubit>().randomize();
                 },
-                child: const Text('Randomize'),
+                child: Text(l10n.implicitAnimationShowcaseRandomizeButtonText),
               ),
             ],
           );
@@ -81,6 +84,7 @@ class _AnimatedSwitcherShowcaseState extends State<_AnimatedSwitcherShowcase> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     return Column(
       children: [
         SizedBox(
@@ -120,7 +124,7 @@ class _AnimatedSwitcherShowcaseState extends State<_AnimatedSwitcherShowcase> {
               _flag = !_flag;
             });
           },
-          child: const Text('Switch'),
+          child: Text(l10n.implicitAnimationShowcaseSwitchButtonText),
         ),
       ],
     );

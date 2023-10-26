@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 import 'package:flutter_resume/utils/utils.dart';
 
@@ -42,9 +43,10 @@ class _AnimationControllerShowcaseWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     return ShowcaseWidget(
-      title: 'AnimationController',
-      content: '演示动画控制',
+      title: l10n.animationControllerShowcaseTitle,
+      content: l10n.animationControllerShowcaseContent,
       builder: (context) {
         return Column(
           children: [
@@ -66,9 +68,9 @@ class _AnimationControllerShowcaseWidgetState
                     final offstage = status != AnimationStatus.dismissed;
                     return Offstage(
                       offstage: offstage,
-                      child: const Text(
-                        '启动看 🖌⭐ 动画️',
-                        style: TextStyle(
+                      child: Text(
+                        l10n.animationControllerShowcaseIdleHint,
+                        style: const TextStyle(
                           color: Colors.grey,
                         ),
                       ),

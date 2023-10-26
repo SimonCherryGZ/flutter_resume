@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 import 'package:flutter_resume/utils/utils.dart';
 
@@ -25,9 +26,10 @@ class _SwapStatelessShowcaseWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     return ShowcaseWidget(
-      title: 'StatelessWidget 交换顺序',
-      content: '可正常交换两个色块的顺序',
+      title: l10n.swapStatelessShowcaseTitle,
+      content: l10n.swapStatelessShowcaseContent,
       builder: (context) {
         return Column(
           children: [
@@ -42,7 +44,7 @@ class _SwapStatelessShowcaseWidgetState
                   _tiles.insert(1, _tiles.removeAt(0));
                 });
               },
-              child: const Text('交换顺序'),
+              child: Text(l10n.swapStatelessShowcaseButtonText),
             ),
           ],
         );

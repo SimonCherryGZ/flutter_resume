@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 import 'package:flutter_resume/utils/utils.dart';
 
@@ -43,9 +44,10 @@ class _CurveShowcaseWidgetState extends State<CurveShowcaseWidget>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     return ShowcaseWidget(
-      title: 'Curve',
-      content: '演示动画曲线',
+      title: l10n.curveShowcaseTitle,
+      content: l10n.curveShowcaseContent,
       builder: (context) {
         const gridPaperSize = 200.0;
         const ballSize = 15.0;

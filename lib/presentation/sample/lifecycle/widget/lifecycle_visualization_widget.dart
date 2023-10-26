@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 import 'package:flutter_resume/utils/utils.dart';
 
@@ -41,6 +42,7 @@ class _LifecycleVisualizationWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     return BlocProvider(
       create: (context) => LifecycleVisualizationCubit(),
       child: Column(
@@ -176,7 +178,8 @@ class _LifecycleVisualizationWidgetState
                       onPressed: () {
                         cubit.setWidget();
                       },
-                      child: const Text('Set'),
+                      child: Text(
+                          l10n.lifecycleVisualizationShowcaseSetButtonText),
                     ),
                   ],
                   if (state.position !=
@@ -187,25 +190,29 @@ class _LifecycleVisualizationWidgetState
                             _random.nextInt(Colors.primaries.length)];
                         cubit.updateColor(color);
                       },
-                      child: const Text('Update'),
+                      child: Text(
+                          l10n.lifecycleVisualizationShowcaseUpdateButtonText),
                     ),
                     ElevatedButton(
                       onPressed: () {
                         cubit.switchIconData();
                       },
-                      child: const Text('Depend'),
+                      child: Text(
+                          l10n.lifecycleVisualizationShowcaseDependButtonText),
                     ),
                     ElevatedButton(
                       onPressed: () {
                         cubit.swapPosition();
                       },
-                      child: const Text('Swap'),
+                      child: Text(
+                          l10n.lifecycleVisualizationShowcaseSwapButtonText),
                     ),
                     ElevatedButton(
                       onPressed: () {
                         cubit.removeWidget();
                       },
-                      child: const Text('Remove'),
+                      child: Text(
+                          l10n.lifecycleVisualizationShowcaseRemoveButtonText),
                     ),
                   ],
                 ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 
 class SampleAnimationScreen extends StatelessWidget {
@@ -6,9 +7,10 @@ class SampleAnimationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Animation Sample'),
+        title: Text(l10n.sampleAnimationScreenTitle),
       ),
       body: const Center(
         child: SingleChildScrollView(

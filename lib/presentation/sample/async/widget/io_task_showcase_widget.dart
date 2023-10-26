@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 import 'package:flutter_resume/utils/utils.dart';
 import 'package:oktoast/oktoast.dart';
@@ -8,9 +9,10 @@ class IOTaskShowcaseWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     return ShowcaseWidget(
-      title: 'I/O 操作',
-      content: 'I/O 操作在 IO Task Runner 执行，不阻塞 UI',
+      title: l10n.ioTaskShowcaseTitle,
+      content: l10n.ioTaskShowcaseContent,
       builder: (context) {
         return Column(
           children: [
@@ -24,7 +26,7 @@ class IOTaskShowcaseWidget extends StatelessWidget {
               onPressed: () {
                 _executeIOTask();
               },
-              child: const Text('执行 I/O 操作'),
+              child: Text(l10n.ioTaskShowcaseButtonText),
             ),
           ],
         );

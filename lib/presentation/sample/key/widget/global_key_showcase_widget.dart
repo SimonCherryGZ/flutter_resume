@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_resume/config/router.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 import 'package:flutter_resume/utils/utils.dart';
 import 'package:go_router/go_router.dart';
@@ -14,9 +15,10 @@ class GlobalKeyShowcaseWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     return ShowcaseWidget(
-      title: 'GlobalKey',
-      content: '在新页面通过 GlobalKey 访问此 Widget',
+      title: l10n.globalKeyShowcaseTitle,
+      content: l10n.globalKeyShowcaseContent,
       builder: (context) {
         return Column(
           children: [
@@ -32,7 +34,7 @@ class GlobalKeyShowcaseWidget extends StatelessWidget {
                   extra: globalKey,
                 );
               },
-              child: const Text('跳转新页面'),
+              child: Text(l10n.globalKeyShowcaseButtonText),
             ),
           ],
         );

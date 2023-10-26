@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 
 class LifecycleShowcaseWidget extends StatelessWidget {
@@ -6,9 +7,10 @@ class LifecycleShowcaseWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     return ShowcaseWidget(
-      title: 'Lifecycle',
-      content: '演示 State 生命周期变化',
+      title: l10n.lifecycleVisualizationShowcaseTitle,
+      content: l10n.lifecycleVisualizationShowcaseContent,
       builder: (context) {
         return const Column(
           children: [

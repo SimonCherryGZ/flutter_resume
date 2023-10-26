@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 import 'package:flutter_resume/utils/utils.dart';
 
@@ -38,11 +39,15 @@ class _SwapStatefulShowcaseWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     final useKey = widget.useKey;
     return ShowcaseWidget(
-      title: 'StatefulWidget（${useKey ? '有' : '无'} Key）交换顺序',
-      content:
-          '序号来自 Widget 构造器传参\n颜色是 State 中的属性\n${useKey ? '序号和颜色都能交换' : '序号能交换，但颜色无法交换'}',
+      title: useKey
+          ? l10n.swapStatefulWithKeyShowcaseTitle
+          : l10n.swapStatefulWithoutKeyShowcaseTitle,
+      content: useKey
+          ? l10n.swapStatefulWithKeyShowcaseContent
+          : l10n.swapStatefulWithoutKeyShowcaseContent,
       builder: (context) {
         return Column(
           children: [
@@ -57,7 +62,7 @@ class _SwapStatefulShowcaseWidgetState
                   _tiles.insert(1, _tiles.removeAt(0));
                 });
               },
-              child: const Text('交换顺序'),
+              child: Text(l10n.swapStatefulShowcaseButtonText),
             ),
           ],
         );

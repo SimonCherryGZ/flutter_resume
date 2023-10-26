@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_resume/config/router.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 import 'package:flutter_resume/utils/utils.dart';
 import 'package:go_router/go_router.dart';
@@ -9,9 +10,10 @@ class HeroShowcaseWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     return ShowcaseWidget(
-      title: 'Hero',
-      content: '演示共享元素动画',
+      title: l10n.heroShowcaseTitle,
+      content: l10n.heroShowcaseContent,
       builder: (context) {
         return Column(
           children: [
@@ -27,7 +29,7 @@ class HeroShowcaseWidget extends StatelessWidget {
               onPressed: () {
                 context.push(AppRouter.sampleHeroAnimation);
               },
-              child: const Text('跳转新页面'),
+              child: Text(l10n.heroShowcaseButtonText),
             ),
           ],
         );

@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/utils/utils.dart';
 
 class SampleGlobalKeyAccessScreen extends StatelessWidget {
@@ -15,6 +16,7 @@ class SampleGlobalKeyAccessScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     const errorWidget = Text('Oops! Something went wrong...');
     final widgetSize = _getWidgetSizeFromGlobalKey(globalKey);
     Widget body = widgetSize == Size.zero
@@ -26,7 +28,7 @@ class SampleGlobalKeyAccessScreen extends StatelessWidget {
           );
     return Scaffold(
       appBar: AppBar(
-        title: const Text('GlobalKey Access'),
+        title: Text(l10n.sampleGlobalKeyAccessScreenTitle),
       ),
       body: Center(
         child: body,
@@ -60,6 +62,7 @@ class _FutureBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     return FutureBuilder<Uint8List?>(
       future: _captureWidgetFromGlobalKey(globalKey, context),
       builder: (context, snapshot) {
@@ -73,7 +76,7 @@ class _FutureBuilder extends StatelessWidget {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('通过 GlobalKey 找到上一个页面的目标 Widget\n然后对其截屏，以 Image 形式显示'),
+            Text(l10n.sampleGlobalKeyAccessScreenContent),
             SizedBox(
               height: 20.ss(),
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 import 'package:flutter_resume/utils/utils.dart';
 import 'package:oktoast/oktoast.dart';
@@ -8,9 +9,10 @@ class BlockUIShowcaseWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     return ShowcaseWidget(
-      title: 'UI Task Runner 执行耗时操作',
-      content: '点击【执行耗时操作】按钮，观察进度指示器卡顿',
+      title: l10n.blockUIShowcaseTitle,
+      content: l10n.blockUIShowcaseContent,
       builder: (context) {
         return Column(
           children: [
@@ -24,7 +26,7 @@ class BlockUIShowcaseWidget extends StatelessWidget {
               onPressed: () {
                 _executeHeavyTask();
               },
-              child: const Text('执行耗时操作'),
+              child: Text(l10n.blockUIShowcaseButtonText),
             ),
           ],
         );

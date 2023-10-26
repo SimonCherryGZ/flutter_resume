@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 import 'package:flutter_resume/utils/utils.dart';
 import 'package:flutter_syntax_view/flutter_syntax_view.dart';
@@ -17,6 +18,7 @@ class _SerialTaskShowcaseWidgetState extends State<SerialTaskShowcaseWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     const code = ''
         'Stopwatch stopwatch = Stopwatch();\n'
         'stopwatch.start();\n'
@@ -25,8 +27,8 @@ class _SerialTaskShowcaseWidgetState extends State<SerialTaskShowcaseWidget> {
         'await Future.delayed(const Duration(milliseconds:600));\n'
         'final cost = stopwatch.elapsedMilliseconds;\n';
     return ShowcaseWidget(
-      title: '演示多个异步任务阻塞等待',
-      content: '总耗时等于全部异步任务耗时的总和',
+      title: l10n.serialTaskShowcaseTitle,
+      content: l10n.serialTaskShowcaseContent,
       builder: (context) {
         return Column(
           children: [
@@ -65,7 +67,11 @@ class _SerialTaskShowcaseWidgetState extends State<SerialTaskShowcaseWidget> {
                   }
                 });
               },
-              child: Text(_showSimulation ? '返回' : '计算耗时'),
+              child: Text(
+                _showSimulation
+                    ? l10n.serialTaskShowcaseButtonText2
+                    : l10n.serialTaskShowcaseButtonText,
+              ),
             ),
           ],
         );

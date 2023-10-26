@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 import 'package:flutter_resume/utils/utils.dart';
 import 'package:flutter_syntax_view/flutter_syntax_view.dart';
@@ -18,6 +19,7 @@ class _ParallelTaskShowcaseWidgetState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     const code = ''
         'Stopwatch stopwatch = Stopwatch();\n'
         'stopwatch.start();\n'
@@ -28,8 +30,8 @@ class _ParallelTaskShowcaseWidgetState
         ']);\n'
         'final cost = stopwatch.elapsedMilliseconds;\n';
     return ShowcaseWidget(
-      title: '演示多个异步任务并行处理',
-      content: '总耗时等于最长的耗时',
+      title: l10n.parallelTaskShowcaseTitle,
+      content: l10n.parallelTaskShowcaseContent,
       builder: (context) {
         return Column(
           children: [
@@ -68,7 +70,11 @@ class _ParallelTaskShowcaseWidgetState
                   }
                 });
               },
-              child: Text(_showSimulation ? '返回' : '计算耗时'),
+              child: Text(
+                _showSimulation
+                    ? l10n.parallelTaskShowcaseButtonText2
+                    : l10n.parallelTaskShowcaseButtonText,
+              ),
             ),
           ],
         );

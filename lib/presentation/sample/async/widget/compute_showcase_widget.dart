@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 import 'package:flutter_resume/utils/utils.dart';
 import 'package:oktoast/oktoast.dart';
@@ -9,9 +10,10 @@ class ComputeShowcaseWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10nDelegate.l10n(context);
     return ShowcaseWidget(
-      title: '新 isolate 中执行耗时操作',
-      content: '点击【执行耗时操作】按钮，进度指示器不受影响',
+      title: l10n.computeShowcaseTitle,
+      content: l10n.computeShowcaseContent,
       builder: (context) {
         return Column(
           children: [
@@ -25,7 +27,7 @@ class ComputeShowcaseWidget extends StatelessWidget {
               onPressed: () {
                 _executeHeavyTask();
               },
-              child: const Text('执行耗时操作'),
+              child: Text(l10n.computeShowcaseButtonText),
             ),
           ],
         );
