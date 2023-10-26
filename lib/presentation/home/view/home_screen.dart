@@ -6,6 +6,7 @@ import 'package:flutter_resume/presentation/app/app.dart';
 import 'package:flutter_resume/presentation/common/common.dart';
 import 'package:flutter_resume/presentation/feed/feed.dart';
 import 'package:flutter_resume/presentation/home/home.dart';
+import 'package:flutter_resume/presentation/message/message.dart';
 import 'package:flutter_resume/presentation/profile/profile.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 import 'package:go_router/go_router.dart';
@@ -56,9 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     const FeedScreen(),
                     const SampleScreen(),
-                    const Center(
-                      child: Text('TODO: 消息'),
-                    ),
+                    const MessageScreen(),
                     ProfileScreen(
                       user: context.read<AppCubit>().state.signedInUser!,
                     ),

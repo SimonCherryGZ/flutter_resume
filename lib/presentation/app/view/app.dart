@@ -81,6 +81,10 @@ class MyApp extends StatelessWidget {
           create: (context) => PostRepositoryImpl(),
           lazy: false,
         ),
+        RepositoryProvider<ConversationRepository>(
+          create: (context) => ConversationRepositoryImpl(),
+          lazy: false,
+        ),
       ],
       child: Builder(
         builder: (context) {

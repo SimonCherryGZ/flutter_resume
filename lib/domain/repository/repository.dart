@@ -3,3 +3,4 @@ export 'ad_repository.dart';
 export 'feed_repository.dart';
 export 'post_repository.dart';
 export 'setting_repository.dart';
+export 'conversation_repository.dart';
