@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/config/constants.dart';
 import 'package:flutter_resume/domain/domain.dart';
 import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/setting/setting.dart';
@@ -59,14 +60,14 @@ class SettingView extends StatelessWidget {
             ),
             SettingSelection(
               title: '主题色',
-              initSelection: currentThemeColor.value.toString(),
+              initSelection: _getColorName(currentThemeColor),
               onPerformAction: <String>(value) async {
                 final result = await _showThemeColorSelection(context);
                 if (result == null) {
                   return value;
                 }
                 bloc.add(ChangeThemeColor(result));
-                return SynchronousFuture(result.value.toString() as String);
+                return SynchronousFuture(_getColorName(result) as String);
               },
             ),
           ],
@@ -158,11 +159,28 @@ class SettingView extends StatelessWidget {
       builder: (context) {
         return Dialog(
           child: ListView.separated(
-            itemCount: Colors.primaries.length,
+            itemCount: themeColors.length,
             itemBuilder: (context, index) {
-              final color = Colors.primaries[index];
+              final color = themeColors[index];
               return ListTile(
-                title: Text(color.value.toString()),
+                title: Container(
+                  color: color,
+                  height: 40.ss(),
+                  child: Center(
+                    child: Text(
+                      _getColorName(color),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        shadows: [
+                          Shadow(
+                            color: Colors.black,
+                            blurRadius: 3,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
                 onTap: () {
                   Navigator.of(context).pop(color);
                 },
@@ -175,5 +193,27 @@ class SettingView extends StatelessWidget {
         );
       },
     );
+  }
+
+  String _getColorName(MaterialColor color) {
+    assert(themeColors.contains(color));
+    switch (color) {
+      case Colors.red:
+        return '红色';
+      case Colors.orange:
+        return '橙色';
+      case Colors.yellow:
+        return '黄色';
+      case Colors.green:
+        return '绿色';
+      case Colors.cyan:
+        return '青色';
+      case Colors.blue:
+        return '蓝色';
+      case Colors.purple:
+        return '紫色';
+      default:
+        return '';
+    }
   }
 }
