@@ -92,6 +92,10 @@ class Faker {
     );
   }
 
+  String imageUrl() {
+    return _randomElement(imageUrls);
+  }
+
   T _randomElement<T>(List<T> list) {
     return list[_random.nextInt(list.length)];
   }

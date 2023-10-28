@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_resume/config/router.dart';
 import 'package:flutter_resume/domain/domain.dart';
@@ -19,6 +21,7 @@ class DiscoverItem extends StatelessWidget {
     final imageWidth = screenSize.width;
     final aspectRatio = feed.imageWidth * 1.0 / feed.imageHeight;
     final imageHeight = imageWidth / aspectRatio;
+    final itemHeight = min(imageHeight, imageWidth * 4 / 3);
     final heroTag = 'discover_${feed.id}';
     return GestureDetector(
       onTap: () {
@@ -33,7 +36,7 @@ class DiscoverItem extends StatelessWidget {
         );
       },
       child: SizedBox(
-        height: imageHeight + 150.ss(),
+        height: itemHeight + 150.ss(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -54,12 +57,16 @@ class DiscoverItem extends StatelessWidget {
               ],
             ),
             SizedBox(height: 10.ss()),
-            Hero(
-              tag: heroTag,
-              child: CommonFeedImageWidget(
-                imageUrl: feed.imageUrl,
-                imageWidth: imageWidth.toInt(),
-                imageHeight: imageHeight.toInt(),
+            SizedBox(
+              width: imageWidth,
+              height: itemHeight,
+              child: Hero(
+                tag: heroTag,
+                child: CommonFeedImageWidget(
+                  imageUrl: feed.imageUrl,
+                  imageWidth: imageWidth.toInt(),
+                  imageHeight: imageHeight.toInt(),
+                ),
               ),
             ),
             SizedBox(height: 15.ss()),

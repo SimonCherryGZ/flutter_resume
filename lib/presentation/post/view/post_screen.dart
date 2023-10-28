@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_resume/domain/domain.dart';
@@ -61,7 +63,7 @@ class PostScreen extends StatelessWidget {
             SliverToBoxAdapter(
               child: SizedBox(
                 width: imageWidth,
-                height: imageHeight,
+                height: min(imageHeight, imageWidth * 4 / 3),
                 child: Hero(
                   tag: heroTag,
                   child: CommonFeedImageWidget(
@@ -127,31 +129,37 @@ class PostScreen extends StatelessWidget {
             BlocBuilder<PostBloc, PostState>(
               builder: (context, state) {
                 if (state.isFetching) {
-                  return const SliverFillRemaining(
-                    child: Center(
-                      child: CircularProgressIndicator(),
+                  return SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: 250.ss(),
+                      child: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
                     ),
                   );
                 }
                 if (state.comments.isEmpty) {
-                  return SliverFillRemaining(
-                    child: Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.chair,
-                            size: 50.ss(),
-                            color: Colors.grey,
-                          ),
-                          SizedBox(height: 10.ss()),
-                          Text(
-                            l10n.postNoReplies,
-                            style: const TextStyle(
+                  return SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: 250.ss(),
+                      child: Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.chair,
+                              size: 50.ss(),
                               color: Colors.grey,
                             ),
-                          ),
-                        ],
+                            SizedBox(height: 10.ss()),
+                            Text(
+                              l10n.postNoReplies,
+                              style: const TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );

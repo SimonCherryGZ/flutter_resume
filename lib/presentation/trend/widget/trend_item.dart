@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_resume/config/router.dart';
 import 'package:flutter_resume/domain/domain.dart';
@@ -18,9 +20,10 @@ class TrendItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    final itemWidth = screenSize.width / 2 - 4.ss();
+    final imageWidth = screenSize.width / 2 - 4.ss();
     final aspectRatio = feed.imageWidth * 1.0 / feed.imageHeight;
-    final itemHeight = itemWidth / aspectRatio;
+    final imageHeight = imageWidth / aspectRatio;
+    final itemHeight = min(imageHeight, imageWidth * 4 / 3);
     final heroTag = '${heroTagPrefix}_${feed.id}';
     return GestureDetector(
       onTap: () async {
@@ -39,12 +42,15 @@ class TrendItem extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Expanded(
+            SizedBox(
+              width: imageWidth,
+              height: itemHeight,
               child: Hero(
                 tag: heroTag,
                 child: CommonFeedImageWidget(
                   imageUrl: feed.imageUrl,
-                  imageWidth: screenSize.width ~/ 2,
+                  imageWidth: imageWidth.toInt(),
+                  imageHeight: imageHeight.toInt(),
                 ),
               ),
             ),

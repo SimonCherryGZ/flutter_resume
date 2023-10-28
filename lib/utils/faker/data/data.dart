@@ -4,3 +4,4 @@ export 'nickname_pattern.dart';
 export 'title.dart';
 export 'content.dart';
 export 'comment.dart';
+export 'image_url.dart';
