@@ -60,13 +60,16 @@ class _LeftConversationItem extends StatelessWidget {
               Expanded(
                 child: Transform.translate(
                   offset: Offset(-13.ss(), 0),
-                  child: Container(
-                    padding: EdgeInsets.all(10.ss()),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.ss()),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      padding: EdgeInsets.all(10.ss()),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.ss()),
+                      ),
+                      child: Text(message.content),
                     ),
-                    child: Text(message.content),
                   ),
                 ),
               ),
@@ -99,13 +102,16 @@ class _RightConversationItem extends StatelessWidget {
               Expanded(
                 child: Transform.translate(
                   offset: Offset(13.ss(), 0),
-                  child: Container(
-                    padding: EdgeInsets.all(10.ss()),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.ss()),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                      padding: EdgeInsets.all(10.ss()),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.ss()),
+                      ),
+                      child: Text(message.content),
                     ),
-                    child: Text(message.content),
                   ),
                 ),
               ),

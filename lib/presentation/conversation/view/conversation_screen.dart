@@ -4,7 +4,6 @@ import 'package:flutter_resume/domain/domain.dart';
 import 'package:flutter_resume/presentation/app/app.dart';
 import 'package:flutter_resume/presentation/conversation/conversation.dart';
 import 'package:flutter_resume/utils/utils.dart';
-import 'package:oktoast/oktoast.dart';
 
 class ConversationScreen extends StatefulWidget {
   const ConversationScreen({
@@ -51,47 +50,66 @@ class _ConversationScreenState extends State<ConversationScreen>
     final otherUser = firstMessage.fromUser.id == currentUser.id
         ? firstMessage.toUser
         : firstMessage.fromUser;
-    final messages = widget.conversation.messages;
-    return Scaffold(
-      backgroundColor: Colors.grey.shade200,
-      appBar: AppBar(
-        title: Text(otherUser.nickname),
+    return BlocProvider(
+      create: (context) => ConversationBloc(
+        widget.conversation.id,
+        currentUser,
+        otherUser,
+        context.read<ConversationRepository>(),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.separated(
-              controller: _scrollController,
-              padding: EdgeInsets.symmetric(vertical: 20.ss()),
-              itemCount: messages.length,
-              itemBuilder: (context, index) {
-                final message = messages[index];
-                final fromCurrentUser = message.fromUser.id == currentUser.id;
-                return ConversationItem(
-                  message: message,
-                  fromCurrentUser: fromCurrentUser,
-                );
-              },
-              separatorBuilder: (context, index) {
-                return SizedBox(height: 20.ss());
-              },
-            ),
+      child: Builder(builder: (context) {
+        final bloc = context.read<ConversationBloc>();
+        return Scaffold(
+          backgroundColor: Colors.grey.shade200,
+          appBar: AppBar(
+            title: Text(otherUser.nickname),
           ),
-          ChatBottomToolbar(
-            onChanged: (text) {
-              _scrollToBottom();
-            },
-            onSubmitted: (text) {
-              // todo
-              showToast(text);
-            },
+          body: Column(
+            children: [
+              Expanded(
+                child: BlocConsumer<ConversationBloc, ConversationState>(
+                    listener: (context, state) {
+                  if (state.messages.isNotEmpty) {
+                    _scrollToBottom();
+                  }
+                }, builder: (context, state) {
+                  final messages = state.messages;
+                  return ListView.separated(
+                    controller: _scrollController,
+                    padding: EdgeInsets.symmetric(vertical: 20.ss()),
+                    itemCount: messages.length,
+                    itemBuilder: (context, index) {
+                      final message = messages[index];
+                      final fromCurrentUser =
+                          message.fromUser.id == currentUser.id;
+                      return ConversationItem(
+                        message: message,
+                        fromCurrentUser: fromCurrentUser,
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return SizedBox(height: 20.ss());
+                    },
+                  );
+                }),
+              ),
+              ChatBottomToolbar(
+                onChanged: (text) {
+                  _scrollToBottom();
+                },
+                onSubmitted: (text) {
+                  bloc.add(AddMessage(text));
+                  _scrollToBottom();
+                },
+              ),
+              Container(
+                color: Colors.white,
+                height: MediaQuery.of(context).padding.bottom,
+              ),
+            ],
           ),
-          Container(
-            color: Colors.white,
-            height: MediaQuery.of(context).padding.bottom,
-          ),
-        ],
-      ),
+        );
+      }),
     );
   }
 

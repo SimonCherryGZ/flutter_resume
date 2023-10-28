@@ -22,6 +22,8 @@ class Faker {
   int _messageIncrementIndex = 0;
   int _conversationIncrementIndex = 0;
 
+  int get messageId => _messageIncrementIndex++;
+
   int nextInt(int max) => _random.nextInt(max);
 
   User user() {
