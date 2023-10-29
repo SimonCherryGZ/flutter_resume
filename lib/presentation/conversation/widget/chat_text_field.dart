@@ -17,15 +17,18 @@ class ChatTextField extends StatefulWidget {
 
 class _ChatTextFieldState extends State<ChatTextField> {
   late final TextEditingController _controller;
+  late final FocusNode _focusNode;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
+    _focusNode = FocusNode();
   }
 
   @override
   void dispose() {
+    _focusNode.dispose();
     _controller.dispose();
     super.dispose();
   }
@@ -43,6 +46,7 @@ class _ChatTextFieldState extends State<ChatTextField> {
       ),
       child: TextField(
         controller: _controller,
+        focusNode: _focusNode,
         maxLines: null,
         cursorColor: Theme.of(context).primaryColor,
         textAlignVertical: TextAlignVertical.center,
@@ -56,9 +60,10 @@ class _ChatTextFieldState extends State<ChatTextField> {
         onSubmitted: (text) {
           widget.onSubmitted?.call(text);
           _controller.clear();
+          _focusNode.requestFocus();
         },
         onTapOutside: (_) {
-          FocusManager.instance.primaryFocus?.unfocus();
+          _focusNode.unfocus();
         },
         decoration: InputDecoration(
           isDense: true,
