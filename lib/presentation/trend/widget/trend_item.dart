@@ -38,7 +38,7 @@ class TrendItem extends StatelessWidget {
         );
       },
       child: SizedBox(
-        height: itemHeight + 80.ss(),
+        height: itemHeight + 75.ss(),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -55,7 +55,7 @@ class TrendItem extends StatelessWidget {
               ),
             ),
             Container(
-              height: 40.ss(),
+              height: 45.ss(),
               padding: EdgeInsets.symmetric(
                 horizontal: 10.ss(),
                 vertical: 5.ss(),
@@ -69,10 +69,10 @@ class TrendItem extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 35.ss(),
+              height: 25.ss(),
               child: Row(
                 children: [
-                  SizedBox(width: 5.ss()),
+                  SizedBox(width: 10.ss()),
                   CommonAvatarWidget(
                     imageUrl: feed.author.avatar,
                     size: 20.ss(),

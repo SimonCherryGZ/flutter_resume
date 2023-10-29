@@ -36,7 +36,7 @@ class DiscoverItem extends StatelessWidget {
         );
       },
       child: SizedBox(
-        height: itemHeight + 150.ss(),
+        height: itemHeight + 140.ss(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
