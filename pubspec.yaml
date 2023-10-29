@@ -35,6 +35,8 @@ dependencies:
   flutter_syntax_view: ^4.0.0
   rxdart: ^0.27.7
   flutter_localized_locales: ^2.0.4
+  image: ^4.0.17
+  crypto: ^3.0.3
 
 dev_dependencies:
   flutter_test:

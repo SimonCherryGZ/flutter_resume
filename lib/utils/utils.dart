@@ -5,3 +5,4 @@ export 'timed_counter.dart';
 export 'sp_util.dart';
 export 'http_util.dart';
 export 'faker/faker.dart';
+export 'identicon.dart';

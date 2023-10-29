@@ -1,5 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/utils/utils.dart';
 
 class CommonAvatarWidget extends StatelessWidget {
   const CommonAvatarWidget({
@@ -13,6 +13,8 @@ class CommonAvatarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // multiavatar 访问不了
+    /*
     return CircleAvatar(
       radius: size / 2,
       backgroundColor: Colors.grey.shade300,
@@ -29,6 +31,22 @@ class CommonAvatarWidget extends StatelessWidget {
             size: size / 2,
           );
         },
+      ),
+    );
+    */
+    // 换成哈希头像算了
+    return ClipOval(
+      child: Image.memory(
+        IdenticonCache().getIdenticon(imageUrl),
+        color: Colors.grey.shade200,
+        colorBlendMode: BlendMode.dstOver,
+        width: size,
+        height: size,
+        cacheWidth: size.toInt(),
+        cacheHeight: size.toInt(),
+        fit: BoxFit.cover,
+        filterQuality: FilterQuality.none,
+        gaplessPlayback: true,
       ),
     );
   }
