@@ -10,7 +10,6 @@ import 'package:flutter_resume/presentation/message/message.dart';
 import 'package:flutter_resume/presentation/profile/profile.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 import 'package:go_router/go_router.dart';
-import 'package:oktoast/oktoast.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -70,8 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
               _indexNotifier.value = index;
             },
             onTapActionButton: () {
-              // todo
-              showToast('TODO: Center Action Button');
+              context.push(AppRouter.editor);
             },
           ),
         ),

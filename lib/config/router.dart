@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_resume/domain/domain.dart';
 import 'package:flutter_resume/presentation/app/app.dart';
 import 'package:flutter_resume/presentation/conversation/conversation.dart';
+import 'package:flutter_resume/presentation/editor/editor.dart';
 import 'package:flutter_resume/presentation/home/home.dart';
 import 'package:flutter_resume/presentation/post/post.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
@@ -18,6 +19,7 @@ class AppRouter {
   static const String setting = '/setting';
   static const String post = '/post';
   static const String conversation = '/conversation';
+  static const String editor = '/editor';
   static const String sampleAsync = '/sample/async';
   static const String sampleKey = '/sample/key';
   static const String sampleGlobalKeyAccess = '/sample/globalKeyAccess';
@@ -74,6 +76,10 @@ class AppRouter {
         builder: (_, state) => ConversationScreen(
           conversation: state.extra as Conversation,
         ),
+      ),
+      GoRoute(
+        path: editor,
+        builder: (_, __) => const EditorScreen(),
       ),
       GoRoute(
         path: sampleAsync,
