@@ -20,6 +20,10 @@ class PanUpdate extends EditorEvent {
   PanUpdate(this.details);
 }
 
+class PanEnd extends EditorEvent {}
+
+class PanCancel extends EditorEvent {}
+
 class SetStickerOnTop extends EditorEvent {
   final StickerConfig sticker;
 

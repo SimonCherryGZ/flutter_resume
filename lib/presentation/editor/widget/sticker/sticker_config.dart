@@ -12,8 +12,8 @@ class StickerConfig {
 
   final String id;
   final String imagePath;
-  final double width;
-  final double height;
+  double width;
+  double height;
   Matrix4 transform = Matrix4.identity();
   bool isSelected;
 

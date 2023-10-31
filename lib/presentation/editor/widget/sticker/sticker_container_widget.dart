@@ -23,6 +23,12 @@ class StickerContainerWidget extends StatelessWidget {
           onPanUpdate: (details) {
             bloc.add(PanUpdate(details));
           },
+          onPanEnd: (details) {
+            bloc.add(PanEnd());
+          },
+          onPanCancel: () {
+            bloc.add(PanCancel());
+          },
           child: BlocBuilder<EditorBloc, EditorState>(
             builder: (context, state) {
               return Stack(
