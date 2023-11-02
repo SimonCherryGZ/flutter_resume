@@ -1,28 +1,13 @@
 part of 'editor_bloc.dart';
 
 class EditorState {
-  final List<StickerConfig> stickers;
-  final StickerConfig? selectedSticker;
-  final bool isScaleOrRotate;
+  final String? imagePath;
+  final double? width;
+  final double? height;
 
   EditorState({
-    this.stickers = const [],
-    this.selectedSticker,
-    this.isScaleOrRotate = false,
+    this.imagePath,
+    this.width,
+    this.height,
   });
-
-  EditorState copyWith({
-    List<StickerConfig>? stickers,
-    StickerConfig? selectedSticker,
-    bool clearSelectedSticker = false,
-    bool? isScaleOrRotate,
-  }) {
-    return EditorState(
-      stickers: stickers ?? this.stickers,
-      selectedSticker: clearSelectedSticker
-          ? null
-          : (selectedSticker ?? this.selectedSticker),
-      isScaleOrRotate: isScaleOrRotate ?? this.isScaleOrRotate,
-    );
-  }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_resume/presentation/editor/editor.dart';
 import 'package:flutter_resume/utils/utils.dart';
-import 'package:provider/provider.dart';
 
 class StickerMaterialWidget extends StatelessWidget {
   const StickerMaterialWidget({super.key});
@@ -24,7 +24,11 @@ class StickerMaterialWidget extends StatelessWidget {
         final imagePath = imagePaths[index];
         return GestureDetector(
           onTap: () {
-            context.read<EditorBloc>().add(AddSticker(imagePath));
+            context.read<EditorBloc>().add(AddAssetSticker(
+                  imagePath: imagePath,
+                  width: 100,
+                  height: 100,
+                ));
           },
           child: Container(
             decoration: BoxDecoration(
