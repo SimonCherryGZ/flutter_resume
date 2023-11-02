@@ -44,10 +44,14 @@ class StickerContainerBloc
   var _mode = BaseActionMode.SELECTED_CLICK_OR_MOVE;
   var _actionMode = DecorationActionMode.NONE;
   WsElement? _selectedElement;
+  int _stickerIncrementCounter = 1;
 
   void _onAddAssetSticker(
-      AddAssetStickerToContainer event, Emitter<StickerContainerState> emit) {
+    AddAssetStickerToContainer event,
+    Emitter<StickerContainerState> emit,
+  ) {
     final assetSticker = AssetStickerElement(
+      id: 'asset_sticker-${_stickerIncrementCounter++}',
       event.imagePath,
       originWidth: event.width,
       originHeight: event.height,
@@ -57,7 +61,10 @@ class StickerContainerBloc
     emit(state.copyWith(elements: [...state.elements, assetSticker]));
   }
 
-  void _onPointerDown(PointerDown event, Emitter<StickerContainerState> emit) {
+  void _onPointerDown(
+    PointerDown event,
+    Emitter<StickerContainerState> emit,
+  ) {
     final e = event.event;
     // final x = _getRelativeX(e.position.dx);
     // final y = _getRelativeY(e.position.dy);
@@ -68,7 +75,7 @@ class StickerContainerBloc
     final selectedElement = _selectedElement;
     if (selectedElement != null) {
       if (isSameElement(clickedElement, selectedElement)) {
-        bool result = _downSelectTapOtherAction(e);
+        bool result = _downSelectTapOtherAction(e, emit);
         if (result) {
           return;
         }
@@ -101,7 +108,10 @@ class StickerContainerBloc
     }
   }
 
-  void _onPointerUp(PointerUp event, Emitter<StickerContainerState> emit) {
+  void _onPointerUp(
+    PointerUp event,
+    Emitter<StickerContainerState> emit,
+  ) {
     if (!_upSelectTapOtherAction(event.event, emit)) {
       switch (_mode) {
         case BaseActionMode.SELECTED_CLICK_OR_MOVE:
@@ -117,7 +127,10 @@ class StickerContainerBloc
     }
   }
 
-  void _onPanUpdate(PanUpdate event, Emitter<StickerContainerState> emit) {
+  void _onPanUpdate(
+    PanUpdate event,
+    Emitter<StickerContainerState> emit,
+  ) {
     List<DragUpdateDetails> dragUpdateDetailList = [event.details];
     if (_scrollSelectTapOtherAction(dragUpdateDetailList, emit)) {
       return;
@@ -217,7 +230,10 @@ class StickerContainerBloc
     return realFoundedElement;
   }
 
-  bool _downSelectTapOtherAction(PointerDownEvent event) {
+  bool _downSelectTapOtherAction(
+    PointerDownEvent event,
+    Emitter<StickerContainerState> emit,
+  ) {
     _actionMode = DecorationActionMode.NONE;
     // final x = _getRelativeX(event.position.dx);
     // final y = _getRelativeY(event.position.dy);
@@ -233,6 +249,14 @@ class StickerContainerBloc
     }
     if (selectedDecorationElement.isInRemoveButton(x, y)) {
       _actionMode = DecorationActionMode.CLICK_BUTTON_DELETE;
+      return true;
+    }
+    if (selectedDecorationElement.isInSetOnTopButton(x, y)) {
+      _setElementOnTop(selectedDecorationElement, emit);
+      return true;
+    }
+    if (selectedDecorationElement.isInFlipButton(x, y)) {
+      _flipElement(selectedDecorationElement, emit);
       return true;
     }
     return false;
@@ -271,29 +295,22 @@ class StickerContainerBloc
   }
 
   _unSelectDeleteAndUpdateTopElement(Emitter<StickerContainerState> emit) {
+    if (_selectedElement != null) {
+      _deleteElement(_selectedElement!);
+    }
     _unSelectElement();
-    _deleteElement();
     _update(emit);
   }
 
-  bool _deleteElement([WsElement? wsElement]) {
+  void _deleteElement(WsElement wsElement) {
     final elements = state.elements;
-    if (wsElement == null) {
-      if (elements.isEmpty) {
-        return false;
+    for (final element in elements) {
+      if (element.mId == wsElement.mId) {
+        elements.remove(element);
+        break;
       }
-      wsElement = elements.first;
-    }
-    if (elements.first != wsElement) {
-      return false;
-    }
-    elements.remove(wsElement);
-    for (int i = 0; i < elements.length; i++) {
-      WsElement nowElement = elements[i];
-      nowElement.mZIndex--;
     }
     wsElement.delete();
-    return true;
   }
 
   bool _scrollSelectTapOtherAction(
@@ -320,5 +337,28 @@ class StickerContainerBloc
       return true;
     }
     return false;
+  }
+
+  void _setElementOnTop(
+    WsElement wsElement,
+    Emitter<StickerContainerState> emit,
+  ) {
+    final elements = state.elements;
+    for (final element in elements) {
+      if (element.mId == wsElement.mId) {
+        elements.remove(element);
+        break;
+      }
+    }
+    elements.insert(elements.length, wsElement);
+    _update(emit);
+  }
+
+  void _flipElement(
+    WsElement wsElement,
+    Emitter<StickerContainerState> emit,
+  ) {
+    wsElement.mIsFlip = !wsElement.mIsFlip;
+    _update(emit);
   }
 }

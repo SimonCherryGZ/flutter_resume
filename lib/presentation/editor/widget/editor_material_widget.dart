@@ -29,7 +29,7 @@ class EditorMaterialWidget extends StatelessWidget {
               child: TabBarView(
                 children: [
                   StickerMaterialWidget(),
-                  Center(child: Text('滤镜')),
+                  Center(child: Text('滤镜 - 占位，未实现')),
                 ],
               ),
             ),

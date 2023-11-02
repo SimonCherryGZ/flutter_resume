@@ -9,6 +9,8 @@ const double MIN_SCALE_FACTOR = 0.3; // 最小缩放倍数
 const double MAX_SCALE_FACTOR = 4.0; // 最大缩放倍数
 
 abstract class WsElement {
+  final String mId;
+
   int mZIndex = -1; // 图像的层级
 
   double mMoveX = 0.0; // 初始化后相对 ElementContainerWidget 中心的移动距离
@@ -35,7 +37,10 @@ abstract class WsElement {
 
   final Offset mOffset; // ElementContainerWidget 相对屏幕的位移
 
+  bool mIsFlip = false;
+
   WsElement({
+    required this.mId,
     required this.mOriginWidth,
     required this.mOriginHeight,
     required this.mEditRect,
@@ -52,6 +57,9 @@ abstract class WsElement {
     Matrix4 matrix4 = Matrix4.translationValues(mMoveX, mMoveY, 0);
     matrix4.rotateZ(mRotate);
     matrix4.scale(mScale, mScale, 1);
+    if (mIsFlip) {
+      matrix4.rotateY(math.pi);
+    }
     return Transform(
       alignment: Alignment.center,
       transform: matrix4,

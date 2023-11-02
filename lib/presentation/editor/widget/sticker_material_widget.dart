@@ -11,6 +11,7 @@ class StickerMaterialWidget extends StatelessWidget {
     final imagePaths = [
       'assets/images/monkey_face_1.png',
       'assets/images/monkey_face_2.png',
+      'assets/images/monkey.png',
     ];
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
