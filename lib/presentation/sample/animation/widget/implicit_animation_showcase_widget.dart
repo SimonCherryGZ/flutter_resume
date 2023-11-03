@@ -38,24 +38,27 @@ class _AnimatedContainerShowcase extends StatelessWidget {
           return Column(
             children: [
               SizedBox(
+                width: 100.ss(),
                 height: 100.ss(),
-                child:
-                    BlocBuilder<AnimatedContainerCubit, AnimatedContainerState>(
-                  builder: (context, state) {
-                    return AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      width: state.width,
-                      height: state.height,
-                      decoration: BoxDecoration(
-                        shape: state.shape,
-                        color: state.color,
-                        border: Border.all(
-                          color: state.borderColor,
-                          width: state.borderWidth,
+                child: Center(
+                  child: BlocBuilder<AnimatedContainerCubit,
+                      AnimatedContainerState>(
+                    builder: (context, state) {
+                      return AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        width: state.width,
+                        height: state.height,
+                        decoration: BoxDecoration(
+                          shape: state.shape,
+                          color: state.color,
+                          border: Border.all(
+                            color: state.borderColor,
+                            width: state.borderWidth,
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
               SizedBox(height: 30.ss()),
