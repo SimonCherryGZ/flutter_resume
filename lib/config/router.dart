@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_resume/config/router_transition.dart';
 import 'package:flutter_resume/domain/domain.dart';
 import 'package:flutter_resume/presentation/app/app.dart';
 import 'package:flutter_resume/presentation/conversation/conversation.dart';
@@ -42,16 +44,17 @@ class AppRouter {
       ),
       GoRoute(
         path: login,
-        pageBuilder: (context, state) => CustomTransitionPage<void>(
+        pageBuilder: (context, state) => buildFadeTransition(
           key: state.pageKey,
           child: const LoginScreen(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-              FadeTransition(opacity: animation, child: child),
         ),
       ),
       GoRoute(
         path: home,
-        builder: (_, __) => const HomeScreen(),
+        pageBuilder: (context, state) => buildSlideTransition(
+          key: state.pageKey,
+          child: const HomeScreen(),
+        ),
         redirect: (context, state) async {
           final isSignedIn = context.read<AppCubit>().state.isSignedIn;
           if (!isSignedIn) {
@@ -62,50 +65,80 @@ class AppRouter {
       ),
       GoRoute(
         path: setting,
-        builder: (_, __) => const SettingScreen(),
+        pageBuilder: (context, state) => buildSlideTransition(
+          key: state.pageKey,
+          child: const SettingScreen(),
+        ),
       ),
       GoRoute(
         path: post,
-        builder: (_, state) => PostScreen(
-          feed: state.extra as Feed,
-          heroTag: state.queryParameters['heroTag'] ?? '',
+        pageBuilder: (_, state) => buildZoomTransition(
+          key: state.pageKey,
+          child: PostScreen(
+            feed: state.extra as Feed,
+            heroTag: state.queryParameters['heroTag'] ?? '',
+          ),
         ),
       ),
       GoRoute(
         path: conversation,
-        builder: (_, state) => ConversationScreen(
-          conversation: state.extra as Conversation,
+        pageBuilder: (context, state) => buildSlideTransition(
+          key: state.pageKey,
+          child: ConversationScreen(
+            conversation: state.extra as Conversation,
+          ),
         ),
       ),
       GoRoute(
         path: editor,
-        builder: (_, __) => const EditorScreen(),
+        pageBuilder: (_, state) => buildSlideTransition(
+          key: state.pageKey,
+          child: const EditorScreen(),
+        ),
       ),
       GoRoute(
         path: sampleAsync,
-        builder: (_, __) => const SampleAsyncScreen(),
+        pageBuilder: (_, state) => buildSlideTransition(
+          key: state.pageKey,
+          child: const SampleAsyncScreen(),
+        ),
       ),
       GoRoute(
         path: sampleKey,
-        builder: (_, __) => const SampleKeyScreen(),
+        pageBuilder: (_, state) => buildSlideTransition(
+          key: state.pageKey,
+          child: const SampleKeyScreen(),
+        ),
       ),
       GoRoute(
         path: sampleGlobalKeyAccess,
-        builder: (_, state) => SampleGlobalKeyAccessScreen(
-          globalKey: state.extra as GlobalKey,
+        pageBuilder: (_, state) => buildSlideTransition(
+          key: state.pageKey,
+          child: SampleGlobalKeyAccessScreen(
+            globalKey: state.extra as GlobalKey,
+          ),
         ),
       ),
       GoRoute(
         path: sampleLifecycle,
-        builder: (_, __) => const SampleLifecycleScreen(),
+        pageBuilder: (_, state) => buildSlideTransition(
+          key: state.pageKey,
+          child: const SampleLifecycleScreen(),
+        ),
       ),
       GoRoute(
         path: sampleAnimation,
-        builder: (_, __) => const SampleAnimationScreen(),
+        pageBuilder: (_, state) => buildSlideTransition(
+          key: state.pageKey,
+          child: const SampleAnimationScreen(),
+        ),
       ),
       GoRoute(
         path: sampleHeroAnimation,
-        builder: (_, __) => const SampleHeroAnimationScreen(),
+        pageBuilder: (_, state) => buildSlideTransition(
+          key: state.pageKey,
+          child: const SampleHeroAnimationScreen(),
+        ),
       ),
     ],
   );
