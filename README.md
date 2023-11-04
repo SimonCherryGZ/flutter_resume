@@ -139,11 +139,13 @@ class AppImage {
 
 [https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/login/view/login_screen.dart](https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/login/view/login_screen.dart)
 
+<div align="left">
 <img width="200" alt="screenshot_welcome" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/screenshot_welcome.jpg">
-
+  
 <img width="200" alt="screenshot_login_1" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/screenshot_login_1.jpg">
 
 <img width="200" alt="screenshot_login_2" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/screenshot_login_2.jpg">
+</div>
 
 启动页模拟展示开屏广告。这里假定的规则是：
 
@@ -175,9 +177,11 @@ final (_, splashAd) = await (
 
 [https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/feed/view/feed_screen.dart](https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/feed/view/feed_screen.dart)
 
+<div align="left">
 <img width="200" alt="screenshot_feed_1" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/screenshot_feed_1.jpg">
 
 <img width="200" alt="screenshot_feed_2" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/screenshot_feed_2.jpg">
+</div>
 
 这里展示了两种场景的 Feed 流列表样式：GridView 和 ListView。两者都需要有上拉刷新、下拉翻页加载更多、到底无更多数据时显示提示 Footer。因此基于这些共性封装成统一的组件：
 
@@ -189,19 +193,23 @@ final (_, splashAd) = await (
 
 [https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/post/view/post_screen.dart](https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/post/view/post_screen.dart)
 
+<div align="left">
 <img width="200" alt="screenshot_feed_detail_1" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/screenshot_feed_detail_1.jpg">
 
 <img width="200" alt="screenshot_feed_detail_2" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/screenshot_feed_detail_2.jpg">
 
 <img width="200" alt="screenshot_feed_detail_3" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/screenshot_feed_detail_3.jpg">
+</div>
 
 ## 个人主页
 
 [https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/profile/view/profile_screen.dart](https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/profile/view/profile_screen.dart)
 
+<div align="left">
 <img width="200" alt="screenshot_profile_1" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/screenshot_profile_1.jpg">
 
 <img width="200" alt="screenshot_profile_2" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/screenshot_profile_2.jpg">
+</div>
 
 这里主要的经验是做 TabBar 盖住封面图、TabBar 背景带圆角：
 
@@ -229,11 +237,13 @@ final (_, splashAd) = await (
 
 [https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/conversation/view/conversation_screen.dart](https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/conversation/view/conversation_screen.dart)
 
+<div align="left">
 <img width="200" alt="screenshot_message" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/screenshot_message.jpg">
 
 <img width="200" alt="screenshot_message_detail" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/screenshot_message_detail.jpg">
 
 <img width="200" alt="gif_message" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/gif_message.GIF">
+</div>
 
 消息页主要的经验是，实现进入消息详情页后默认“滚动”到最新的消息。
 
@@ -288,17 +298,21 @@ void _scrollToBottom() {
 
 对比在不同 isolate 中执行任务时对 UI 的影响
 
+<div align="left">
 <img width="200" alt="gif_async_ui_task_runner" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/gif_async_ui_task_runner.GIF">
 
 <img width="200" alt="gif_async_isolate" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/gif_async_isolate.GIF">
 
 <img width="200" alt="gif_async_io_task_runner" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/gif_async_io_task_runner.GIF">
+</div>
 
 对比异步任务串行和并行的差异
 
+<div align="left">
 <img width="300" alt="gif_async_serial_task" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/gif_async_serial_task.GIF">
 
 <img width="300" alt="gif_async_parallel_task" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/gif_async_parallel_task.GIF">
+</div>
 
 ### Key
 
@@ -306,11 +320,13 @@ void _scrollToBottom() {
 
 通过对色块交换顺序来演示 Key 的作用
 
+<div align="left">
 <img width="200" alt="gif_key_stateless" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/gif_key_stateless.GIF">
 
 <img width="200" alt="gif_key_stateful_1" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/gif_key_stateful_1.GIF">
 
 <img width="200" alt="gif_key_stateful_2" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/gif_key_stateful_2.GIF">
+</div>
 
 ### Lifecycle
 
