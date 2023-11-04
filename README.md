@@ -1,3 +1,27 @@
+<!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
+
+- [项目结构](#structure)
+- [框架选型](#framework)
+   * [状态管理](#state_management)
+   * [路由管理](#router)
+   * [国际化](#intl)
+- [页面展示](#pages)
+   * [启动页 & 登录页](#welcome)
+   * [主页 - Feed 流](#feed)
+   * [Feed 流详情](#feed_detail)
+   * [个人主页](#profile)
+   * [设置页](#setting)
+   * [消息页](#message)
+   * [贴纸功能](#sticker)
+   * [Flutter 知识点可视化](#visualization)
+      + [异步](#async)
+      + [Key](#key)
+      + [Lifecycle](#lifecycle)
+      + [Animation](#animation)
+
+<!-- TOC end -->
+
+<!-- TOC --><a name="structure"></a>
 # 项目结构
 
 <img width="200" alt="project_structure" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/project_structure.png">
@@ -8,15 +32,17 @@
 * presentation：表现层代码
 * l10n：国际化相关的代码和 arb 文件
 * utils：工具类
-  表现层按模块划分
+表现层按模块划分
 
 <img width="200" alt="presentation_structure" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/presentation_structure.png">
 
 * bloc：flutter_bloc 相关代码
 * view：页面类
 * widget：控件类
+<!-- TOC --><a name="framework"></a>
 # 框架选型
 
+<!-- TOC --><a name="state_management"></a>
 ## 状态管理
 
 状态管理从 provider、flutter_bloc、redux、getx 中选择，最后选用 flutter_bloc。理由如下：
@@ -28,6 +54,7 @@
     * StoreConnector 的 ignoreChange 只给了当前状态，无法做新旧差异对比；
     * 页面复用问题。redux 里的 State 是全局的，如果想给当前用户和其它用户共用“个人中心页”，则在页面跳转前后需要对全局 State 里的用户数据做切换。
 * getx：代码量太大，短时间内无法掌握其原理，使用中如果出现问题，怕难以定位。
+<!-- TOC --><a name="router"></a>
 ## 路由管理
 
 路由管理用的是 go_router，它基于 Navigator 2.0。2.0 相比 1.0 主要是为了解决：
@@ -36,7 +63,7 @@
 * 声明式 API
 * 嵌套路由
 * Web 端地址栏 Url 同步页面变化
-  其它基于 2.0 的比较流行的库还有 auto_route、beamer 等。感觉和 go_router 所支持的特性差别不大；auto_route 是通过注解生成路由代码，beamer 有一些自己的概念需要去理解（BeamLocation、BeamState）；在特性支持差别不大的情况下，暂时先选择相对简洁的 go_router。
+其它基于 2.0 的比较流行的库还有 auto_route、beamer 等。感觉和 go_router 所支持的特性差别不大；auto_route 是通过注解生成路由代码，beamer 有一些自己的概念需要去理解（BeamLocation、BeamState）；在特性支持差别不大的情况下，暂时先选择相对简洁的 go_router。
 
 目前 Demo 中有实际利用到的 go_router 特性是路由重定向：
 
@@ -57,6 +84,7 @@ GoRoute(
 ),
 ```
 在“主页”的路由中配置重定向逻辑，如果发现用户未登录，则重定向到“登录页”的路由。这样凡是涉及“跳转到主页”的代码，就不用重复写登录状态的判断。
+<!-- TOC --><a name="intl"></a>
 ## 国际化
 
 国际化用的是 Flutter 官方文档介绍的 intl 库。实际运用下来它有这些优点：
@@ -64,7 +92,7 @@ GoRoute(
 * arb 文件：与代码隔离，便于提取给翻译人员。对 arb 文件的修改也可以 Hot Reload。
 * 对缺失语言的兼容：例如设置模板语言为英文，则其它支持语言缺少的文案条目，可以 fallback 到英文版本。
 * 占位符（不同语言的语序差异）
-  中文 arb：
+中文 arb：
 
 ```dart
 "postCommentsInTotal": "共 {length} 条评论",
@@ -117,7 +145,7 @@ static Locale _lookupLocale(Locale locale) {
 }
 ```
 * 图片国际化：将不同语言版本的同一切图，放到以 languageCode_scriptCode 命名的对应目录中：
-
+      
 <img width="200" alt="l10n_image_structure" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/l10n_image_structure.png">
 
 然后在代码中用 Locale.toString 来拼接得到对应语言版本的切图：
@@ -131,27 +159,27 @@ class AppImage {
 }
 ```
 
+<!-- TOC --><a name="pages"></a>
 # 页面展示
 
+<!-- TOC --><a name="welcome"></a>
 ## 启动页 & 登录页
 
 [https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/welcome/view/welcome_screen.dart](https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/welcome/view/welcome_screen.dart)
 
 [https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/login/view/login_screen.dart](https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/login/view/login_screen.dart)
 
-<div align="left">
 <img width="200" alt="screenshot_welcome" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/screenshot_welcome.jpg">
-  
+
 <img width="200" alt="screenshot_login_1" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/screenshot_login_1.jpg">
 
 <img width="200" alt="screenshot_login_2" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/screenshot_login_2.jpg">
-</div>
 
 启动页模拟展示开屏广告。这里假定的规则是：
 
 * 应用初始化本身有一定耗时；在此期间尝试加载开屏广告
 * 但是开屏广告不应阻塞启动，只允许尝试一定时间（如 3 秒），超时就放弃展示
-  代码写成等待两个异步任务：一个是初始化、另一个是加载广告。两个异步任务都完成后，如果广告已加载好，就先展示；否则直接跳转到后续页面。
+代码写成等待两个异步任务：一个是初始化、另一个是加载广告。两个异步任务都完成后，如果广告已加载好，就先展示；否则直接跳转到后续页面。
 
 两个异步任务（Future）返回类型不一样，如果写成：
 
@@ -171,17 +199,16 @@ final (_, splashAd) = await (
 ).wait;
 ```
 
+<!-- TOC --><a name="feed"></a>
 ## 主页 - Feed 流
 
 [https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/home/view/home_screen.dart](https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/home/view/home_screen.dart)
 
 [https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/feed/view/feed_screen.dart](https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/feed/view/feed_screen.dart)
 
-<div align="left">
 <img width="200" alt="screenshot_feed_1" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/screenshot_feed_1.jpg">
 
 <img width="200" alt="screenshot_feed_2" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/screenshot_feed_2.jpg">
-</div>
 
 这里展示了两种场景的 Feed 流列表样式：GridView 和 ListView。两者都需要有上拉刷新、下拉翻页加载更多、到底无更多数据时显示提示 Footer。因此基于这些共性封装成统一的组件：
 
@@ -189,27 +216,25 @@ final (_, splashAd) = await (
 
 业务代码只需提供列表 Widget 的构建方式。
 
+<!-- TOC --><a name="feed_detail"></a>
 ## Feed 流详情
 
 [https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/post/view/post_screen.dart](https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/post/view/post_screen.dart)
 
-<div align="left">
 <img width="200" alt="screenshot_feed_detail_1" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/screenshot_feed_detail_1.jpg">
 
 <img width="200" alt="screenshot_feed_detail_2" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/screenshot_feed_detail_2.jpg">
 
 <img width="200" alt="screenshot_feed_detail_3" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/screenshot_feed_detail_3.jpg">
-</div>
 
+<!-- TOC --><a name="profile"></a>
 ## 个人主页
 
 [https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/profile/view/profile_screen.dart](https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/profile/view/profile_screen.dart)
 
-<div align="left">
 <img width="200" alt="screenshot_profile_1" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/screenshot_profile_1.jpg">
 
 <img width="200" alt="screenshot_profile_2" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/screenshot_profile_2.jpg">
-</div>
 
 这里主要的经验是做 TabBar 盖住封面图、TabBar 背景带圆角：
 
@@ -221,6 +246,7 @@ final (_, splashAd) = await (
 
 后来发现 SliverAppBar 的 bottom 接受的是 PreferredSizeWidget，而 TabBar 也实现了 PreferredSizeWidget。既然如此，也就可以自己写一个 Widget 实现 PreferredSizeWidget，然后在 build 方法中用 Container 包裹 TabBar，最后一整个提供给 SliverAppBar 的 bottom。
 
+<!-- TOC --><a name="setting"></a>
 ## 设置页
 
 [https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/setting/view/setting_screen.dart](https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/setting/view/setting_screen.dart)
@@ -231,19 +257,18 @@ final (_, splashAd) = await (
 
 切换语言、主题色，通过修改 MaterialApp 的 locale 和 theme 实现。
 
+<!-- TOC --><a name="message"></a>
 ## 消息页
 
 [https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/message/view/message_screen.dart](https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/message/view/message_screen.dart)
 
 [https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/conversation/view/conversation_screen.dart](https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/conversation/view/conversation_screen.dart)
 
-<div align="left">
 <img width="200" alt="screenshot_message" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/screenshot_message.jpg">
 
 <img width="200" alt="screenshot_message_detail" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/screenshot_message_detail.jpg">
 
 <img width="200" alt="gif_message" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/gif_message.GIF">
-</div>
 
 消息页主要的经验是，实现进入消息详情页后默认“滚动”到最新的消息。
 
@@ -274,6 +299,7 @@ void _scrollToBottom() {
 
 目前的解决办法是，给 ListView 包一层 Align 对齐 Alignment.topLeft；当列表数据不超过 10 条时（这里简单处理，没有精确计算，仅目测 10 条单行消息 Item 的高度是一个屏幕高度），设置 ListView 的 shrinkWrap 属性为 true，这样 ListView 高度仅是当前所有 Item 高度总和，然后被 Align 对齐到顶部，避免“露馅”。
 
+<!-- TOC --><a name="sticker"></a>
 ## 贴纸功能
 
 [https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/editor/view/editor_screen.dart](https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/editor/view/editor_screen.dart)
@@ -288,46 +314,44 @@ void _scrollToBottom() {
 
 在此基础上增加了置顶和水平翻转功能。
 
+<!-- TOC --><a name="visualization"></a>
 ## Flutter 知识点可视化
 
 [https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/sample/home/view/sample_screen.dart](https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/sample/home/view/sample_screen.dart)
 
+<!-- TOC --><a name="async"></a>
 ### 异步
 
 [https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/sample/async/view/sample_async_screen.dart](https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/sample/async/view/sample_async_screen.dart)
 
 对比在不同 isolate 中执行任务时对 UI 的影响
 
-<div align="left">
 <img width="200" alt="gif_async_ui_task_runner" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/gif_async_ui_task_runner.GIF">
 
 <img width="200" alt="gif_async_isolate" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/gif_async_isolate.GIF">
 
 <img width="200" alt="gif_async_io_task_runner" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/gif_async_io_task_runner.GIF">
-</div>
 
 对比异步任务串行和并行的差异
 
-<div align="left">
 <img width="300" alt="gif_async_serial_task" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/gif_async_serial_task.GIF">
 
 <img width="300" alt="gif_async_parallel_task" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/gif_async_parallel_task.GIF">
-</div>
 
+<!-- TOC --><a name="key"></a>
 ### Key
 
 [https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/sample/key/view/sample_key_screen.dart](https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/sample/key/view/sample_key_screen.dart)
 
 通过对色块交换顺序来演示 Key 的作用
 
-<div align="left">
 <img width="200" alt="gif_key_stateless" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/gif_key_stateless.GIF">
 
 <img width="200" alt="gif_key_stateful_1" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/gif_key_stateful_1.GIF">
 
 <img width="200" alt="gif_key_stateful_2" src="https://raw.githubusercontent.com/SimonCherryGZ/ImageHost/main/flutter_resume/gif_key_stateful_2.GIF">
-</div>
 
+<!-- TOC --><a name="lifecycle"></a>
 ### Lifecycle
 
 [https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/sample/lifecycle/view/sample_lifecycle_screen.dart](https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/sample/lifecycle/view/sample_lifecycle_screen.dart)
@@ -342,6 +366,7 @@ void _scrollToBottom() {
 * Swap：将演示 Widget 的位置变更
 * Remove：移除演示 Widget
 
+<!-- TOC --><a name="animation"></a>
 ### Animation
 
 [https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/sample/animation/view/sample_animation_screen.dart](https://github.com/SimonCherryGZ/flutter_resume/blob/main/lib/presentation/sample/animation/view/sample_animation_screen.dart)
