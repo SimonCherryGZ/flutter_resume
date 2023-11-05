@@ -28,6 +28,7 @@ class AppRouter {
   static const String sampleLifecycle = '/sample/lifecycle';
   static const String sampleAnimation = '/sample/animation';
   static const String sampleHeroAnimation = '/sample/heroAnimation';
+  static const String sampleLayout = '/sample/layout';
 
   AppRouter._();
 
@@ -138,6 +139,13 @@ class AppRouter {
         pageBuilder: (_, state) => buildSlideTransition(
           key: state.pageKey,
           child: const SampleHeroAnimationScreen(),
+        ),
+      ),
+      GoRoute(
+        path: sampleLayout,
+        pageBuilder: (_, state) => buildSlideTransition(
+          key: state.pageKey,
+          child: const SampleLayoutScreen(),
         ),
       ),
     ],
