@@ -29,12 +29,26 @@ class CommonFeedImageWidget extends StatelessWidget {
         return Container(color: Colors.grey.shade300);
       },
       errorWidget: (context, url, error) {
-        return Center(
-          child: Text(
-            l10n.imageLoadFailedHint,
-            style: TextStyle(
-              fontSize: 12.ss(),
-            ),
+        return Container(
+          color: Colors.grey.shade300,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.mood_bad,
+                color: Colors.black45,
+              ),
+              SizedBox(height: 5.ss()),
+              Center(
+                child: Text(
+                  l10n.imageLoadFailedHint,
+                  style: TextStyle(
+                    fontSize: 12.ss(),
+                    color: Colors.black45,
+                  ),
+                ),
+              ),
+            ],
           ),
         );
       },
