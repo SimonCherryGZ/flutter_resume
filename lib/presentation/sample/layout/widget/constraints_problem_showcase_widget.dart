@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 import 'package:flutter_syntax_view/flutter_syntax_view.dart';
 
-class SizeProblemShowcaseWidget extends StatelessWidget {
-  const SizeProblemShowcaseWidget({super.key});
+class ConstraintsProblemShowcaseWidget extends StatelessWidget {
+  const ConstraintsProblemShowcaseWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,15 +14,19 @@ class SizeProblemShowcaseWidget extends StatelessWidget {
         '  color: Colors.red,\n'
         '  width: $containerSize,\n'
         '  height: $containerSize,\n'
-        '  child: const ConstraintsLabelBox(\n'
-        '    color: Colors.blue,\n'
-        '    width: $boxSize,\n'
-        '    height: $boxSize,\n'
+        '  child: ConstrainedBox(\n'
+        '    constraints:\n'
+        '        BoxConstraints.loose(const Size($boxSize, $boxSize)),\n'
+        '    child: const ConstraintsLabelBox(\n'
+        '      color: Colors.blue,\n'
+        '      width: $boxSize,\n'
+        '      height: $boxSize,\n'
+        '    ),\n'
         '  ),\n'
         '),';
     return ShowcaseWidget(
-      title: 'Container 宽高不生效',
-      content: '红色盒给蓝色盒的是 Tight 约束',
+      title: 'ConstrainedBox 没作用？',
+      content: '因为额外附加的约束，仍要遵循父约束',
       builder: (context) {
         return Column(
           children: [
@@ -41,10 +45,14 @@ class SizeProblemShowcaseWidget extends StatelessWidget {
                   color: Colors.red,
                   width: containerSize,
                   height: containerSize,
-                  child: const ConstraintsLabelBox(
-                    color: Colors.blue,
-                    width: boxSize,
-                    height: boxSize,
+                  child: ConstrainedBox(
+                    constraints:
+                        BoxConstraints.loose(const Size(boxSize, boxSize)),
+                    child: const ConstraintsLabelBox(
+                      color: Colors.blue,
+                      width: boxSize,
+                      height: boxSize,
+                    ),
                   ),
                 ),
                 Container(
