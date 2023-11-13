@@ -29,6 +29,7 @@ class AppRouter {
   static const String sampleAnimation = '/sample/animation';
   static const String sampleHeroAnimation = '/sample/heroAnimation';
   static const String sampleLayout = '/sample/layout';
+  static const String sampleOptimization = '/sample/optimization';
 
   AppRouter._();
 
@@ -146,6 +147,13 @@ class AppRouter {
         pageBuilder: (_, state) => buildSlideTransition(
           key: state.pageKey,
           child: const SampleLayoutScreen(),
+        ),
+      ),
+      GoRoute(
+        path: sampleOptimization,
+        pageBuilder: (_, state) => buildSlideTransition(
+          key: state.pageKey,
+          child: const SampleOptimizationScreen(),
         ),
       ),
     ],

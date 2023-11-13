@@ -13,6 +13,7 @@ class SampleScreen extends StatelessWidget {
     'Lifecycle': AppRouter.sampleLifecycle,
     'Animation': AppRouter.sampleAnimation,
     'Layout': AppRouter.sampleLayout,
+    'Optimization': AppRouter.sampleOptimization,
   };
 
   @override

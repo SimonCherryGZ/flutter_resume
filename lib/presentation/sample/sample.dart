@@ -5,3 +5,4 @@ export 'key/key.dart';
 export 'lifecycle/lifecycle.dart';
 export 'animation/animation.dart';
 export 'layout/layout.dart';
+export 'optimization/optimization.dart';
