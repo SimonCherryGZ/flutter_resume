@@ -10,6 +10,8 @@ class AlbumTitleBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.read<AlbumBloc>();
     return BlocBuilder<AlbumBloc, AlbumState>(
+      buildWhen: (p, c) =>
+          p.currentPath != c.currentPath || p.showAlbums != c.showAlbums,
       builder: (context, state) {
         final currentPath = state.currentPath;
         if (currentPath == null) {
@@ -32,25 +34,28 @@ class AlbumTitleBar extends StatelessWidget {
                   borderRadius: BorderRadius.circular(appBarHeight / 2),
                   color: Theme.of(context).primaryColorDark,
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxWidth: 100.ss(),
+                child: AnimatedSize(
+                  duration: const Duration(milliseconds: 300),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxWidth: 100.ss(),
+                        ),
+                        child: Text(currentPath.name),
                       ),
-                      child: Text(currentPath.name),
-                    ),
-                    SizedBox(width: 5.ss()),
-                    AnimatedRotation(
-                      duration: const Duration(milliseconds: 300),
-                      turns: showAlbums ? 0.5 : 0,
-                      child: Icon(
-                        Icons.arrow_drop_down_circle_outlined,
-                        size: 17.ss(),
+                      SizedBox(width: 5.ss()),
+                      AnimatedRotation(
+                        duration: const Duration(milliseconds: 300),
+                        turns: showAlbums ? 0.5 : 0,
+                        child: Icon(
+                          Icons.arrow_drop_down_circle_outlined,
+                          size: 17.ss(),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
