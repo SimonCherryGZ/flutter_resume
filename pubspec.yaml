@@ -37,6 +37,7 @@ dependencies:
   flutter_localized_locales: ^2.0.4
   image: ^4.0.17
   crypto: ^3.0.3
+  photo_manager: ^2.7.1
 
 dev_dependencies:
   flutter_test:

@@ -41,3 +41,22 @@ CustomTransitionPage buildFadeTransition({
     },
   );
 }
+
+CustomTransitionPage buildBottomToTopTransition({
+  required Widget child,
+  LocalKey? key,
+}) {
+  return CustomTransitionPage<void>(
+    key: key,
+    child: child,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      return SlideTransition(
+        position: Tween<Offset>(
+          begin: const Offset(0, 1),
+          end: Offset.zero,
+        ).animate(animation),
+        child: child,
+      );
+    },
+  );
+}

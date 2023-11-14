@@ -47,5 +47,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>I will use photo library</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>You must agree the additions permission to save assets.</string>
 </dict>
 </plist>

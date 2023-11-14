@@ -10,6 +10,8 @@ import 'package:flutter_resume/presentation/message/message.dart';
 import 'package:flutter_resume/presentation/profile/profile.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 import 'package:go_router/go_router.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:photo_manager/photo_manager.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -69,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
               _indexNotifier.value = index;
             },
             onTapActionButton: () {
-              context.push(AppRouter.editor);
+              _handleJumpToAlbum(context);
             },
           ),
         ),
@@ -86,5 +88,15 @@ class _HomeScreenState extends State<HomeScreen> {
       negativeButtonText: l10n.exitConfirmDialogNegativeButtonText,
       positiveButtonText: l10n.exitConfirmDialogPositiveButtonText,
     );
+  }
+
+  Future<void> _handleJumpToAlbum(BuildContext context) async {
+    final goRouter = GoRouter.of(context);
+    final PermissionState ps = await PhotoManager.requestPermissionExtend();
+    if (!ps.hasAccess) {
+      showToast('未授予相册权限');
+      return;
+    }
+    goRouter.push(AppRouter.album);
   }
 }

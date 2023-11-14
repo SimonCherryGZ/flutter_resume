@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_resume/config/router_transition.dart';
 import 'package:flutter_resume/domain/domain.dart';
+import 'package:flutter_resume/presentation/album/album.dart';
 import 'package:flutter_resume/presentation/app/app.dart';
 import 'package:flutter_resume/presentation/conversation/conversation.dart';
 import 'package:flutter_resume/presentation/editor/editor.dart';
@@ -22,6 +23,7 @@ class AppRouter {
   static const String post = '/post';
   static const String conversation = '/conversation';
   static const String editor = '/editor';
+  static const String album = '/album';
   static const String sampleAsync = '/sample/async';
   static const String sampleKey = '/sample/key';
   static const String sampleGlobalKeyAccess = '/sample/globalKeyAccess';
@@ -96,6 +98,13 @@ class AppRouter {
         pageBuilder: (_, state) => buildSlideTransition(
           key: state.pageKey,
           child: const EditorScreen(),
+        ),
+      ),
+      GoRoute(
+        path: album,
+        pageBuilder: (_, state) => buildBottomToTopTransition(
+          key: state.pageKey,
+          child: const AlbumScreen(),
         ),
       ),
       GoRoute(
