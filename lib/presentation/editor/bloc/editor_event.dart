@@ -13,3 +13,5 @@ class AddAssetSticker extends EditorEvent {
     required this.height,
   });
 }
+
+class ExportImage extends EditorEvent {}

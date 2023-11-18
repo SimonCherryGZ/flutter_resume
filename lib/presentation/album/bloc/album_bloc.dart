@@ -1,4 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 part 'album_event.dart';
@@ -10,6 +12,16 @@ class AlbumBloc extends Bloc<AlbumEvent, AlbumState> {
     on<FetchData>(_onFetchData);
     on<ToggleAlbums>(_onToggleAlbums);
     on<SelectAlbum>(_onSelectAlbum);
+
+    PhotoManager.addChangeCallback(_onPhotoChanged);
+    PhotoManager.startChangeNotify();
+  }
+
+  @override
+  Future<void> close() {
+    PhotoManager.stopChangeNotify();
+    PhotoManager.removeChangeCallback(_onPhotoChanged);
+    return super.close();
   }
 
   void _onFetchData(FetchData event, Emitter<AlbumState> emit) async {
@@ -49,5 +61,11 @@ class AlbumBloc extends Bloc<AlbumEvent, AlbumState> {
       assetCount: assetCount,
       entities: entities,
     ));
+  }
+
+  void _onPhotoChanged(MethodCall value) {
+    debugPrint(
+        'PhotoManager ChangeCallback: ${value.method}, ${value.arguments}');
+    add(FetchData());
   }
 }
