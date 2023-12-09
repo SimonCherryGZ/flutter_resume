@@ -14,6 +14,10 @@ class AlbumPhotoGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.sizeOf(context);
+    final dp = MediaQuery.devicePixelRatioOf(context);
+    final thumbnailSize =
+        ThumbnailSize.square((screenSize.width / 4 * dp).toInt());
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 4,
@@ -30,7 +34,7 @@ class AlbumPhotoGridView extends StatelessWidget {
           child: AssetEntityImage(
             entity,
             isOriginal: false,
-            thumbnailSize: const ThumbnailSize.square(200),
+            thumbnailSize: thumbnailSize,
             thumbnailFormat: ThumbnailFormat.jpeg,
             fit: BoxFit.cover,
           ),
