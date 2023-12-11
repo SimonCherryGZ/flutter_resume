@@ -27,13 +27,11 @@ class TrendItem extends StatelessWidget {
     final heroTag = '${heroTagPrefix}_${feed.id}';
     return GestureDetector(
       onTap: () async {
-        context.push(
-          Uri(
-            path: AppRouter.post,
-            queryParameters: {
-              'heroTag': heroTag,
-            },
-          ).toString(),
+        context.goNamed(
+          AppRouter.post,
+          queryParameters: {
+            'heroTag': heroTag,
+          },
           extra: feed,
         );
       },

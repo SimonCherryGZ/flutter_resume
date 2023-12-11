@@ -29,7 +29,7 @@ class GlobalKeyShowcaseWidget extends StatelessWidget {
             SizedBox(height: 30.ss()),
             ElevatedButton(
               onPressed: () {
-                context.push(
+                context.goNamed(
                   AppRouter.sampleGlobalKeyAccess,
                   extra: globalKey,
                 );

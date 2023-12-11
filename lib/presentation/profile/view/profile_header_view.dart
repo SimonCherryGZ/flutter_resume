@@ -71,7 +71,7 @@ class AppBarTitle extends StatelessWidget {
             const Spacer(),
             IconButton(
               onPressed: () {
-                context.push(AppRouter.setting);
+                context.goNamed(AppRouter.setting);
               },
               icon: const Icon(Icons.settings),
             ),

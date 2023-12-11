@@ -25,13 +25,11 @@ class DiscoverItem extends StatelessWidget {
     final heroTag = 'discover_${feed.id}';
     return GestureDetector(
       onTap: () {
-        context.push(
-          Uri(
-            path: AppRouter.post,
-            queryParameters: {
-              'heroTag': heroTag,
-            },
-          ).toString(),
+        context.goNamed(
+          AppRouter.post,
+          queryParameters: {
+            'heroTag': heroTag,
+          },
           extra: feed,
         );
       },

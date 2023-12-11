@@ -14,6 +14,7 @@ class SampleScreen extends StatelessWidget {
     'Animation': AppRouter.sampleAnimation,
     'Layout': AppRouter.sampleLayout,
     'Optimization': AppRouter.sampleOptimization,
+    'Router': AppRouter.sampleRouter,
   };
 
   @override
@@ -30,7 +31,7 @@ class SampleScreen extends StatelessWidget {
               title: title,
               route: route!,
               onTap: () {
-                context.push(route);
+                context.goNamed(route);
               },
             );
           },

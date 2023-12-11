@@ -97,6 +97,6 @@ class _HomeScreenState extends State<HomeScreen> {
       showToast('未授予相册权限');
       return;
     }
-    goRouter.push(AppRouter.album);
+    goRouter.goNamed(AppRouter.album);
   }
 }

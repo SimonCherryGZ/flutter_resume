@@ -96,5 +96,6 @@
   "heroShowcaseButtonText": "Jump to new page",
   "sampleHeroAnimationScreenTitle": "Hero animation",
   "staggeredAnimationShowcaseTitle": "Staggered Animation",
-  "staggeredAnimationShowcaseContent": "Demonstrate staggered animation\n【0.0 - 1.0】: translation\n【0.4 - 0.7】: rotation\n【0.0 - 0.5】: scale"
+  "staggeredAnimationShowcaseContent": "Demonstrate staggered animation\n【0.0 - 1.0】: translation\n【0.4 - 0.7】: rotation\n【0.0 - 0.5】: scale",
+  "sampleRouterScreenTitle": "Router Sample"
 }

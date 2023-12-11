@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_resume/config/router.dart';
 import 'package:flutter_resume/presentation/album/album.dart';
 import 'package:flutter_resume/utils/utils.dart';
 import 'package:go_router/go_router.dart';
@@ -32,7 +33,7 @@ class AlbumScreen extends StatelessWidget {
                 centerTitle: true,
                 leading: IconButton(
                   onPressed: () {
-                    context.pop();
+                    context.go(AppRouter.home);
                   },
                   icon: const Icon(Icons.close),
                 ),
@@ -41,7 +42,7 @@ class AlbumScreen extends StatelessWidget {
                 listenWhen: (p, c) => p.hasAccess != c.hasAccess,
                 listener: (context, state) {
                   if (!state.hasAccess) {
-                    context.pop();
+                    context.go(AppRouter.home);
                   }
                 },
                 child: const AlbumContentWidget(),

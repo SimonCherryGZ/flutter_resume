@@ -27,7 +27,7 @@ class HeroShowcaseWidget extends StatelessWidget {
             SizedBox(height: 30.ss()),
             ElevatedButton(
               onPressed: () {
-                context.push(AppRouter.sampleHeroAnimation);
+                context.goNamed(AppRouter.sampleHeroAnimation);
               },
               child: Text(l10n.heroShowcaseButtonText),
             ),

@@ -39,7 +39,7 @@ class MessageScreen extends StatelessWidget {
                   message: message,
                   currentUser: currentUser,
                   onTap: () {
-                    context.push(
+                    context.goNamed(
                       AppRouter.conversation,
                       extra: conversation,
                     );
