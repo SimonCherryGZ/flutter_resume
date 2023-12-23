@@ -133,24 +133,33 @@ class SettingView extends StatelessWidget {
   Future<Locale?> _showLocaleSelection(BuildContext context) async {
     final supportedLocales = L10nDelegate.supportedLocales;
     final localeNames = LocaleNames.of(context)!;
+    final screenSize = MediaQuery.sizeOf(context);
     return showDialog<Locale>(
       context: context,
       builder: (context) {
         return Dialog(
-          child: ListView.separated(
-            itemCount: supportedLocales.length,
-            itemBuilder: (context, index) {
-              final locale = supportedLocales[index];
-              return ListTile(
-                title: Text(localeNames.nameOf(locale.toString())!),
-                onTap: () {
-                  Navigator.of(context).pop(locale);
-                },
-              );
-            },
-            separatorBuilder: (context, index) {
-              return const Divider();
-            },
+          child: Container(
+            width: screenSize.width - 40.ss(),
+            height: screenSize.height / 2,
+            padding: EdgeInsets.symmetric(
+              horizontal: 20.ss(),
+              vertical: 10.ss(),
+            ),
+            child: ListView.separated(
+              itemCount: supportedLocales.length,
+              itemBuilder: (context, index) {
+                final locale = supportedLocales[index];
+                return ListTile(
+                  title: Text(localeNames.nameOf(locale.toString())!),
+                  onTap: () {
+                    Navigator.of(context).pop(locale);
+                  },
+                );
+              },
+              separatorBuilder: (context, index) {
+                return const Divider();
+              },
+            ),
           ),
         );
       },
@@ -161,41 +170,50 @@ class SettingView extends StatelessWidget {
     BuildContext context,
     AppLocalizations l10n,
   ) {
+    final screenSize = MediaQuery.sizeOf(context);
     return showDialog<MaterialColor>(
       context: context,
       builder: (context) {
         return Dialog(
-          child: ListView.separated(
-            itemCount: themeColors.length,
-            itemBuilder: (context, index) {
-              final color = themeColors[index];
-              return ListTile(
-                title: Container(
-                  color: color,
-                  height: 40.ss(),
-                  child: Center(
-                    child: Text(
-                      _getColorName(color, l10n),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        shadows: [
-                          Shadow(
-                            color: Colors.black,
-                            blurRadius: 3,
-                          ),
-                        ],
+          child: Container(
+            width: screenSize.width - 40.ss(),
+            height: screenSize.height / 2,
+            padding: EdgeInsets.symmetric(
+              horizontal: 20.ss(),
+              vertical: 10.ss(),
+            ),
+            child: ListView.separated(
+              itemCount: themeColors.length,
+              itemBuilder: (context, index) {
+                final color = themeColors[index];
+                return ListTile(
+                  title: Container(
+                    color: color,
+                    height: 40.ss(),
+                    child: Center(
+                      child: Text(
+                        _getColorName(color, l10n),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          shadows: [
+                            Shadow(
+                              color: Colors.black,
+                              blurRadius: 3,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                onTap: () {
-                  Navigator.of(context).pop(color);
-                },
-              );
-            },
-            separatorBuilder: (context, index) {
-              return const Divider();
-            },
+                  onTap: () {
+                    Navigator.of(context).pop(color);
+                  },
+                );
+              },
+              separatorBuilder: (context, index) {
+                return const Divider();
+              },
+            ),
           ),
         );
       },

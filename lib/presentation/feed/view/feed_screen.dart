@@ -22,7 +22,6 @@ class FeedScreen extends StatelessWidget {
                 indicatorSize: TabBarIndicatorSize.label,
                 tabs: tabs.map((e) => Tab(text: e)).toList(),
               ),
-              const Divider(),
               const Expanded(
                 child: TabBarView(
                   children: [

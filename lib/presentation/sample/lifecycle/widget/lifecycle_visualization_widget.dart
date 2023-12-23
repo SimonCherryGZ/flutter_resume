@@ -169,53 +169,57 @@ class _LifecycleVisualizationWidgetState
             buildWhen: (p, c) => p.position != c.position,
             builder: (context, state) {
               final cubit = context.read<LifecycleVisualizationCubit>();
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  if (state.position ==
-                      LifecycleVisualizationWidgetPosition.none) ...[
-                    ElevatedButton(
-                      onPressed: () {
-                        cubit.setWidget();
-                      },
-                      child: Text(
-                          l10n.lifecycleVisualizationShowcaseSetButtonText),
-                    ),
-                  ],
-                  if (state.position !=
-                      LifecycleVisualizationWidgetPosition.none) ...[
-                    ElevatedButton(
-                      onPressed: () {
-                        final color = Colors.primaries[
-                            _random.nextInt(Colors.primaries.length)];
-                        cubit.updateColor(color);
-                      },
-                      child: Text(
-                          l10n.lifecycleVisualizationShowcaseUpdateButtonText),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        cubit.switchIconData();
-                      },
-                      child: Text(
-                          l10n.lifecycleVisualizationShowcaseDependButtonText),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        cubit.swapPosition();
-                      },
-                      child: Text(
-                          l10n.lifecycleVisualizationShowcaseSwapButtonText),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        cubit.removeWidget();
-                      },
-                      child: Text(
-                          l10n.lifecycleVisualizationShowcaseRemoveButtonText),
-                    ),
-                  ],
-                ],
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.symmetric(horizontal: 4.ss()),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    if (state.position ==
+                        LifecycleVisualizationWidgetPosition.none) ...[
+                      ElevatedButton(
+                        onPressed: () {
+                          cubit.setWidget();
+                        },
+                        child: Text(
+                            l10n.lifecycleVisualizationShowcaseSetButtonText),
+                      ),
+                    ],
+                    if (state.position !=
+                        LifecycleVisualizationWidgetPosition.none) ...[
+                      ElevatedButton(
+                        onPressed: () {
+                          final color = Colors.primaries[
+                              _random.nextInt(Colors.primaries.length)];
+                          cubit.updateColor(color);
+                        },
+                        child: Text(l10n
+                            .lifecycleVisualizationShowcaseUpdateButtonText),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          cubit.switchIconData();
+                        },
+                        child: Text(l10n
+                            .lifecycleVisualizationShowcaseDependButtonText),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          cubit.swapPosition();
+                        },
+                        child: Text(
+                            l10n.lifecycleVisualizationShowcaseSwapButtonText),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          cubit.removeWidget();
+                        },
+                        child: Text(l10n
+                            .lifecycleVisualizationShowcaseRemoveButtonText),
+                      ),
+                    ],
+                  ].withSpaceBetween(width: 4.ss()),
+                ),
               );
             },
           ),

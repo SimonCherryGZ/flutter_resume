@@ -38,9 +38,14 @@ class _HomeScreenState extends State<HomeScreen> {
       MapEntry(l10n.homeBottomNavigationBarItemMessage, Icons.message),
       MapEntry(l10n.homeBottomNavigationBarItemProfile, Icons.person),
     ];
-    return WillPopScope(
-      onWillPop: () {
-        return _showExitConfirmDialog(context);
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (_) async {
+        final router = GoRouter.of(context);
+        final canPop = await _showExitConfirmDialog(context);
+        if (canPop) {
+          router.pop();
+        }
       },
       child: BlocListener<AppCubit, AppState>(
         listenWhen: (p, c) {

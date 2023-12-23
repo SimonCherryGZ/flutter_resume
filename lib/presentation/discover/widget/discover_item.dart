@@ -38,6 +38,7 @@ class DiscoverItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: 10.ss()),
             Row(
               children: [
                 SizedBox(width: 10.ss()),

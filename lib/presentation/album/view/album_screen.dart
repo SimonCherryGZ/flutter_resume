@@ -15,14 +15,15 @@ class AlbumScreen extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final bloc = context.read<AlbumBloc>();
-          return WillPopScope(
-            onWillPop: () async {
+          return PopScope(
+            canPop: false,
+            onPopInvoked: (_) async {
               final showAlbums = bloc.state.showAlbums;
               if (showAlbums) {
                 bloc.add(ToggleAlbums());
-                return false;
+                return;
               }
-              return true;
+              context.go(AppRouter.home);
             },
             child: Scaffold(
               appBar: AppBar(

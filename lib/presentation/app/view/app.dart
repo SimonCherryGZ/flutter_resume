@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
     Widget app = BlocBuilder<AppCubit, AppState>(
       buildWhen: (p, c) => p.themeColor != c.themeColor || p.locale != c.locale,
       builder: (context, state) {
+        final themeColor = state.themeColor;
         return MaterialApp.router(
           title: 'FlutterResume',
           onGenerateTitle: (context) {
@@ -53,7 +55,44 @@ class MyApp extends StatelessWidget {
               ? CustomScrollBehavior()
               : null,
           theme: ThemeData(
-            primarySwatch: state.themeColor,
+            primarySwatch: themeColor,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: themeColor,
+              primary: themeColor,
+              brightness: Brightness.light,
+              surfaceTint: Colors.transparent,
+            ),
+            iconTheme: IconThemeData(
+              size: 24.0,
+              fill: 0.0,
+              weight: 400.0,
+              grade: 0.0,
+              opticalSize: 48.0,
+              color: themeColor,
+              opacity: 0.8,
+            ),
+            appBarTheme: AppBarTheme(
+              backgroundColor: themeColor,
+              iconTheme: const IconThemeData(
+                color: Colors.white,
+                size: 24.0,
+              ),
+              titleTextStyle: Typography.dense2014.titleLarge,
+              systemOverlayStyle: SystemUiOverlayStyle.light,
+            ),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(themeColor),
+                foregroundColor: MaterialStateProperty.all(Colors.white),
+                textStyle: MaterialStateProperty.all(const TextStyle(
+                  color: Colors.white,
+                )),
+                // Add more customizations as needed
+              ),
+            ),
+            dividerTheme: DividerThemeData(
+              thickness: 0.5.ss(),
+            ),
           ),
         );
       },
