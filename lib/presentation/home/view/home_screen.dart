@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_resume/config/router.dart';
 import 'package:flutter_resume/l10n/l10n.dart';
@@ -41,10 +42,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return PopScope(
       canPop: false,
       onPopInvoked: (_) async {
-        final router = GoRouter.of(context);
         final canPop = await _showExitConfirmDialog(context);
         if (canPop) {
-          router.pop();
+          SystemNavigator.pop();
         }
       },
       child: BlocListener<AppCubit, AppState>(
