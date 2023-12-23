@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_resume/config/nav_observer.dart';
 import 'package:flutter_resume/config/router_transition.dart';
 import 'package:flutter_resume/domain/domain.dart';
 import 'package:flutter_resume/presentation/album/album.dart';
@@ -42,10 +43,15 @@ class AppRouter {
 
   AppRouter._();
 
+  static final MyNavObserver myNavObserver = MyNavObserver();
+
   // Unknown behavior with hot reload when using the go_router package
   // https://stackoverflow.com/a/73877637
   static final GoRouter _router = GoRouter(
     initialLocation: root,
+    observers: [
+      myNavObserver,
+    ],
     routes: [
       GoRoute(
         path: root,
@@ -57,6 +63,7 @@ class AppRouter {
         path: login,
         pageBuilder: (context, state) => buildFadeTransition(
           key: state.pageKey,
+          name: state.name,
           child: const LoginScreen(),
         ),
       ),
@@ -64,6 +71,7 @@ class AppRouter {
         path: home,
         pageBuilder: (context, state) => buildSlideTransition(
           key: state.pageKey,
+          name: state.name,
           child: const HomeScreen(),
         ),
         redirect: (context, state) async {
@@ -79,6 +87,7 @@ class AppRouter {
             name: setting,
             pageBuilder: (context, state) => buildSlideTransition(
               key: state.pageKey,
+              name: state.name,
               child: const SettingScreen(),
             ),
           ),
@@ -87,6 +96,7 @@ class AppRouter {
             name: post,
             pageBuilder: (_, state) => buildZoomTransition(
               key: state.pageKey,
+              name: state.name,
               child: PostScreen(
                 feed: state.extra as Feed,
                 heroTag: state.queryParameters['heroTag'] ?? '',
@@ -98,6 +108,7 @@ class AppRouter {
             name: conversation,
             pageBuilder: (context, state) => buildSlideTransition(
               key: state.pageKey,
+              name: state.name,
               child: ConversationScreen(
                 conversation: state.extra as Conversation,
               ),
@@ -108,6 +119,7 @@ class AppRouter {
             name: album,
             pageBuilder: (_, state) => buildBottomToTopTransition(
               key: state.pageKey,
+              name: state.name,
               child: const AlbumScreen(),
             ),
           ),
@@ -116,6 +128,7 @@ class AppRouter {
             name: editor,
             pageBuilder: (_, state) => buildSlideTransition(
               key: state.pageKey,
+              name: state.name,
               child: const EditorScreen(),
             ),
           ),
@@ -124,6 +137,7 @@ class AppRouter {
             name: sampleAsync,
             pageBuilder: (_, state) => buildSlideTransition(
               key: state.pageKey,
+              name: state.name,
               child: const SampleAsyncScreen(),
             ),
           ),
@@ -132,6 +146,7 @@ class AppRouter {
             name: sampleKey,
             pageBuilder: (_, state) => buildSlideTransition(
               key: state.pageKey,
+              name: state.name,
               child: const SampleKeyScreen(),
             ),
             routes: [
@@ -140,6 +155,7 @@ class AppRouter {
                 name: sampleGlobalKeyAccess,
                 pageBuilder: (_, state) => buildSlideTransition(
                   key: state.pageKey,
+                  name: state.name,
                   child: SampleGlobalKeyAccessScreen(
                     globalKey: state.extra as GlobalKey,
                   ),
@@ -152,6 +168,7 @@ class AppRouter {
             name: sampleLifecycle,
             pageBuilder: (_, state) => buildSlideTransition(
               key: state.pageKey,
+              name: state.name,
               child: const SampleLifecycleScreen(),
             ),
           ),
@@ -160,6 +177,7 @@ class AppRouter {
             name: sampleAnimation,
             pageBuilder: (_, state) => buildSlideTransition(
               key: state.pageKey,
+              name: state.name,
               child: const SampleAnimationScreen(),
             ),
             routes: [
@@ -168,6 +186,7 @@ class AppRouter {
                 name: sampleHeroAnimation,
                 pageBuilder: (_, state) => buildSlideTransition(
                   key: state.pageKey,
+                  name: state.name,
                   child: const SampleHeroAnimationScreen(),
                 ),
               ),
@@ -178,6 +197,7 @@ class AppRouter {
             name: sampleLayout,
             pageBuilder: (_, state) => buildSlideTransition(
               key: state.pageKey,
+              name: state.name,
               child: const SampleLayoutScreen(),
             ),
           ),
@@ -186,6 +206,7 @@ class AppRouter {
             name: sampleOptimization,
             pageBuilder: (_, state) => buildSlideTransition(
               key: state.pageKey,
+              name: state.name,
               child: const SampleOptimizationScreen(),
             ),
           ),
@@ -194,6 +215,7 @@ class AppRouter {
             name: sampleRouter,
             pageBuilder: (_, state) => buildSlideTransition(
               key: state.pageKey,
+              name: state.name,
               child: const SampleRouterScreen(),
             ),
             routes: [
@@ -202,6 +224,7 @@ class AppRouter {
                 name: sampleSubRouteA,
                 pageBuilder: (_, state) => buildSlideTransition(
                   key: state.pageKey,
+                  name: state.name,
                   child: const SampleSubRouteScreen(
                     label: 'A',
                     nextRoutePath: sampleSubRouteB,
@@ -213,6 +236,7 @@ class AppRouter {
                     name: sampleSubRouteB,
                     pageBuilder: (_, state) => buildSlideTransition(
                       key: state.pageKey,
+                      name: state.name,
                       child: const SampleSubRouteScreen(
                         label: 'B',
                         nextRoutePath: sampleSubRouteC_1,
@@ -244,6 +268,7 @@ class AppRouter {
       name: pathC,
       pageBuilder: (_, state) => buildSlideTransition(
         key: state.pageKey,
+        name: state.name,
         child: SampleSubRouteScreen(
           label: 'C',
           nextRoutePath: pathD,
@@ -255,6 +280,7 @@ class AppRouter {
           name: pathD,
           pageBuilder: (_, state) => buildSlideTransition(
             key: state.pageKey,
+            name: state.name,
             child: const SampleSubRouteScreen(
               label: 'D',
             ),

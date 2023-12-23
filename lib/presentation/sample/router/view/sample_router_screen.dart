@@ -17,6 +17,8 @@ class SampleRouterScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              ObserverShowcaseWidget(),
+              Divider(),
               SubRoutesShowcaseWidget(),
             ],
           ),
