@@ -56,7 +56,6 @@ class _ObserverLogWidgetState extends State<_ObserverLogWidget> {
   @override
   void initState() {
     super.initState();
-    debugPrint('_ObserverLogWidgetState - initState');
     _pushCallback = _createNavObserverCallback('DidPush');
     _popCallback = _createNavObserverCallback('DidPop');
     _removeCallback = _createNavObserverCallback('DidRemove');
@@ -71,7 +70,6 @@ class _ObserverLogWidgetState extends State<_ObserverLogWidget> {
 
   @override
   void dispose() {
-    debugPrint('_ObserverLogWidgetState - dispose');
     AppRouter.myNavObserver.removeDidPushCallback(_pushCallback);
     AppRouter.myNavObserver.removeDidPopCallback(_popCallback);
     AppRouter.myNavObserver.removeDidRemoveCallback(_removeCallback);
@@ -81,20 +79,7 @@ class _ObserverLogWidgetState extends State<_ObserverLogWidget> {
   }
 
   @override
-  void didUpdateWidget(covariant _ObserverLogWidget oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    debugPrint('_ObserverLogWidgetState - didUpdateWidget');
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    debugPrint('_ObserverLogWidgetState - didChangeDependencies');
-  }
-
-  @override
   Widget build(BuildContext context) {
-    debugPrint('_ObserverLogWidgetState - build');
     final screenSize = MediaQuery.sizeOf(context);
     return Container(
       width: screenSize.width * 0.8,
