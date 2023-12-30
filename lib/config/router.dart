@@ -40,6 +40,7 @@ class AppRouter {
   static const String sampleSubRouteD_1 = 'sampleSubRouteD_1';
   static const String sampleSubRouteC_2 = 'sampleSubRouteC_2';
   static const String sampleSubRouteD_2 = 'sampleSubRouteD_2';
+  static const String sampleAppLifecycle = 'sampleAppLifecycle';
 
   AppRouter._();
 
@@ -260,6 +261,15 @@ class AppRouter {
                 sampleSubRouteD_2,
               ),
             ],
+          ),
+          GoRoute(
+            path: sampleAppLifecycle,
+            name: sampleAppLifecycle,
+            pageBuilder: (_, state) => buildSlideTransition(
+              key: state.pageKey,
+              name: state.name,
+              child: const SampleAppLifecycleScreen(),
+            ),
           ),
         ],
       ),
