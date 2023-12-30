@@ -12,13 +12,14 @@ class ObserverShowcaseWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShowcaseWidget(
       title: 'Navigation Observer',
-      content: '打开浮窗查看日志',
+      content: '打开浮窗查看日志\n退出本页面后浮窗仍保留\n浮窗与RouteAware示例共用',
       builder: (context) {
         return Column(
           children: [
             ElevatedButton(
               onPressed: () {
                 DraggableStickyOverlayWidget.show(
+                  tag: 'ObserverShowcase',
                   context: context,
                   view: _ObserverLogWidget(
                     key: GlobalKey(),

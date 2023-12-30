@@ -3,18 +3,22 @@ import 'package:flutter/material.dart';
 // https://takeroro.github.io/2019/07/28/Flutter-Overlay/
 class DraggableStickyOverlayWidget {
   static OverlayEntry? _holder;
+  static String? _tag;
 
   static void remove() {
     _holder?.remove();
     _holder = null;
+    _tag = null;
   }
 
   static void show({
     required BuildContext context,
     required Widget view,
     required Size viewSize,
+    String? tag,
   }) {
     remove();
+    _tag = tag;
     OverlayEntry overlayEntry = OverlayEntry(
       builder: (context) {
         return Positioned(
@@ -23,6 +27,7 @@ class DraggableStickyOverlayWidget {
             context: context,
             view: view,
             viewSize: viewSize,
+            tag: tag,
           ),
         );
       },
@@ -31,10 +36,17 @@ class DraggableStickyOverlayWidget {
     _holder = overlayEntry;
   }
 
+  static bool isShowing() {
+    return _holder != null;
+  }
+
+  static String? get tag => _tag;
+
   static _buildDraggable({
     required BuildContext context,
     required Widget view,
     required Size viewSize,
+    String? tag,
   }) {
     return Draggable(
       ignoringFeedbackSemantics: false,
@@ -45,6 +57,7 @@ class DraggableStickyOverlayWidget {
           context: context,
           view: view,
           viewSize: viewSize,
+          tag: tag,
         );
       },
       childWhenDragging: Container(),
@@ -61,8 +74,10 @@ class DraggableStickyOverlayWidget {
     required BuildContext context,
     required Widget view,
     required Size viewSize,
+    String? tag,
   }) {
     _holder?.remove();
+    _tag = tag;
     _holder = OverlayEntry(
       builder: (context) {
         bool isLeft = true;

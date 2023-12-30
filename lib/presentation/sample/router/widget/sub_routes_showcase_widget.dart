@@ -22,7 +22,7 @@ class SubRoutesShowcaseWidget extends StatelessWidget {
               },
               child: const Text('跳转 A 页面'),
             ),
-            SizedBox(height: 50.ss()),
+            SizedBox(height: 10.ss()),
             ElevatedButton(
               onPressed: () {
                 context.goNamed(AppRouter.sampleSubRouteC_2);

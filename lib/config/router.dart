@@ -45,12 +45,16 @@ class AppRouter {
 
   static final MyNavObserver myNavObserver = MyNavObserver();
 
+  static final RouteObserver<ModalRoute<void>> routeObserver =
+      RouteObserver<ModalRoute<void>>();
+
   // Unknown behavior with hot reload when using the go_router package
   // https://stackoverflow.com/a/73877637
   static final GoRouter _router = GoRouter(
     initialLocation: root,
     observers: [
       myNavObserver,
+      routeObserver,
     ],
     routes: [
       GoRoute(

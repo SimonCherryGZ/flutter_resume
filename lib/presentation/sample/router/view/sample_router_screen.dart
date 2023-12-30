@@ -19,6 +19,8 @@ class SampleRouterScreen extends StatelessWidget {
             children: [
               ObserverShowcaseWidget(),
               Divider(),
+              RouteAwareShowcaseWidget(),
+              Divider(),
               SubRoutesShowcaseWidget(),
             ],
           ),
