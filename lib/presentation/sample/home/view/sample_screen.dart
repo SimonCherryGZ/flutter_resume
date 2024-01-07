@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 class SampleScreen extends StatelessWidget {
   const SampleScreen({super.key});
 
-  static const _items = {
+  static const _items1 = {
     'Async': AppRouter.sampleAsync,
     'Key': AppRouter.sampleKey,
     'State Lifecycle': AppRouter.sampleLifecycle,
@@ -17,6 +17,46 @@ class SampleScreen extends StatelessWidget {
     'Router': AppRouter.sampleRouter,
     'App Lifecycle': AppRouter.sampleAppLifecycle,
   };
+
+  static const _items2 = {
+    'NestedScrollView': AppRouter.sampleNestedScrollView,
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    final tabs = ['Concept', 'UI'];
+    return DefaultTabController(
+      length: tabs.length,
+      child: SafeArea(
+        child: Scaffold(
+          body: Column(
+            children: [
+              TabBar(
+                labelColor: Theme.of(context).primaryColor,
+                unselectedLabelColor: Theme.of(context).disabledColor,
+                indicatorSize: TabBarIndicatorSize.label,
+                tabs: tabs.map((e) => Tab(text: e)).toList(),
+              ),
+              const Expanded(
+                child: TabBarView(
+                  children: [
+                    _SubSampleScreen(_items1),
+                    _SubSampleScreen(_items2),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SubSampleScreen extends StatelessWidget {
+  const _SubSampleScreen(Map<String, String> items) : _items = items;
+
+  final Map<String, String> _items;
 
   @override
   Widget build(BuildContext context) {
