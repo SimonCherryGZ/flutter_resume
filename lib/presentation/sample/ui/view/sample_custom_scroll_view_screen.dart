@@ -13,7 +13,15 @@ class SampleCustomScrollViewScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           _AppBarWidget(),
-          _BodyWidget(),
+          SliverToBoxAdapter(
+            child: SizedBox(height: 10.ss()),
+          ),
+          const _TitleWidget('Horizontal List'),
+          _SliverHorizontalListWidget(),
+          const _TitleWidget('Grid'),
+          _SliverGridWidget(),
+          const _TitleWidget('Vertical List'),
+          _SliverVerticalListWidget(),
         ],
       ),
     );
@@ -112,21 +120,114 @@ class _HeaderBackgroundWidget extends StatelessWidget {
   }
 }
 
-class _BodyWidget extends StatelessWidget {
+class _TitleWidget extends StatelessWidget {
+  const _TitleWidget(this.title);
+
+  final String title;
+
   @override
   Widget build(BuildContext context) {
-    return SliverList.separated(
-      itemCount: 50,
+    return SliverToBoxAdapter(
+      child: Center(
+        child: Text(
+          title,
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
+      ),
+    );
+  }
+}
+
+class _SliverHorizontalListWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: SizedBox(
+        height: 50.ss(),
+        child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          padding: EdgeInsets.symmetric(
+            horizontal: 10.ss(),
+            vertical: 5.ss(),
+          ),
+          itemCount: 10,
+          itemBuilder: (context, index) {
+            return Container(
+              color: Theme.of(context).primaryColorLight,
+              width: 100.ss(),
+              height: 40.ss(),
+              child: Center(
+                child: Text(
+                  '$index',
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            );
+          },
+          separatorBuilder: (context, index) {
+            return SizedBox(width: 10.ss());
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _SliverGridWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+      padding: EdgeInsets.all(10.ss()),
+      sliver: SliverGrid.builder(
+        itemCount: 16,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 4,
+          mainAxisSpacing: 10.ss(),
+          crossAxisSpacing: 10.ss(),
+          childAspectRatio: 1,
+        ),
+        itemBuilder: (context, index) {
+          return Container(
+            color: Theme.of(context).primaryColor,
+            child: Center(
+              child: Text(
+                '$index',
+                style: const TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _SliverVerticalListWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SliverList.builder(
+      itemCount: 20,
       itemBuilder: (context, index) {
-        return SizedBox(
+        return Container(
+          color: Theme.of(context).primaryColorDark,
           height: 40.ss(),
+          margin: EdgeInsets.symmetric(
+            horizontal: 10.ss(),
+            vertical: 5.ss(),
+          ),
           child: Center(
-            child: Text('$index'),
+            child: Text(
+              '$index',
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
           ),
         );
-      },
-      separatorBuilder: (context, index) {
-        return const Divider();
       },
     );
   }
