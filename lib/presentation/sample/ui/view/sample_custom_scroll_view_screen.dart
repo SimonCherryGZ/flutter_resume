@@ -4,40 +4,23 @@ import 'package:flutter_resume/utils/utils.dart';
 
 import '../ui.dart';
 
-class SampleNestedScrollViewScreen extends StatelessWidget {
-  const SampleNestedScrollViewScreen({super.key});
+class SampleCustomScrollViewScreen extends StatelessWidget {
+  const SampleCustomScrollViewScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final tabs = ['A', 'B', 'C'];
     return Scaffold(
-      body: DefaultTabController(
-        length: tabs.length,
-        child: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) {
-            return [
-              _AppBarWidget(
-                tabs: tabs,
-                innerBoxIsScrolled: innerBoxIsScrolled,
-              ),
-            ];
-          },
-          body: _BodyWidget(tabs: tabs),
-        ),
+      body: CustomScrollView(
+        slivers: [
+          _AppBarWidget(),
+          _BodyWidget(),
+        ],
       ),
     );
   }
 }
 
 class _AppBarWidget extends StatefulWidget {
-  const _AppBarWidget({
-    required this.tabs,
-    required this.innerBoxIsScrolled,
-  });
-
-  final List<String> tabs;
-  final bool innerBoxIsScrolled;
-
   @override
   State<_AppBarWidget> createState() => _AppBarWidgetState();
 }
@@ -50,12 +33,11 @@ class _AppBarWidgetState extends State<_AppBarWidget> {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      title: const Text('NestedScrollView'),
+      title: const Text('CustomScrollView'),
       floating: _floating,
       pinned: _pinned,
       snap: _snap,
       expandedHeight: 250.ss(),
-      forceElevated: widget.innerBoxIsScrolled,
       flexibleSpace: _HeaderBackgroundWidget(
         floating: _floating,
         pinned: _pinned,
@@ -67,11 +49,6 @@ class _AppBarWidgetState extends State<_AppBarWidget> {
             _snap = snap;
           });
         },
-      ),
-      bottom: TabBar(
-        labelColor: Colors.white,
-        unselectedLabelColor: Colors.grey,
-        tabs: widget.tabs.map((e) => Tab(text: e)).toList(),
       ),
     );
   }
@@ -118,7 +95,10 @@ class _HeaderBackgroundWidget extends StatelessWidget {
               ),
             ),
           ),
-          Center(
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 75.ss(),
             child: AppBarBehaviorOptionsWidget(
               floating: floating,
               pinned: pinned,
@@ -133,31 +113,21 @@ class _HeaderBackgroundWidget extends StatelessWidget {
 }
 
 class _BodyWidget extends StatelessWidget {
-  const _BodyWidget({
-    required this.tabs,
-  });
-
-  final List<String> tabs;
-
   @override
   Widget build(BuildContext context) {
-    return TabBarView(
-      children: tabs.map((e) {
-        return ListView.separated(
-          itemCount: 50,
-          itemBuilder: (context, index) {
-            return SizedBox(
-              height: 40.ss(),
-              child: Center(
-                child: Text('$e - $index'),
-              ),
-            );
-          },
-          separatorBuilder: (context, index) {
-            return const Divider();
-          },
+    return SliverList.separated(
+      itemCount: 50,
+      itemBuilder: (context, index) {
+        return SizedBox(
+          height: 40.ss(),
+          child: Center(
+            child: Text('$index'),
+          ),
         );
-      }).toList(),
+      },
+      separatorBuilder: (context, index) {
+        return const Divider();
+      },
     );
   }
 }

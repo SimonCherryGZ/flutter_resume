@@ -41,6 +41,7 @@ class AppRouter {
   static const String sampleSubRouteC_2 = 'sampleSubRouteC_2';
   static const String sampleSubRouteD_2 = 'sampleSubRouteD_2';
   static const String sampleAppLifecycle = 'sampleAppLifecycle';
+  static const String sampleCustomScrollView = 'sampleCustomScrollView';
   static const String sampleNestedScrollView = 'sampleNestedScrollView';
 
   AppRouter._();
@@ -270,6 +271,15 @@ class AppRouter {
               key: state.pageKey,
               name: state.name,
               child: const SampleAppLifecycleScreen(),
+            ),
+          ),
+          GoRoute(
+            path: sampleCustomScrollView,
+            name: sampleCustomScrollView,
+            pageBuilder: (_, state) => buildSlideTransition(
+              key: state.pageKey,
+              name: state.name,
+              child: const SampleCustomScrollViewScreen(),
             ),
           ),
           GoRoute(
