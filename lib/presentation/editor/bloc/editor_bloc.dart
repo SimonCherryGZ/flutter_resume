@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_resume/utils/utils.dart';
+import 'package:image/image.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'dart:ui' as ui;
@@ -42,6 +43,24 @@ class EditorBloc extends Bloc<EditorEvent, EditorState> {
         pixelRatio: ScreenUtil.getInstance().screenDensity);
     final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     Uint8List bytes = byteData!.buffer.asUint8List();
+
+    final cropRect = event.cropRect;
+    if (cropRect != null) {
+      var im = decodeImage(bytes);
+      if (im == null) {
+        showToast('保存失败');
+        return;
+      }
+      im = copyCrop(
+        im,
+        x: cropRect.left.toInt(),
+        y: cropRect.top.toInt(),
+        width: cropRect.width.toInt(),
+        height: cropRect.height.toInt(),
+      );
+      bytes = encodePng(im);
+    }
+
     final title = DateTime.now().millisecondsSinceEpoch.toString();
     final entity = await PhotoManager.editor.saveImage(
       bytes,

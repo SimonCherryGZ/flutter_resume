@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -37,7 +39,6 @@ class _EditorScreenState extends State<EditorScreen> {
   @override
   Widget build(BuildContext context) {
     final canvasKey = GlobalKey();
-    final screenSize = MediaQuery.sizeOf(context);
     final dp = MediaQuery.devicePixelRatioOf(context);
     return BlocProvider(
       create: (context) => EditorBloc(canvasKey: canvasKey),
@@ -64,10 +65,41 @@ class _EditorScreenState extends State<EditorScreen> {
                 actions: [
                   IconButton(
                     onPressed: () {
-                      // todo - 裁掉空白区域
+                      // 画布宽高
+                      final renderObject =
+                          canvasKey.currentContext?.findRenderObject();
+                      final renderBox = renderObject != null
+                          ? (renderObject as RenderBox)
+                          : null;
+                      final canvasSize =
+                          renderBox?.size ?? const Size.square(1);
+                      debugPrint('canvasSize: $canvasSize');
+                      // 图片宽高
+                      final photoSize = widget.assetEntity.size;
+                      debugPrint('photoSize: $photoSize');
+                      // PhotoView 缩放
                       final scale = _photoViewController.scale ?? 1.0;
                       debugPrint('scale: $scale');
-                      context.read<EditorBloc>().add(ExportImage());
+                      // 裁掉空白区域
+                      final scaleX = canvasSize.width / photoSize.width;
+                      final scaleY = canvasSize.height / photoSize.height;
+                      final fitCenterScale = min(scaleX, scaleY);
+                      final centerCropScale = max(scaleX, scaleY);
+                      debugPrint('fitCenterScale: $fitCenterScale');
+                      debugPrint('centerCropScale: $centerCropScale');
+                      Rect? cropRect;
+                      if (scale < centerCropScale) {
+                        final scaleSize = photoSize * scale;
+                        cropRect = Rect.fromLTWH(
+                          (canvasSize.width - scaleSize.width) / 2 * dp,
+                          (canvasSize.height - scaleSize.height) / 2 * dp,
+                          scaleSize.width * dp,
+                          scaleSize.height * dp,
+                        );
+                      }
+                      context
+                          .read<EditorBloc>()
+                          .add(ExportImage(cropRect: cropRect));
                     },
                     icon: const Icon(Icons.save),
                   ),
@@ -83,14 +115,11 @@ class _EditorScreenState extends State<EditorScreen> {
                           Center(
                             child: PhotoView(
                               controller: _photoViewController,
+                              backgroundDecoration: BoxDecoration(
+                                color: Colors.grey.shade200,
+                              ),
                               imageProvider: AssetEntityImageProvider(
                                 widget.assetEntity,
-                                isOriginal: false,
-                                thumbnailSize: ThumbnailSize(
-                                  (screenSize.width * dp).toInt(),
-                                  (screenSize.height * dp).toInt(),
-                                ),
-                                thumbnailFormat: ThumbnailFormat.jpeg,
                               ),
                               initialScale:
                                   PhotoViewComputedScale.contained * 1,

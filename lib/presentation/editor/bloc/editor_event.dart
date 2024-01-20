@@ -14,4 +14,10 @@ class AddAssetSticker extends EditorEvent {
   });
 }
 
-class ExportImage extends EditorEvent {}
+class ExportImage extends EditorEvent {
+  ExportImage({
+    this.cropRect,
+  });
+
+  final Rect? cropRect;
+}
