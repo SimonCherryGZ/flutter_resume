@@ -21,6 +21,8 @@ class SampleScreen extends StatelessWidget {
   static const _items2 = {
     'CustomScrollView': AppRouter.sampleCustomScrollView,
     'NestedScrollView': AppRouter.sampleNestedScrollView,
+    'RoundedCornerHeader': AppRouter.sampleRoundedCornerHeader,
+    'RoundedCornerPinnedHeader': AppRouter.sampleRoundedCornerPinnedHeader,
   };
 
   @override

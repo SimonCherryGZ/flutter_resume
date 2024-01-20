@@ -43,6 +43,9 @@ class AppRouter {
   static const String sampleAppLifecycle = 'sampleAppLifecycle';
   static const String sampleCustomScrollView = 'sampleCustomScrollView';
   static const String sampleNestedScrollView = 'sampleNestedScrollView';
+  static const String sampleRoundedCornerHeader = 'sampleRoundedCornerHeader';
+  static const String sampleRoundedCornerPinnedHeader =
+      'sampleRoundedCornerPinnedHeader';
 
   AppRouter._();
 
@@ -289,6 +292,24 @@ class AppRouter {
               key: state.pageKey,
               name: state.name,
               child: const SampleNestedScrollViewScreen(),
+            ),
+          ),
+          GoRoute(
+            path: sampleRoundedCornerHeader,
+            name: sampleRoundedCornerHeader,
+            pageBuilder: (_, state) => buildSlideTransition(
+              key: state.pageKey,
+              name: state.name,
+              child: const SampleRoundedCornerHeaderScreen(),
+            ),
+          ),
+          GoRoute(
+            path: sampleRoundedCornerPinnedHeader,
+            name: sampleRoundedCornerPinnedHeader,
+            pageBuilder: (_, state) => buildSlideTransition(
+              key: state.pageKey,
+              name: state.name,
+              child: const SampleRoundedCornerPinnedHeaderScreen(),
             ),
           ),
         ],
