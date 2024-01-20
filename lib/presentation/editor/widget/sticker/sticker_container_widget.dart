@@ -33,7 +33,7 @@ class StickerContainerWidget extends StatelessWidget {
             onPanUpdate: (details) {
               bloc.add(PanUpdate(details));
             },
-            behavior: HitTestBehavior.opaque,
+            behavior: HitTestBehavior.deferToChild,
             child: BlocBuilder<StickerContainerBloc, StickerContainerState>(
               builder: (context, state) {
                 return Stack(
@@ -81,7 +81,7 @@ class StickerContainerWidget extends StatelessWidget {
             ));
           },
           child: Listener(
-            behavior: HitTestBehavior.opaque,
+            behavior: HitTestBehavior.translucent,
             onPointerDown: (event) {
               bloc.add(PointerDown(event));
             },

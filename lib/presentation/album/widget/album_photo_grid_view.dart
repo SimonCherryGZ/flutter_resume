@@ -30,7 +30,10 @@ class AlbumPhotoGridView extends StatelessWidget {
         final entity = entities[index];
         return GestureDetector(
           onTap: () {
-            context.goNamed(AppRouter.editor);
+            context.goNamed(
+              AppRouter.editor,
+              extra: entity,
+            );
           },
           child: AssetEntityImage(
             entity,

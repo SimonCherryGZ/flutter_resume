@@ -16,6 +16,7 @@ import 'package:flutter_resume/presentation/setting/setting.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_resume/presentation/login/login.dart';
 import 'package:flutter_resume/presentation/welcome/welcome.dart';
+import 'package:photo_manager/photo_manager.dart';
 
 class AppRouter {
   static const String root = '/';
@@ -141,7 +142,9 @@ class AppRouter {
             pageBuilder: (_, state) => buildSlideTransition(
               key: state.pageKey,
               name: state.name,
-              child: const EditorScreen(),
+              child: EditorScreen(
+                assetEntity: state.extra as AssetEntity,
+              ),
             ),
           ),
           GoRoute(
