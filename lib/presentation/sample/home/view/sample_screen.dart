@@ -9,6 +9,7 @@ class SampleScreen extends StatelessWidget {
 
   static const _items1 = {
     'Async': AppRouter.sampleAsync,
+    'Isolate': AppRouter.sampleIsolate,
     'Key': AppRouter.sampleKey,
     'State Lifecycle': AppRouter.sampleLifecycle,
     'Animation': AppRouter.sampleAnimation,

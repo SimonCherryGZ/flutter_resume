@@ -10,6 +10,7 @@ import 'package:flutter_resume/presentation/conversation/conversation.dart';
 import 'package:flutter_resume/presentation/editor/editor.dart';
 import 'package:flutter_resume/presentation/home/home.dart';
 import 'package:flutter_resume/presentation/post/post.dart';
+import 'package:flutter_resume/presentation/sample/isolate/isolate.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 import 'package:flutter_resume/presentation/setting/setting.dart';
 import 'package:go_router/go_router.dart';
@@ -26,6 +27,7 @@ class AppRouter {
   static const String album = 'album';
   static const String editor = 'editor';
   static const String sampleAsync = 'sampleAsync';
+  static const String sampleIsolate = 'sampleIsolate';
   static const String sampleKey = 'sampleKey';
   static const String sampleGlobalKeyAccess = 'sampleGlobalKeyAccess';
   static const String sampleLifecycle = 'sampleLifecycle';
@@ -149,6 +151,15 @@ class AppRouter {
               key: state.pageKey,
               name: state.name,
               child: const SampleAsyncScreen(),
+            ),
+          ),
+          GoRoute(
+            path: sampleIsolate,
+            name: sampleIsolate,
+            pageBuilder: (_, state) => buildSlideTransition(
+              key: state.pageKey,
+              name: state.name,
+              child: const SampleIsolateScreen(),
             ),
           ),
           GoRoute(
