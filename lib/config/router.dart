@@ -10,6 +10,7 @@ import 'package:flutter_resume/presentation/conversation/conversation.dart';
 import 'package:flutter_resume/presentation/editor/editor.dart';
 import 'package:flutter_resume/presentation/home/home.dart';
 import 'package:flutter_resume/presentation/post/post.dart';
+import 'package:flutter_resume/presentation/sample/gesture/gesture.dart';
 import 'package:flutter_resume/presentation/sample/isolate/isolate.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 import 'package:flutter_resume/presentation/setting/setting.dart';
@@ -49,6 +50,7 @@ class AppRouter {
   static const String sampleRoundedCornerHeader = 'sampleRoundedCornerHeader';
   static const String sampleRoundedCornerPinnedHeader =
       'sampleRoundedCornerPinnedHeader';
+  static const String sampleGesture = 'sampleGesture';
 
   AppRouter._();
 
@@ -288,6 +290,15 @@ class AppRouter {
               key: state.pageKey,
               name: state.name,
               child: const SampleAppLifecycleScreen(),
+            ),
+          ),
+          GoRoute(
+            path: sampleGesture,
+            name: sampleGesture,
+            pageBuilder: (_, state) => buildSlideTransition(
+              key: state.pageKey,
+              name: state.name,
+              child: const SampleGestureScreen(),
             ),
           ),
           GoRoute(
