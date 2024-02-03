@@ -1,0 +1,6 @@
+framework module iOSPalette {
+  umbrella header "iOSPalette.h"
+
+  export *
+  module * { export * }
+}
