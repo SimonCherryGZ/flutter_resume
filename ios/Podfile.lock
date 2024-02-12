@@ -3,12 +3,16 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
+  - palette (0.0.1):
+    - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
   - photo_manager (2.0.0):
     - Flutter
     - FlutterMacOS
+  - screen_security (0.0.1):
+    - Flutter
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -20,8 +24,10 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - palette (from `.symlinks/plugins/palette/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - photo_manager (from `.symlinks/plugins/photo_manager/ios`)
+  - screen_security (from `.symlinks/plugins/screen_security/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
@@ -33,10 +39,14 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  palette:
+    :path: ".symlinks/plugins/palette/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   photo_manager:
     :path: ".symlinks/plugins/photo_manager/ios"
+  screen_security:
+    :path: ".symlinks/plugins/screen_security/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
   sqflite:
@@ -47,8 +57,10 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  palette: 4d3d4bbb458a5e9e60d319c88c12edb03c4823b6
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   photo_manager: 4f6810b7dfc4feb03b461ac1a70dacf91fba7604
+  screen_security: 53967eeb24521dfa0581da904f3d3914fa365bd6
   shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
   url_launcher_ios: 68d46cc9766d0c41dbdc884310529557e3cd7a86

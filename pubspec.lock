@@ -732,6 +732,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.27.7"
+  screen_security:
+    dependency: "direct main"
+    description:
+      path: "plugins/screen_security"
+      relative: true
+    source: path
+    version: "0.0.1"
   shared_preferences:
     dependency: "direct main"
     description:
