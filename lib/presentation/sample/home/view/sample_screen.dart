@@ -27,9 +27,13 @@ class SampleScreen extends StatelessWidget {
     'RoundedCornerPinnedHeader': AppRouter.sampleRoundedCornerPinnedHeader,
   };
 
+  static const _items3 = {
+    'ScreenSecurity': AppRouter.sampleScreenSecurity,
+  };
+
   @override
   Widget build(BuildContext context) {
-    final tabs = ['Concept', 'UI'];
+    final tabs = ['Concept', 'UI', 'Demo'];
     return DefaultTabController(
       length: tabs.length,
       child: SafeArea(
@@ -47,6 +51,7 @@ class SampleScreen extends StatelessWidget {
                   children: [
                     _SubSampleScreen(_items1),
                     _SubSampleScreen(_items2),
+                    _SubSampleScreen(_items3),
                   ],
                 ),
               ),

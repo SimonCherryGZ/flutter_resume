@@ -9,11 +9,13 @@ import 'package:flutter_resume/presentation/app/app.dart';
 import 'package:flutter_resume/presentation/conversation/conversation.dart';
 import 'package:flutter_resume/presentation/editor/editor.dart';
 import 'package:flutter_resume/presentation/home/home.dart';
+import 'package:flutter_resume/presentation/photo/photo.dart';
 import 'package:flutter_resume/presentation/post/post.dart';
 import 'package:flutter_resume/presentation/sample/gesture/gesture.dart';
 import 'package:flutter_resume/presentation/sample/isolate/isolate.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 import 'package:flutter_resume/presentation/setting/setting.dart';
+import 'package:flutter_resume/presentation/video/video.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_resume/presentation/login/login.dart';
 import 'package:flutter_resume/presentation/welcome/welcome.dart';
@@ -51,6 +53,11 @@ class AppRouter {
   static const String sampleRoundedCornerPinnedHeader =
       'sampleRoundedCornerPinnedHeader';
   static const String sampleGesture = 'sampleGesture';
+  static const String sampleScreenSecurity = 'sampleScreenSecurity';
+  static const String sampleScreenSecurityPhotoView =
+      'sampleScreenSecurityPhotoView';
+  static const String sampleScreenSecurityVideoPlayer =
+      'sampleScreenSecurityVideoPlayer';
 
   AppRouter._();
 
@@ -336,6 +343,39 @@ class AppRouter {
               name: state.name,
               child: const SampleRoundedCornerPinnedHeaderScreen(),
             ),
+          ),
+          GoRoute(
+            path: sampleScreenSecurity,
+            name: sampleScreenSecurity,
+            pageBuilder: (_, state) => buildSlideTransition(
+              key: state.pageKey,
+              name: state.name,
+              child: const SampleScreenSecurityScreen(),
+            ),
+            routes: [
+              GoRoute(
+                path: sampleScreenSecurityPhotoView,
+                name: sampleScreenSecurityPhotoView,
+                pageBuilder: (_, state) => buildSlideTransition(
+                  key: state.pageKey,
+                  name: state.name,
+                  child: PhotoViewScreen(
+                    imageProvider: state.extra as ImageProvider,
+                  ),
+                ),
+              ),
+              GoRoute(
+                path: sampleScreenSecurityVideoPlayer,
+                name: sampleScreenSecurityVideoPlayer,
+                pageBuilder: (_, state) => buildSlideTransition(
+                  key: state.pageKey,
+                  name: state.name,
+                  child: VideoPlayerScreen(
+                    videoAssetPath: state.extra as String,
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
