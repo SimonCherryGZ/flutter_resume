@@ -12,6 +12,7 @@ import 'package:flutter_resume/presentation/home/home.dart';
 import 'package:flutter_resume/presentation/photo/photo.dart';
 import 'package:flutter_resume/presentation/post/post.dart';
 import 'package:flutter_resume/presentation/sample/gesture/gesture.dart';
+import 'package:flutter_resume/presentation/sample/gojuon/gojuon.dart';
 import 'package:flutter_resume/presentation/sample/isolate/isolate.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 import 'package:flutter_resume/presentation/setting/setting.dart';
@@ -58,6 +59,7 @@ class AppRouter {
       'sampleScreenSecurityPhotoView';
   static const String sampleScreenSecurityVideoPlayer =
       'sampleScreenSecurityVideoPlayer';
+  static const String sampleGojuon = 'sampleGojuon';
 
   AppRouter._();
 
@@ -376,6 +378,15 @@ class AppRouter {
                 ),
               ),
             ],
+          ),
+          GoRoute(
+            path: sampleGojuon,
+            name: sampleGojuon,
+            pageBuilder: (_, state) => buildSlideTransition(
+              key: state.pageKey,
+              name: state.name,
+              child: const SampleGojuonScreen(),
+            ),
           ),
         ],
       ),

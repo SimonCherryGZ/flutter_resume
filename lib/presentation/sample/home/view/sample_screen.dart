@@ -29,6 +29,7 @@ class SampleScreen extends StatelessWidget {
 
   static const _items3 = {
     'ScreenSecurity': AppRouter.sampleScreenSecurity,
+    '五十音': AppRouter.sampleGojuon,
   };
 
   @override
