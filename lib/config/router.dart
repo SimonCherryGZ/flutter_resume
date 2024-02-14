@@ -11,9 +11,6 @@ import 'package:flutter_resume/presentation/editor/editor.dart';
 import 'package:flutter_resume/presentation/home/home.dart';
 import 'package:flutter_resume/presentation/photo/photo.dart';
 import 'package:flutter_resume/presentation/post/post.dart';
-import 'package:flutter_resume/presentation/sample/gesture/gesture.dart';
-import 'package:flutter_resume/presentation/sample/gojuon/gojuon.dart';
-import 'package:flutter_resume/presentation/sample/isolate/isolate.dart';
 import 'package:flutter_resume/presentation/sample/sample.dart';
 import 'package:flutter_resume/presentation/setting/setting.dart';
 import 'package:flutter_resume/presentation/video/video.dart';
@@ -60,6 +57,11 @@ class AppRouter {
   static const String sampleScreenSecurityVideoPlayer =
       'sampleScreenSecurityVideoPlayer';
   static const String sampleGojuon = 'sampleGojuon';
+  static const String sampleColorMatch = 'sampleColorMatch';
+  static const String sampleColorMatchClassic = 'classic';
+  static const String sampleColorMatchTime = 'time';
+  static const String sampleColorMatchChoice = 'choice';
+  static const String sampleColorMatchRace = 'race';
 
   AppRouter._();
 
@@ -387,6 +389,53 @@ class AppRouter {
               name: state.name,
               child: const SampleGojuonScreen(),
             ),
+          ),
+          GoRoute(
+            path: sampleColorMatch,
+            name: sampleColorMatch,
+            pageBuilder: (_, state) => buildSlideTransition(
+              key: state.pageKey,
+              name: state.name,
+              child: const ColorMatchHomeScreen(),
+            ),
+            routes: [
+              GoRoute(
+                path: sampleColorMatchClassic,
+                name: sampleColorMatchClassic,
+                pageBuilder: (_, state) => buildSlideTransition(
+                  key: state.pageKey,
+                  name: state.name,
+                  child: const ColorMatchClassicScreen(),
+                ),
+              ),
+              GoRoute(
+                path: sampleColorMatchTime,
+                name: sampleColorMatchTime,
+                pageBuilder: (_, state) => buildSlideTransition(
+                  key: state.pageKey,
+                  name: state.name,
+                  child: const ColorMatchTimeScreen(),
+                ),
+              ),
+              GoRoute(
+                path: sampleColorMatchChoice,
+                name: sampleColorMatchChoice,
+                pageBuilder: (_, state) => buildSlideTransition(
+                  key: state.pageKey,
+                  name: state.name,
+                  child: const ColorMatchChoiceScreen(),
+                ),
+              ),
+              GoRoute(
+                path: sampleColorMatchRace,
+                name: sampleColorMatchRace,
+                pageBuilder: (_, state) => buildSlideTransition(
+                  key: state.pageKey,
+                  name: state.name,
+                  child: const ColorMatchRaceScreen(),
+                ),
+              ),
+            ],
           ),
         ],
       ),
