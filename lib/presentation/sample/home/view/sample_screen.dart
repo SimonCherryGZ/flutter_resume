@@ -18,6 +18,7 @@ class SampleScreen extends StatelessWidget {
     'Router': AppRouter.sampleRouter,
     'App Lifecycle': AppRouter.sampleAppLifecycle,
     'Gesture': AppRouter.sampleGesture,
+    'Shader': AppRouter.sampleShader,
   };
 
   static const _items2 = {

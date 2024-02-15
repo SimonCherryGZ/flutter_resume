@@ -51,6 +51,7 @@ class AppRouter {
   static const String sampleRoundedCornerPinnedHeader =
       'sampleRoundedCornerPinnedHeader';
   static const String sampleGesture = 'sampleGesture';
+  static const String sampleShader = 'sampleShader';
   static const String sampleScreenSecurity = 'sampleScreenSecurity';
   static const String sampleScreenSecurityPhotoView =
       'sampleScreenSecurityPhotoView';
@@ -310,6 +311,15 @@ class AppRouter {
               key: state.pageKey,
               name: state.name,
               child: const SampleGestureScreen(),
+            ),
+          ),
+          GoRoute(
+            path: sampleShader,
+            name: sampleShader,
+            pageBuilder: (_, state) => buildSlideTransition(
+              key: state.pageKey,
+              name: state.name,
+              child: const SampleShaderScreen(),
             ),
           ),
           GoRoute(

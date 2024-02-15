@@ -10,6 +10,7 @@ export 'router/router.dart';
 export 'app_lifecycle/app_lifecycle.dart';
 export 'gesture/gesture.dart';
 export 'isolate/isolate.dart';
+export 'shader/shader.dart';
 export 'ui/ui.dart';
 export 'screen_security/screen_security.dart';
 export 'gojuon/gojuon.dart';

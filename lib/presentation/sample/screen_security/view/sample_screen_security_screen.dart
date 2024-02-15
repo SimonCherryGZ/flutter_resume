@@ -62,11 +62,12 @@ class _SampleScreenSecurityScreenState extends State<SampleScreenSecurityScreen>
                   onTap: () {
                     context.goNamed(
                       AppRouter.sampleScreenSecurityPhotoView,
-                      extra: const AssetImage('assets/images/sample_photo.jpg'),
+                      extra:
+                          const AssetImage('assets/images/sample_photo_1.jpg'),
                     );
                   },
                   child: Image.asset(
-                    'assets/images/sample_photo.jpg',
+                    'assets/images/sample_photo_1.jpg',
                     fit: BoxFit.contain,
                   ),
                 ),
