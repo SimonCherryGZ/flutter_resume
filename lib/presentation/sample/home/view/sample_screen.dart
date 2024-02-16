@@ -32,6 +32,7 @@ class SampleScreen extends StatelessWidget {
     'ScreenSecurity': AppRouter.sampleScreenSecurity,
     '五十音': AppRouter.sampleGojuon,
     '颜色匹配': AppRouter.sampleColorMatch,
+    'Pathfinding': AppRouter.samplePathfinding,
   };
 
   @override

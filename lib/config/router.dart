@@ -63,6 +63,7 @@ class AppRouter {
   static const String sampleColorMatchTime = 'time';
   static const String sampleColorMatchChoice = 'choice';
   static const String sampleColorMatchRace = 'race';
+  static const String samplePathfinding = 'samplePathfinding';
 
   AppRouter._();
 
@@ -446,6 +447,15 @@ class AppRouter {
                 ),
               ),
             ],
+          ),
+          GoRoute(
+            path: samplePathfinding,
+            name: samplePathfinding,
+            pageBuilder: (_, state) => buildSlideTransition(
+              key: state.pageKey,
+              name: state.name,
+              child: const PathfindingScreen(),
+            ),
           ),
         ],
       ),
