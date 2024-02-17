@@ -64,6 +64,7 @@ class AppRouter {
   static const String sampleColorMatchChoice = 'choice';
   static const String sampleColorMatchRace = 'race';
   static const String samplePathfinding = 'samplePathfinding';
+  static const String sampleLocalNotification = 'sampleLocalNotification';
 
   AppRouter._();
 
@@ -455,6 +456,15 @@ class AppRouter {
               key: state.pageKey,
               name: state.name,
               child: const PathfindingScreen(),
+            ),
+          ),
+          GoRoute(
+            path: sampleLocalNotification,
+            name: sampleLocalNotification,
+            pageBuilder: (_, state) => buildSlideTransition(
+              key: state.pageKey,
+              name: state.name,
+              child: const SampleLocalNotificationScreen(),
             ),
           ),
         ],

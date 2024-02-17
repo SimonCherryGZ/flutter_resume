@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_resume/config/notification_service.dart';
 import 'package:flutter_resume/config/router.dart';
 import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/app/app.dart';
@@ -23,9 +26,25 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final ValueNotifier<int> _indexNotifier = ValueNotifier(0);
+  late final StreamSubscription _selectNotificationSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectNotificationSubscription = NotificationService()
+        .selectNotificationStream
+        .stream
+        .listen((String? payload) async {
+      if (!mounted || payload == null) {
+        return;
+      }
+      context.goNamed(payload);
+    });
+  }
 
   @override
   void dispose() {
+    _selectNotificationSubscription.cancel();
     _indexNotifier.dispose();
     super.dispose();
   }

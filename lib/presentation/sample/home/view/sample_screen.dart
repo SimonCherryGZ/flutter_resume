@@ -33,6 +33,7 @@ class SampleScreen extends StatelessWidget {
     '五十音': AppRouter.sampleGojuon,
     '颜色匹配': AppRouter.sampleColorMatch,
     'Pathfinding': AppRouter.samplePathfinding,
+    'Local Notification': AppRouter.sampleLocalNotification,
   };
 
   @override
