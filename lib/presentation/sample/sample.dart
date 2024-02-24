@@ -17,3 +17,4 @@ export 'gojuon/gojuon.dart';
 export 'color_match/color_match.dart';
 export 'pathfinding/pathfinding.dart';
 export 'local_notification/local_notification.dart';
+export 'custom_layout/custom_layout.dart';

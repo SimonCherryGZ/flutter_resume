@@ -34,6 +34,7 @@ class SampleScreen extends StatelessWidget {
     '颜色匹配': AppRouter.sampleColorMatch,
     'Pathfinding': AppRouter.samplePathfinding,
     'Local Notification': AppRouter.sampleLocalNotification,
+    'Custom Layout': AppRouter.sampleCustomLayout,
   };
 
   @override
