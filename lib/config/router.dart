@@ -63,6 +63,7 @@ class AppRouter {
   static const String sampleColorMatchTime = 'time';
   static const String sampleColorMatchChoice = 'choice';
   static const String sampleColorMatchRace = 'race';
+  static const String sampleCardMatch = 'sampleCardMatch';
   static const String samplePathfinding = 'samplePathfinding';
   static const String sampleLocalNotification = 'sampleLocalNotification';
   static const String sampleCustomLayout = 'sampleCustomLayout';
@@ -449,6 +450,15 @@ class AppRouter {
                 ),
               ),
             ],
+          ),
+          GoRoute(
+            path: sampleCardMatch,
+            name: sampleCardMatch,
+            pageBuilder: (_, state) => buildSlideTransition(
+              key: state.pageKey,
+              name: state.name,
+              child: const SampleCardMatchScreen(),
+            ),
           ),
           GoRoute(
             path: samplePathfinding,

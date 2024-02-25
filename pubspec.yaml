@@ -63,6 +63,7 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - assets/images/card/
     - assets/videos/
   shaders:
     - assets/shaders/pixelation.frag
