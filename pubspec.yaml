@@ -44,6 +44,7 @@ dependencies:
   video_thumbnail: ^0.5.3
   video_player: ^2.8.2
   flutter_local_notifications: ^16.3.2
+  extended_tabs: ^4.1.0
 
   palette:
     path: plugins/palette

@@ -50,6 +50,7 @@ class AppRouter {
   static const String sampleRoundedCornerHeader = 'sampleRoundedCornerHeader';
   static const String sampleRoundedCornerPinnedHeader =
       'sampleRoundedCornerPinnedHeader';
+  static const String sampleNestedTabBarView = 'sampleNestedTabBarView';
   static const String sampleGesture = 'sampleGesture';
   static const String sampleShader = 'sampleShader';
   static const String sampleScreenSecurity = 'sampleScreenSecurity';
@@ -360,6 +361,15 @@ class AppRouter {
               key: state.pageKey,
               name: state.name,
               child: const SampleRoundedCornerPinnedHeaderScreen(),
+            ),
+          ),
+          GoRoute(
+            path: sampleNestedTabBarView,
+            name: sampleNestedTabBarView,
+            pageBuilder: (_, state) => buildSlideTransition(
+              key: state.pageKey,
+              name: state.name,
+              child: const SampleNestedTabBarViewScreen(),
             ),
           ),
           GoRoute(
