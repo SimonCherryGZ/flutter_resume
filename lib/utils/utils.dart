@@ -7,3 +7,4 @@ export 'http_util.dart';
 export 'faker/faker.dart';
 export 'identicon.dart';
 export 'widget_extension.dart';
+export 'audio_manager.dart';

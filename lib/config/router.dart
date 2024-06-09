@@ -68,6 +68,7 @@ class AppRouter {
   static const String samplePathfinding = 'samplePathfinding';
   static const String sampleLocalNotification = 'sampleLocalNotification';
   static const String sampleCustomLayout = 'sampleCustomLayout';
+  static const String sampleAudioPlayer = 'sampleAudioPlayer';
 
   AppRouter._();
 
@@ -495,6 +496,15 @@ class AppRouter {
               key: state.pageKey,
               name: state.name,
               child: const SampleCustomLayoutScreen(),
+            ),
+          ),
+          GoRoute(
+            path: sampleAudioPlayer,
+            name: sampleAudioPlayer,
+            pageBuilder: (_, state) => buildSlideTransition(
+              key: state.pageKey,
+              name: state.name,
+              child: const SampleAudioPlayerScreen(),
             ),
           ),
         ],

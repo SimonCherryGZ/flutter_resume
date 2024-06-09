@@ -37,6 +37,7 @@ class SampleScreen extends StatelessWidget {
     'Pathfinding': AppRouter.samplePathfinding,
     'Local Notification': AppRouter.sampleLocalNotification,
     'Custom Layout': AppRouter.sampleCustomLayout,
+    'Audio Player': AppRouter.sampleAudioPlayer,
   };
 
   @override
