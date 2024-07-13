@@ -6,3 +6,4 @@ export 'draw_curve_painter.dart';
 export 'hero_showcase_widget.dart';
 export 'circle_dash_widget.dart';
 export 'staggered_animation_showcase_widget.dart';
+export 'tween_sequence_showcase_widget.dart';
