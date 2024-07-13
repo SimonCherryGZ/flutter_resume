@@ -96,7 +96,7 @@ class DraggableStickyOverlayWidget {
           left: isLeft ? 0 : null,
           right: isLeft ? null : 0,
           child: DragTarget(
-            onWillAccept: (data) {
+            onWillAcceptWithDetails: (data) {
               return true;
             },
             builder: (
