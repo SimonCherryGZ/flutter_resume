@@ -17,14 +17,27 @@ import 'package:go_router/go_router.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:photo_manager/photo_manager.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => HomeBloc()..add(Init()),
+      lazy: false,
+      child: const _HomeScreenContent(),
+    );
+  }
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenContent extends StatefulWidget {
+  const _HomeScreenContent();
+
+  @override
+  State<_HomeScreenContent> createState() => _HomeScreenContentState();
+}
+
+class _HomeScreenContentState extends State<_HomeScreenContent> {
   final ValueNotifier<int> _indexNotifier = ValueNotifier(0);
   late final StreamSubscription _selectNotificationSubscription;
 
@@ -58,6 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
       MapEntry(l10n.homeBottomNavigationBarItemMessage, Icons.message),
       MapEntry(l10n.homeBottomNavigationBarItemProfile, Icons.person),
     ];
+    final bloc = context.read<HomeBloc>();
     return PopScope(
       canPop: false,
       onPopInvoked: (_) async {
@@ -75,26 +89,28 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         child: Scaffold(
           body: ValueListenableBuilder(
-              valueListenable: _indexNotifier,
-              builder: (context, index, child) {
-                return IndexedStack(
-                  index: index,
-                  children: [
-                    const FeedScreen(),
-                    const SampleScreen(),
-                    const MessageScreen(),
-                    ProfileScreen(
-                      user: context.read<AppCubit>().state.signedInUser!,
-                    ),
-                  ],
-                );
-              }),
+            valueListenable: _indexNotifier,
+            builder: (context, index, child) {
+              return IndexedStack(
+                index: index,
+                children: [
+                  const FeedScreen(),
+                  const SampleScreen(),
+                  const MessageScreen(),
+                  ProfileScreen(
+                    user: context.read<AppCubit>().state.signedInUser!,
+                  ),
+                ],
+              );
+            },
+          ),
           bottomNavigationBar: HomeBottomNavigationBar(
             itemConfigs: bottomNavigationItems,
             onTapItem: (index) {
               _indexNotifier.value = index;
             },
             onTapActionButton: () {
+              bloc.add(DismissActionTips());
               _handleJumpToAlbum(context);
             },
           ),
