@@ -46,11 +46,14 @@ dependencies:
   flutter_local_notifications: ^16.3.2
   extended_tabs: ^4.1.0
   just_audio: ^0.9.38
+  flutter_rust_bridge: 2.7.0
 
   palette:
     path: plugins/palette
   screen_security:
     path: plugins/screen_security
+  rust_lib_flutter_resume:
+    path: rust_builder
 
 dev_dependencies:
   flutter_test:

@@ -20,3 +20,4 @@ export 'pathfinding/pathfinding.dart';
 export 'local_notification/local_notification.dart';
 export 'custom_layout/custom_layout.dart';
 export 'audio/audio.dart';
+export 'rust/rust.dart';

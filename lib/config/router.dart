@@ -70,6 +70,7 @@ class AppRouter {
   static const String sampleCustomLayout = 'sampleCustomLayout';
   static const String sampleAudioPlayer = 'sampleAudioPlayer';
   static const String sampleVideoComments = 'sampleVideoComments';
+  static const String sampleRust = 'sampleRust';
 
   AppRouter._();
 
@@ -515,6 +516,15 @@ class AppRouter {
               key: state.pageKey,
               name: state.name,
               child: const SampleVideoCommentsScreen(),
+            ),
+          ),
+          GoRoute(
+            path: sampleRust,
+            name: sampleRust,
+            pageBuilder: (_, state) => buildSlideTransition(
+              key: state.pageKey,
+              name: state.name,
+              child: const SampleRustScreen(),
             ),
           ),
         ],
