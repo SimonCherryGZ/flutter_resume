@@ -1,7 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_resume/l10n/l10n.dart';
-import 'package:flutter_resume/utils/utils.dart';
+import 'package:flutter_resume/presentation/common/common.dart';
 
 class CommonFeedImageWidget extends StatelessWidget {
   const CommonFeedImageWidget({
@@ -17,41 +15,13 @@ class CommonFeedImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = L10nDelegate.l10n(context);
-    return CachedNetworkImage(
+    return CommonNetworkImage(
       imageUrl: imageUrl,
       fit: BoxFit.cover,
       memCacheWidth: imageWidth,
       memCacheHeight: imageHeight,
       fadeInDuration: const Duration(milliseconds: 100),
       fadeOutDuration: const Duration(milliseconds: 200),
-      placeholder: (_, __) {
-        return Container(color: Colors.grey.shade300);
-      },
-      errorWidget: (context, url, error) {
-        return Container(
-          color: Colors.grey.shade300,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.mood_bad,
-                color: Colors.black45,
-              ),
-              SizedBox(height: 5.ss()),
-              Center(
-                child: Text(
-                  l10n.imageLoadFailedHint,
-                  style: TextStyle(
-                    fontSize: 12.ss(),
-                    color: Colors.black45,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 }

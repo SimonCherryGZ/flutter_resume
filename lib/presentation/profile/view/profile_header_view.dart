@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_resume/config/router.dart';
 import 'package:flutter_resume/domain/domain.dart';
@@ -128,7 +127,7 @@ class AppBarFlexibleSpace extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        CachedNetworkImage(
+        CommonNetworkImage(
           imageUrl:
               'https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAOEcdM.img',
           height: 220.ss(),

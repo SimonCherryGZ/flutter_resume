@@ -1,8 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_resume/domain/domain.dart';
 import 'package:flutter_resume/l10n/l10n.dart';
+import 'package:flutter_resume/presentation/common/common.dart';
 import 'package:flutter_resume/utils/utils.dart';
 import 'package:flutter_resume/presentation/welcome/welcome.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -23,7 +23,7 @@ class WelcomeAdView extends StatelessWidget {
       color: Colors.white,
       child: Stack(
         children: [
-          CachedNetworkImage(
+          CommonNetworkImage(
             imageUrl: splashAd.imageUrl,
             fadeInDuration: const Duration(milliseconds: 150),
             fadeOutDuration: const Duration(milliseconds: 150),
