@@ -20,6 +20,7 @@ class VideoPlayerWidget extends StatefulWidget {
 
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   VideoPlayerController? _videoPlayerController;
+  bool _pausedByUser = false;
 
   @override
   void initState() {
@@ -28,49 +29,82 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   }
 
   @override
+  void dispose() {
+    _videoPlayerController?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final isVideoReady = _videoPlayerController != null &&
-        (_videoPlayerController?.value.isInitialized ?? false);
-    return Center(
-      child: !isVideoReady
-          ? const CircularProgressIndicator()
-          : GestureDetector(
-              onTap: () {
-                if (_videoPlayerController!.value.isPlaying) {
-                  _videoPlayerController?.pause();
-                } else {
-                  _videoPlayerController?.play();
-                }
-              },
-              child: Stack(
-                children: [
-                  Center(
-                    child: AspectRatio(
-                      aspectRatio:
-                          _videoPlayerController?.value.aspectRatio ?? 1,
-                      child: VideoPlayer(_videoPlayerController!),
+    final controller = _videoPlayerController;
+    return controller == null
+        ? const SizedBox.expand()
+        : GestureDetector(
+            onTap: () {
+              if (controller.value.isPlaying) {
+                controller.pause();
+                _pausedByUser = true;
+              } else {
+                controller.play();
+                _pausedByUser = false;
+              }
+            },
+            child: Stack(
+              children: [
+                Center(
+                  child: AspectRatio(
+                    aspectRatio: controller.value.aspectRatio,
+                    child: VideoPlayer(controller),
+                  ),
+                ),
+                Center(
+                  child: ValueListenableBuilder(
+                    valueListenable: controller,
+                    builder: (context, value, child) {
+                      final isPlaying = value.isPlaying;
+                      if (isPlaying || !_pausedByUser) {
+                        return const SizedBox.shrink();
+                      }
+                      return Container(
+                        width: 60.ss(),
+                        height: 60.ss(),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.black.withOpacity(0.5),
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.play_arrow,
+                            size: 50.ss(),
+                            color: Colors.white.withOpacity(0.75),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Positioned(
+                  left: 16.ss(),
+                  right: 16.ss(),
+                  bottom: MediaQuery.paddingOf(context).bottom + 48.ss(),
+                  child: SizedBox(
+                    width: MediaQuery.sizeOf(context).width,
+                    height: 1.ss(),
+                    child: VideoProgressIndicator(
+                      controller,
+                      allowScrubbing: true,
+                      padding: const EdgeInsets.all(0),
+                      colors: const VideoProgressColors(
+                        playedColor: Colors.white,
+                        bufferedColor: Color.fromRGBO(255, 255, 255, 0.5),
+                        backgroundColor: Color.fromRGBO(255, 255, 255, 0.2),
+                      ),
                     ),
                   ),
-                  Center(
-                    child: ValueListenableBuilder(
-                      valueListenable: _videoPlayerController!,
-                      builder: (context, value, child) {
-                        final isPlaying = value.isPlaying;
-                        if (isPlaying) {
-                          return const SizedBox.shrink();
-                        }
-                        return Icon(
-                          Icons.play_arrow,
-                          size: 100.ss(),
-                          color: Colors.white.withOpacity(0.75),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-    );
+          );
   }
 
   Future<void> _loadVideo() async {

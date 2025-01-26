@@ -29,6 +29,7 @@ class SampleScreen extends StatelessWidget {
     'RoundedCornerPinnedHeader': AppRouter.sampleRoundedCornerPinnedHeader,
     'NestedTabBarView': AppRouter.sampleNestedTabBarView,
     'VideoComments': AppRouter.sampleVideoComments,
+    'VideoPageView': AppRouter.sampleVideoPageView,
   };
 
   static const _items3 = {
