@@ -5,11 +5,12 @@ import 'package:flutter_resume/utils/utils.dart';
 
 class CommonLoadFooter extends Footer {
   CommonLoadFooter({
+    IndicatorPosition position = IndicatorPosition.locator,
     this.needEndLabel = true,
   }) : super(
           triggerOffset: 60.ss(),
           clamping: false,
-          position: IndicatorPosition.locator,
+          position: position,
         );
 
   final bool needEndLabel;

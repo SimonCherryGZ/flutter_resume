@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_resume/utils/utils.dart';
 
 class CommonRefreshHeader extends Header {
-  CommonRefreshHeader()
-      : super(
+  CommonRefreshHeader({
+    IndicatorPosition position = IndicatorPosition.locator,
+  }) : super(
           triggerOffset: 50.ss(),
           clamping: false,
-          position: IndicatorPosition.locator,
+          position: position,
           processedDuration: const Duration(milliseconds: 300),
         );
 

@@ -1,4 +1,6 @@
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_resume/presentation/common/common.dart';
 import 'package:flutter_resume/presentation/video/widget/video_player_widget.dart';
 import 'package:video_player/video_player.dart';
 
@@ -21,7 +23,7 @@ class _VideoPageViewScreenContent extends StatefulWidget {
 
 class _VideoPageViewScreenContentState
     extends State<_VideoPageViewScreenContent> {
-  static const _videoUrls = [
+  static const _sVideoUrls = [
     'https://media.w3.org/2010/05/sintel/trailer.mp4',
     'https://www.w3school.com.cn/example/html5/mov_bbb.mp4',
     'https://www.w3schools.com/html/movie.mp4',
@@ -30,22 +32,53 @@ class _VideoPageViewScreenContentState
     'https://stream7.iqilu.com/10339/upload_transcode/202002/09/20200209104902N3v5Vpxuvb.mp4',
   ];
 
+  final List<String> _videoUrls = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _videoUrls.addAll(_sVideoUrls);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.black,
-      child: PageView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: _videoUrls.length,
-        itemBuilder: (context, index) {
-          final url = _videoUrls[index];
-          return VideoPlayerWidget(
-            onCreateVideoPlayerController: () {
-              return VideoPlayerController.networkUrl(Uri.parse(url));
-            },
-            looping: true,
-          );
+      child: EasyRefresh(
+        header: CommonRefreshHeader(
+          position: IndicatorPosition.above,
+        ),
+        footer: CommonLoadFooter(
+          position: IndicatorPosition.above,
+        ),
+        onRefresh: () {
+          setState(() {
+            _videoUrls.clear();
+            _videoUrls.addAll(_sVideoUrls);
+          });
         },
+        onLoad: () {
+          setState(() {
+            _videoUrls.addAll(_sVideoUrls);
+          });
+        },
+        child: Stack(
+          children: [
+            PageView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: _videoUrls.length,
+              itemBuilder: (context, index) {
+                final url = _videoUrls[index];
+                return VideoPlayerWidget(
+                  onCreateVideoPlayerController: () {
+                    return VideoPlayerController.networkUrl(Uri.parse(url));
+                  },
+                  looping: true,
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
