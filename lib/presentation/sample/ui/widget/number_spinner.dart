@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+typedef NumberUnitWidgetBuilder = Widget Function(
+    BuildContext context, String text);
+
 class NumberSpinner extends StatefulWidget {
   const NumberSpinner({
     super.key,
@@ -12,6 +15,7 @@ class NumberSpinner extends StatefulWidget {
     required this.delayBetween,
     this.curve = Curves.easeOut,
     this.controller,
+    this.numberUnitWidgetBuilder,
     this.onCompleted,
   });
 
@@ -24,6 +28,7 @@ class NumberSpinner extends StatefulWidget {
   final Duration delayBetween;
   final Curve curve;
   final NumberSpinnerController? controller;
+  final NumberUnitWidgetBuilder? numberUnitWidgetBuilder;
   final VoidCallback? onCompleted;
 
   @override
@@ -92,6 +97,7 @@ class _NumberSpinnerState extends State<NumberSpinner>
           numberTextStyle: widget.numberTextStyle,
           curve: widget.curve,
           animationController: _animationControllers[i],
+          numberWidgetBuilder: widget.numberUnitWidgetBuilder,
         );
       }).toList(),
     );
@@ -169,6 +175,7 @@ class _NumberSpinnerUnitWidget extends StatelessWidget {
     required this.targetNumber,
     required this.showAnimation,
     required this.animationController,
+    this.numberWidgetBuilder,
   });
 
   final double? width;
@@ -178,6 +185,7 @@ class _NumberSpinnerUnitWidget extends StatelessWidget {
   final int targetNumber;
   final bool showAnimation;
   final AnimationController animationController;
+  final NumberUnitWidgetBuilder? numberWidgetBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -207,15 +215,18 @@ class _NumberSpinnerUnitWidget extends StatelessWidget {
               children: List.generate(
                 total,
                 (index) {
-                  return SizedBox(
-                    height: numberHeight,
-                    child: Center(
-                      child: Text(
-                        index == 0 ? '?' : '${(index - 1) % 10}',
-                        style: numberTextStyle,
-                      ),
-                    ),
-                  );
+                  final text = index == 0 ? '?' : '${(index - 1) % 10}';
+                  return numberWidgetBuilder != null
+                      ? numberWidgetBuilder!.call(context, text)
+                      : SizedBox(
+                          height: numberHeight,
+                          child: Center(
+                            child: Text(
+                              text,
+                              style: numberTextStyle,
+                            ),
+                          ),
+                        );
                 },
               ),
             ),
