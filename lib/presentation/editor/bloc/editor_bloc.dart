@@ -64,10 +64,9 @@ class EditorBloc extends Bloc<EditorEvent, EditorState> {
     final title = DateTime.now().millisecondsSinceEpoch.toString();
     final entity = await PhotoManager.editor.saveImage(
       bytes,
-      title: title,
+      filename: title,
     );
     emit(state.copyWith(isShowLoading: false));
-    showToast(
-        entity != null ? '已保存到 ${entity.relativePath}/$title.jpg' : '保存失败');
+    showToast('已保存到 ${entity.relativePath}/$title.jpg');
   }
 }

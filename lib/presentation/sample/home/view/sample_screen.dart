@@ -42,6 +42,7 @@ class SampleScreen extends StatelessWidget {
     'Local Notification': AppRouter.sampleLocalNotification,
     'Custom Layout': AppRouter.sampleCustomLayout,
     'Audio Player': AppRouter.sampleAudioPlayer,
+    'Text to Image': AppRouter.sampleTextToImage,
   };
 
   @override
