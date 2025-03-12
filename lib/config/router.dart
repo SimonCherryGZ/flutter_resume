@@ -93,13 +93,13 @@ class AppRouter {
     routes: [
       GoRoute(
         path: root,
-        pageBuilder: (_, __) => const NoTransitionPage(
-          child: WelcomeScreen(),
+        pageBuilder: (_, __) => buildCircleRevealTransition(
+          child: const WelcomeScreen(),
         ),
       ),
       GoRoute(
         path: login,
-        pageBuilder: (context, state) => buildFadeTransition(
+        pageBuilder: (context, state) => buildCircleRevealTransition(
           key: state.pageKey,
           name: state.name,
           child: const LoginScreen(),
@@ -107,7 +107,7 @@ class AppRouter {
       ),
       GoRoute(
         path: home,
-        pageBuilder: (context, state) => buildSlideTransition(
+        pageBuilder: (context, state) => buildCircleRevealTransition(
           key: state.pageKey,
           name: state.name,
           child: const HomeScreen(),

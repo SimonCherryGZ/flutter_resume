@@ -68,3 +68,51 @@ CustomTransitionPage buildBottomToTopTransition({
     },
   );
 }
+
+class CircleRevealClipper extends CustomClipper<Path> {
+  final double fraction;
+
+  CircleRevealClipper(this.fraction);
+
+  @override
+  Path getClip(Size size) {
+    final center = Offset(size.width / 2, size.height / 2);
+    final maxRadius = size.shortestSide * 1.5;
+    return Path()
+      ..addOval(Rect.fromCircle(center: center, radius: maxRadius * fraction));
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => true;
+}
+
+CustomTransitionPage buildCircleRevealTransition({
+  required Widget child,
+  LocalKey? key,
+  String? name,
+}) {
+  return CustomTransitionPage<void>(
+    key: key,
+    name: name,
+    child: child,
+    transitionDuration: const Duration(milliseconds: 600),
+    reverseTransitionDuration: const Duration(milliseconds: 400),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      final curvedAnimation = CurvedAnimation(
+        parent: animation,
+        curve: Curves.easeInOutCubic,
+      );
+
+      return Stack(
+        children: [
+          // 保持前一个页面不动
+          const Positioned.fill(child: ExcludeSemantics()),
+          ClipPath(
+            clipper: CircleRevealClipper(curvedAnimation.value),
+            child: child,
+          ),
+        ],
+      );
+    },
+  );
+}
