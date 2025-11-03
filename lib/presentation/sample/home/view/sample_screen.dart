@@ -28,6 +28,7 @@ class SampleScreen extends StatelessWidget {
     'RoundedCornerHeader': AppRouter.sampleRoundedCornerHeader,
     'RoundedCornerPinnedHeader': AppRouter.sampleRoundedCornerPinnedHeader,
     'NestedTabBarView': AppRouter.sampleNestedTabBarView,
+    'WaterfallFlow': AppRouter.sampleWaterfallFlow,
     'VideoComments': AppRouter.sampleVideoComments,
     'VideoPageView': AppRouter.sampleVideoPageView,
     'NumberSpinner': AppRouter.sampleNumberSpinner,

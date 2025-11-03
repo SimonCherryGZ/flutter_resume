@@ -6,3 +6,4 @@ export 'sample_nested_tab_bar_view_screen.dart';
 export 'sample_video_comments_screen.dart';
 export 'sample_video_page_view_screen.dart';
 export 'sample_number_spinner_screen.dart';
+export 'sample_waterfall_flow_screen.dart';

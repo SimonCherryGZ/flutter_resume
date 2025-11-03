@@ -74,6 +74,7 @@ class AppRouter {
   static const String sampleVideoPageView = 'sampleVideoPageView';
   static const String sampleNumberSpinner = 'sampleNumberSpinner';
   static const String sampleTextToImage = 'sampleTextToImage';
+  static const String sampleWaterfallFlow = 'sampleWaterfallFlow';
 
   AppRouter._();
 
@@ -555,6 +556,15 @@ class AppRouter {
               key: state.pageKey,
               name: state.name,
               child: const SampleTextToImageScreen(),
+            ),
+          ),
+          GoRoute(
+            path: sampleWaterfallFlow,
+            name: sampleWaterfallFlow,
+            pageBuilder: (_, state) => buildSlideTransition(
+              key: state.pageKey,
+              name: state.name,
+              child: const SampleWaterfallFlowScreen(),
             ),
           ),
         ],

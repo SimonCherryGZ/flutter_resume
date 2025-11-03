@@ -47,6 +47,9 @@ dependencies:
   extended_tabs: ^4.1.0
   just_audio: ^0.9.38
   flutter_rust_bridge: 2.7.0
+  waterfall_flow: ^3.1.1
+  pull_to_refresh_notification: ^3.1.1
+  loading_more_list: ^7.1.0
 
   palette:
     path: plugins/palette

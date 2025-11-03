@@ -294,6 +294,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.4.0"
+  extended_list:
+    dependency: transitive
+    description:
+      name: extended_list
+      sha256: fa7bcb2645b7d6849918d499fda6ea917cda85e43b2e06dfec2a29b649722974
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.2"
+  extended_list_library:
+    dependency: transitive
+    description:
+      name: extended_list_library
+      sha256: cb424a04464e89bd6737f9ae025029bd8e913c7bf37101ad10c2defe0238d842
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   extended_tabs:
     dependency: "direct main"
     description:
@@ -626,6 +642,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  loading_more_list:
+    dependency: "direct main"
+    description:
+      name: loading_more_list
+      sha256: "615eeb5e73b653b2256a6482d7a021eb94d18ae51ccb2c033bef1355db27f428"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.1.0"
+  loading_more_list_library:
+    dependency: transitive
+    description:
+      name: loading_more_list_library
+      sha256: "7e9edc3c3c2f9e11ca69ac4ca6b7596fbb708d64dc8f870baa626a287893af87"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.1"
   logging:
     dependency: transitive
     description:
@@ -873,6 +905,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
+  pull_to_refresh_notification:
+    dependency: "direct main"
+    description:
+      name: pull_to_refresh_notification
+      sha256: aea845cd367c158082821ff2c7ed38dbf1930aa8e15c86df74cad70fa10fd75e
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.1"
   rust_lib_flutter_resume:
     dependency: "direct main"
     description:
@@ -1276,6 +1316,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.4"
+  waterfall_flow:
+    dependency: "direct main"
+    description:
+      name: waterfall_flow
+      sha256: e7ab5728fe536e53cf4b8ea97128112ad18c7f1d797d91f073bf396fa6910181
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.1"
   web:
     dependency: transitive
     description:
