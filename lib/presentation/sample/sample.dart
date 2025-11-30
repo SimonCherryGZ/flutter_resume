@@ -22,3 +22,4 @@ export 'custom_layout/custom_layout.dart';
 export 'audio/audio.dart';
 export 'rust/rust.dart';
 export 'text_to_image/text_to_image.dart';
+export 'minesweeper/minesweeper.dart';

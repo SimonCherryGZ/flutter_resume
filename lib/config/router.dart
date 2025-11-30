@@ -75,6 +75,7 @@ class AppRouter {
   static const String sampleNumberSpinner = 'sampleNumberSpinner';
   static const String sampleTextToImage = 'sampleTextToImage';
   static const String sampleWaterfallFlow = 'sampleWaterfallFlow';
+  static const String sampleMinesweeper = 'sampleMinesweeper';
 
   AppRouter._();
 
@@ -565,6 +566,15 @@ class AppRouter {
               key: state.pageKey,
               name: state.name,
               child: const SampleWaterfallFlowScreen(),
+            ),
+          ),
+          GoRoute(
+            path: sampleMinesweeper,
+            name: sampleMinesweeper,
+            pageBuilder: (_, state) => buildSlideTransition(
+              key: state.pageKey,
+              name: state.name,
+              child: const MinesweeperPage(),
             ),
           ),
         ],
