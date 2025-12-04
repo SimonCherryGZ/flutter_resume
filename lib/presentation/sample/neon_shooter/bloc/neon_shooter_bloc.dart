@@ -222,6 +222,7 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
         bullets: bullets,
         items: items,
         wave: newWave,
+        ticks: _ticks,
       ));
     }
   }

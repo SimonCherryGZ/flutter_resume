@@ -10,6 +10,7 @@ class NeonShooterState {
   final List<Item> items;
   final int wave;
   final Size screenSize;
+  final int ticks;
 
   NeonShooterState({
     required this.status,
@@ -19,6 +20,7 @@ class NeonShooterState {
     required this.items,
     required this.wave,
     required this.screenSize,
+    required this.ticks,
   });
 
   factory NeonShooterState.initial() {
@@ -35,6 +37,7 @@ class NeonShooterState {
       items: [],
       wave: 1,
       screenSize: Size.zero,
+      ticks: 0,
     );
   }
 
@@ -46,6 +49,7 @@ class NeonShooterState {
     List<Item>? items,
     int? wave,
     Size? screenSize,
+    int? ticks,
   }) {
     return NeonShooterState(
       status: status ?? this.status,
@@ -55,6 +59,7 @@ class NeonShooterState {
       items: items ?? this.items,
       wave: wave ?? this.wave,
       screenSize: screenSize ?? this.screenSize,
+      ticks: ticks ?? this.ticks,
     );
   }
 }

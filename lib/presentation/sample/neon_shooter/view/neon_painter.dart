@@ -41,19 +41,43 @@ class NeonPainter extends CustomPainter {
       ..style = PaintingStyle.fill;
     canvas.drawRect(Offset.zero & size, paint);
 
-    // Grid
+    // Draw Starfield
+    final random = Random(42); // Fixed seed for consistent star positions
+    const int starCount = 100;
+    
+    for (int i = 0; i < starCount; i++) {
+      double x = random.nextDouble() * size.width;
+      double y = random.nextDouble() * size.height;
+      double speed = 1.0 + random.nextDouble() * 4.0; // Different speeds for parallax
+      double sizeVal = 1.0 + random.nextDouble() * 2.0;
+      double opacity = 0.1 + random.nextDouble() * 0.3;
+
+      // Animate y
+      y = (y + state.ticks * speed) % size.height;
+
+      final starPaint = Paint()
+        ..color = Colors.white.withOpacity(opacity)
+        ..style = PaintingStyle.fill;
+      
+      canvas.drawCircle(Offset(x, y), sizeVal, starPaint);
+    }
+
+    // Grid (Moving)
     final gridPaint = Paint()
       ..color = Colors.purple.withOpacity(0.2)
       ..strokeWidth = 1;
     
     const double gridSize = 50;
-    // Moving grid effect could be added here using a time offset if available in state
+    double gridOffsetY = (state.ticks * 2.0) % gridSize;
     
     for (double x = 0; x < size.width; x += gridSize) {
       canvas.drawLine(Offset(x, 0), Offset(x, size.height), gridPaint);
     }
-    for (double y = 0; y < size.height; y += gridSize) {
-      canvas.drawLine(Offset(0, y), Offset(size.width, y), gridPaint);
+    for (double y = -gridSize; y < size.height; y += gridSize) {
+      double drawY = y + gridOffsetY;
+      if (drawY >= 0 && drawY <= size.height) {
+        canvas.drawLine(Offset(0, drawY), Offset(size.width, drawY), gridPaint);
+      }
     }
   }
 

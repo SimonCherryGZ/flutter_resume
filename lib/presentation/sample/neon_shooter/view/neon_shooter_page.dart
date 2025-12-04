@@ -71,7 +71,8 @@ class _NeonShooterView extends StatelessWidget {
                               'HP: ',
                               style: TextStyle(color: Colors.white, fontSize: 16),
                             ),
-                            Expanded(
+                            SizedBox(
+                              width: 100,
                               child: LinearProgressIndicator(
                                 value: state.player.hp / state.player.maxHp,
                                 backgroundColor: Colors.grey[800],
@@ -80,6 +81,7 @@ class _NeonShooterView extends StatelessWidget {
                                 ),
                               ),
                             ),
+                            const Spacer(),
                           ],
                         ),
                         const SizedBox(height: 8),
