@@ -27,13 +27,14 @@ class GameEntity {
   Rect get rect => position & size;
 }
 
-enum EnemyType { normal, fast, shooter, boss }
+enum EnemyType { normal, fast, shooter, boss, sine, tracker }
 
 class Enemy extends GameEntity {
   double hp;
   double maxHp;
   EnemyType enemyType;
   int scoreValue;
+  double initialX;
 
   Enemy({
     required super.position,
@@ -44,7 +45,9 @@ class Enemy extends GameEntity {
     required this.maxHp,
     required this.enemyType,
     required this.scoreValue,
-  }) : super(type: EntityType.enemy);
+    double? initialX,
+  }) : initialX = initialX ?? position.dx,
+       super(type: EntityType.enemy);
 }
 
 class Player extends GameEntity {

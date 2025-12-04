@@ -175,6 +175,33 @@ class NeonPainter extends CustomPainter {
         canvas.drawRect(enemy.rect, paint);
         canvas.drawCircle(center, halfW * 0.5, paint);
         break;
+      case EnemyType.sine:
+        // Wave shape
+        final path = Path();
+        path.moveTo(center.dx - halfW, center.dy - halfH);
+        path.quadraticBezierTo(center.dx, center.dy, center.dx + halfW, center.dy - halfH);
+        path.quadraticBezierTo(center.dx, center.dy, center.dx - halfW, center.dy + halfH);
+        path.quadraticBezierTo(center.dx, center.dy, center.dx + halfW, center.dy + halfH);
+        canvas.drawPath(path, paint);
+        break;
+      case EnemyType.tracker:
+        // Arrow shape
+        final path = Path();
+        path.moveTo(center.dx, center.dy + halfH);
+        path.lineTo(center.dx - halfW, center.dy - halfH);
+        path.lineTo(center.dx, center.dy - halfH * 0.5);
+        path.lineTo(center.dx + halfW, center.dy - halfH);
+        path.close();
+        
+        // Rotate towards velocity
+        canvas.save();
+        canvas.translate(center.dx, center.dy);
+        double angle = atan2(enemy.velocity.dy, enemy.velocity.dx) - pi / 2;
+        canvas.rotate(angle);
+        canvas.translate(-center.dx, -center.dy);
+        canvas.drawPath(path, paint);
+        canvas.restore();
+        break;
     }
 
     // HP Bar for Boss

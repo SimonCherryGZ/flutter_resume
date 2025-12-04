@@ -123,7 +123,7 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
     // 4. Update Entities
     for (final enemy in enemies) {
       enemy.update();
-      // Simple AI: Move down or towards player
+      // AI Movement
       if (enemy.enemyType == EnemyType.boss) {
          // Boss logic: hover at top, move side to side
          if (enemy.position.dy < 100) {
@@ -131,6 +131,23 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
          } else {
            enemy.velocity = Offset(sin(_ticks * 0.05) * 2, 0);
          }
+      } else if (enemy.enemyType == EnemyType.sine) {
+        // Sine wave movement
+        double newY = enemy.position.dy + enemy.velocity.dy;
+        double newX = enemy.initialX + sin(_ticks * 0.1) * 100; // Amplitude 100
+        // Clamp X to screen
+        newX = newX.clamp(0.0, screenSize.width - enemy.size.width);
+        enemy.position = Offset(newX, newY);
+      } else if (enemy.enemyType == EnemyType.tracker) {
+        // Track player
+        Offset direction = (player.position - enemy.position);
+        double distance = direction.distance;
+        if (distance > 0) {
+          direction = direction / distance;
+          // Move towards player but keep some forward momentum or just direct tracking?
+          // Let's do direct tracking with constant speed
+          enemy.velocity = direction * 2.5; // Speed 2.5
+        }
       } else {
         // Normal enemies move down
         if (enemy.position.dy > screenSize.height) {
@@ -264,7 +281,7 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
       color = const Color(0xFFFF0000); // Red
       score = 500;
       x = screenSize.width / 2 - 40; // Center
-    } else if (roll < 20 && wave > 1) {
+    } else if (roll < 20 && wave > 0) {
       type = EnemyType.shooter;
       hp = 30.0 + wave * 5;
       speed = 1.5;
@@ -276,6 +293,18 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
       speed = 4.0 + wave * 0.2;
       color = const Color(0xFF00FF00); // Green
       score = 20;
+    } else if (roll < 60 && wave > 1) {
+      type = EnemyType.sine;
+      hp = 25.0 + wave * 3;
+      speed = 2.0 + wave * 0.1;
+      color = Colors.purpleAccent;
+      score = 25;
+    } else if (roll < 80 && wave > 2) {
+      type = EnemyType.tracker;
+      hp = 20.0 + wave * 3;
+      speed = 2.5; // Speed handled in update
+      color = Colors.orangeAccent;
+      score = 30;
     }
 
     enemies.add(Enemy(
