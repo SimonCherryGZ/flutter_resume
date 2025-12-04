@@ -33,6 +33,11 @@ class NeonPainter extends CustomPainter {
     for (final item in state.items) {
       _drawItem(canvas, item);
     }
+
+    // Draw Particles
+    for (final particle in state.particles) {
+      _drawParticle(canvas, particle);
+    }
   }
 
   void _drawBackground(Canvas canvas, Size size) {
@@ -82,8 +87,13 @@ class NeonPainter extends CustomPainter {
   }
 
   void _drawPlayer(Canvas canvas, Player player) {
+    Color color = player.color;
+    if (state.ticks - player.lastHitTick < 5) {
+      color = Colors.white;
+    }
+
     final paint = Paint()
-      ..color = player.color
+      ..color = color
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2
       ..maskFilter = const MaskFilter.blur(BlurStyle.solid, 5);
@@ -119,8 +129,13 @@ class NeonPainter extends CustomPainter {
   }
 
   void _drawEnemy(Canvas canvas, Enemy enemy) {
+    Color color = enemy.color;
+    if (state.ticks - enemy.lastHitTick < 5) {
+      color = Colors.white;
+    }
+
     final paint = Paint()
-      ..color = enemy.color
+      ..color = color
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2
       ..maskFilter = const MaskFilter.blur(BlurStyle.solid, 5);
@@ -214,6 +229,14 @@ class NeonPainter extends CustomPainter {
     );
     textPainter.layout();
     textPainter.paint(canvas, center - Offset(textPainter.width / 2, textPainter.height / 2));
+  }
+
+  void _drawParticle(Canvas canvas, Particle particle) {
+    final paint = Paint()
+      ..color = particle.color.withOpacity(particle.life)
+      ..style = PaintingStyle.fill;
+    
+    canvas.drawCircle(particle.position, particle.size.width, paint);
   }
 
   @override

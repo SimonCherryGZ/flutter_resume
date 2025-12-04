@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-enum EntityType { player, enemy, bullet, item }
+enum EntityType { player, enemy, bullet, item, particle }
 
 class GameEntity {
   Offset position;
@@ -9,6 +9,7 @@ class GameEntity {
   Color color;
   EntityType type;
   bool shouldRemove = false;
+  int lastHitTick = 0;
 
   GameEntity({
     required this.position,
@@ -16,6 +17,7 @@ class GameEntity {
     required this.velocity,
     required this.color,
     required this.type,
+    this.lastHitTick = 0,
   });
 
   void update() {
@@ -93,4 +95,19 @@ class Item extends GameEntity {
     required super.color,
     required this.itemType,
   }) : super(type: EntityType.item);
+}
+
+class Particle extends GameEntity {
+  double life; // 0.0 to 1.0
+  double decay;
+
+  Particle({
+    required super.position,
+    required super.size,
+    required super.velocity,
+    required super.color,
+    required this.life,
+    required this.decay,
+  }) : super(type: EntityType.bullet); // Using bullet type as placeholder or add new type if needed, but for now it's fine. 
+  // Actually let's add EntityType.particle to be clean.
 }

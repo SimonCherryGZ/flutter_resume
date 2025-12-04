@@ -8,6 +8,7 @@ class NeonShooterState {
   final List<Enemy> enemies;
   final List<Bullet> bullets;
   final List<Item> items;
+  final List<Particle> particles;
   final int wave;
   final Size screenSize;
   final int ticks;
@@ -18,6 +19,7 @@ class NeonShooterState {
     required this.enemies,
     required this.bullets,
     required this.items,
+    required this.particles,
     required this.wave,
     required this.screenSize,
     required this.ticks,
@@ -35,6 +37,7 @@ class NeonShooterState {
       enemies: [],
       bullets: [],
       items: [],
+      particles: [],
       wave: 1,
       screenSize: Size.zero,
       ticks: 0,
@@ -47,6 +50,7 @@ class NeonShooterState {
     List<Enemy>? enemies,
     List<Bullet>? bullets,
     List<Item>? items,
+    List<Particle>? particles,
     int? wave,
     Size? screenSize,
     int? ticks,
@@ -57,6 +61,7 @@ class NeonShooterState {
       enemies: enemies ?? this.enemies,
       bullets: bullets ?? this.bullets,
       items: items ?? this.items,
+      particles: particles ?? this.particles,
       wave: wave ?? this.wave,
       screenSize: screenSize ?? this.screenSize,
       ticks: ticks ?? this.ticks,

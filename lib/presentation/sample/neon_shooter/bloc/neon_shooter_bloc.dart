@@ -98,6 +98,7 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
     final enemies = List<Enemy>.from(state.enemies);
     final bullets = List<Bullet>.from(state.bullets);
     final items = List<Item>.from(state.items);
+    final particles = List<Particle>.from(state.particles);
     final screenSize = state.screenSize;
 
     // 1. Spawn Enemies
@@ -153,6 +154,14 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
       }
     }
 
+    for (final particle in particles) {
+      particle.update();
+      particle.life -= particle.decay;
+      if (particle.life <= 0) {
+        particle.shouldRemove = true;
+      }
+    }
+
     // 5. Collision Detection
     // Player Bullets hit Enemies
     for (final bullet in bullets.where((b) => b.isPlayerBullet)) {
@@ -164,6 +173,10 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
             enemy.shouldRemove = true;
             player.score += enemy.scoreValue;
             _tryDropItem(enemy, items);
+            _spawnExplosion(particles, enemy.position, enemy.color, 20);
+          } else {
+             enemy.lastHitTick = _ticks;
+             _spawnExplosion(particles, bullet.position, Colors.white, 5);
           }
         }
       }
@@ -175,12 +188,16 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
         if (bullet.rect.overlaps(player.rect)) {
           bullet.shouldRemove = true;
           player.hp -= bullet.damage;
+          player.lastHitTick = _ticks;
+          _spawnExplosion(particles, bullet.position, Colors.red, 5);
         }
       }
       for (final enemy in enemies) {
         if (enemy.rect.overlaps(player.rect)) {
           enemy.shouldRemove = true;
           player.hp -= 20; // Collision damage
+          player.lastHitTick = _ticks;
+          _spawnExplosion(particles, enemy.position, Colors.red, 10);
         }
       }
     }
@@ -197,6 +214,7 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
     enemies.removeWhere((e) => e.shouldRemove);
     bullets.removeWhere((b) => b.shouldRemove);
     items.removeWhere((i) => i.shouldRemove);
+    particles.removeWhere((p) => p.shouldRemove);
 
     // 7. Check Game Over
     if (player.hp <= 0) {
@@ -221,6 +239,7 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
         enemies: enemies,
         bullets: bullets,
         items: items,
+        particles: particles,
         wave: newWave,
         ticks: _ticks,
       ));
@@ -350,6 +369,21 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
       case ItemType.heal:
         player.hp = (player.hp + 30).clamp(0, player.maxHp);
         break;
+    }
+  }
+
+  void _spawnExplosion(List<Particle> particles, Offset position, Color color, int count) {
+    for (int i = 0; i < count; i++) {
+      double angle = _random.nextDouble() * 2 * pi;
+      double speed = 1.0 + _random.nextDouble() * 3.0;
+      particles.add(Particle(
+        position: position,
+        size: const Size(2, 2),
+        velocity: Offset(cos(angle) * speed, sin(angle) * speed),
+        color: color,
+        life: 1.0,
+        decay: 0.05 + _random.nextDouble() * 0.05,
+      ));
     }
   }
   
