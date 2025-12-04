@@ -51,10 +51,6 @@ class _NeonShooterView extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: BlocBuilder<NeonShooterBloc, NeonShooterState>(
-                  buildWhen: (previous, current) => 
-                    previous.player.score != current.player.score || 
-                    previous.player.hp != current.player.hp ||
-                    previous.wave != current.wave,
                   builder: (context, state) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

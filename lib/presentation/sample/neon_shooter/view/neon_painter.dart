@@ -81,11 +81,16 @@ class NeonPainter extends CustomPainter {
     // Shield
     if (player.hasShield) {
       final shieldPaint = Paint()
-        ..color = Colors.blue.withOpacity(0.5)
+        ..color = Colors.cyan.withOpacity(0.3)
+        ..style = PaintingStyle.fill
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5);
+      canvas.drawCircle(center, max(halfW, halfH) + 10, shieldPaint);
+      
+      final shieldBorderPaint = Paint()
+        ..color = Colors.cyan
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 2
-        ..maskFilter = const MaskFilter.blur(BlurStyle.outer, 10);
-      canvas.drawCircle(center, max(halfW, halfH) + 5, shieldPaint);
+        ..strokeWidth = 2;
+      canvas.drawCircle(center, max(halfW, halfH) + 10, shieldBorderPaint);
     }
   }
 
