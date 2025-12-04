@@ -76,6 +76,7 @@ class AppRouter {
   static const String sampleTextToImage = 'sampleTextToImage';
   static const String sampleWaterfallFlow = 'sampleWaterfallFlow';
   static const String sampleMinesweeper = 'sampleMinesweeper';
+  static const String sampleShooter = 'sampleShooter';
 
   AppRouter._();
 
@@ -575,6 +576,15 @@ class AppRouter {
               key: state.pageKey,
               name: state.name,
               child: const MinesweeperPage(),
+            ),
+          ),
+          GoRoute(
+            path: sampleShooter,
+            name: sampleShooter,
+            pageBuilder: (_, state) => buildSlideTransition(
+              key: state.pageKey,
+              name: state.name,
+              child: const NeonShooterPage(),
             ),
           ),
         ],

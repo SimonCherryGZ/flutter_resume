@@ -45,6 +45,7 @@ class SampleScreen extends StatelessWidget {
     'Audio Player': AppRouter.sampleAudioPlayer,
     'Text to Image': AppRouter.sampleTextToImage,
     'Minesweeper': AppRouter.sampleMinesweeper,
+    'Shooter': AppRouter.sampleShooter,
   };
 
   @override
