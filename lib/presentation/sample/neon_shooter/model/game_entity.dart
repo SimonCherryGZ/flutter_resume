@@ -46,15 +46,17 @@ class Enemy extends GameEntity {
     required this.enemyType,
     required this.scoreValue,
     double? initialX,
-  }) : initialX = initialX ?? position.dx,
-       super(type: EntityType.enemy);
+  })  : initialX = initialX ?? position.dx,
+        super(type: EntityType.enemy);
 }
+
+enum WeaponType { single, doubleGun, shotgun, piercing, tracking }
 
 class Player extends GameEntity {
   double hp;
   double maxHp;
   int score;
-  int weaponLevel;
+  WeaponType weaponType;
   double shieldTime; // Remaining time for shield
 
   Player({
@@ -65,7 +67,7 @@ class Player extends GameEntity {
     this.hp = 100,
     this.maxHp = 100,
     this.score = 0,
-    this.weaponLevel = 1,
+    this.weaponType = WeaponType.single,
     this.shieldTime = 0,
   }) : super(type: EntityType.player);
 
@@ -75,6 +77,8 @@ class Player extends GameEntity {
 class Bullet extends GameEntity {
   double damage;
   bool isPlayerBullet;
+  bool isPiercing;
+  bool isTracking;
 
   Bullet({
     required super.position,
@@ -83,6 +87,8 @@ class Bullet extends GameEntity {
     required super.color,
     required this.damage,
     required this.isPlayerBullet,
+    this.isPiercing = false,
+    this.isTracking = false,
   }) : super(type: EntityType.bullet);
 }
 
@@ -90,6 +96,7 @@ enum ItemType { weapon, shield, heal }
 
 class Item extends GameEntity {
   ItemType itemType;
+  WeaponType? weaponType;
 
   Item({
     required super.position,
@@ -97,6 +104,7 @@ class Item extends GameEntity {
     required super.velocity,
     required super.color,
     required this.itemType,
+    this.weaponType,
   }) : super(type: EntityType.item);
 }
 
@@ -111,6 +119,5 @@ class Particle extends GameEntity {
     required super.color,
     required this.life,
     required this.decay,
-  }) : super(type: EntityType.bullet); // Using bullet type as placeholder or add new type if needed, but for now it's fine. 
-  // Actually let's add EntityType.particle to be clean.
+  }) : super(type: EntityType.particle);
 }

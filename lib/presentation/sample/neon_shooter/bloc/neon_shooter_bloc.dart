@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../model/game_entity.dart';
 
 part 'neon_shooter_event.dart';
+
 part 'neon_shooter_state.dart';
 
 class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
@@ -40,16 +41,16 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
 
   void _onInit(NeonShooterInitEvent event, Emitter<NeonShooterState> emit) {
     // Screen size will be updated from the view, for now assume a default or wait for update
-    // Actually, we need screen size to position player. 
+    // Actually, we need screen size to position player.
     // Let's assume a standard size and update it later or pass it in init.
     // For simplicity, we'll start game loop and let view update size via a resize event if needed,
     // but here we just assume a fixed size for logic or handle it dynamically.
     // Better: View passes screen size in Init.
     // Let's modify Init to take size, or just handle it in the first update.
-    // We will use a fixed logical size for game logic to be consistent? 
+    // We will use a fixed logical size for game logic to be consistent?
     // No, full screen is better.
     // Let's assume the View will set the screen size in the state soon.
-    
+
     _startGameLoop(emit);
   }
 
@@ -60,7 +61,8 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
     });
   }
 
-  void _onRestart(NeonShooterRestartEvent event, Emitter<NeonShooterState> emit) {
+  void _onRestart(
+      NeonShooterRestartEvent event, Emitter<NeonShooterState> emit) {
     final screenSize = state.screenSize;
     emit(NeonShooterState.initial().copyWith(
       status: NeonShooterStatus.playing,
@@ -75,9 +77,10 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
     _ticks = 0;
   }
 
-  void _onMovePlayer(NeonShooterMovePlayerEvent event, Emitter<NeonShooterState> emit) {
+  void _onMovePlayer(
+      NeonShooterMovePlayerEvent event, Emitter<NeonShooterState> emit) {
     if (state.status != NeonShooterStatus.playing) return;
-    
+
     final player = state.player;
     double newX = player.position.dx + event.delta.dx;
     double newY = player.position.dy + event.delta.dy;
@@ -107,16 +110,18 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
     }
 
     // 2. Player Fire
-    if (_ticks % (20 - player.weaponLevel * 2).clamp(5, 20) == 0) {
+    if (_ticks % 15 == 0) {
       _fireBullet(player, bullets);
     }
 
     // 3. Enemy Fire
     for (final enemy in enemies) {
-      if (enemy.enemyType == EnemyType.shooter || enemy.enemyType == EnemyType.boss) {
-         if (_random.nextInt(100) < 2) { // 2% chance per frame
-           _enemyFire(enemy, bullets, player);
-         }
+      if (enemy.enemyType == EnemyType.shooter ||
+          enemy.enemyType == EnemyType.boss) {
+        if (_random.nextInt(100) < 2) {
+          // 2% chance per frame
+          _enemyFire(enemy, bullets, player);
+        }
       }
     }
 
@@ -125,12 +130,12 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
       enemy.update();
       // AI Movement
       if (enemy.enemyType == EnemyType.boss) {
-         // Boss logic: hover at top, move side to side
-         if (enemy.position.dy < 100) {
-           enemy.velocity = const Offset(0, 1);
-         } else {
-           enemy.velocity = Offset(sin(_ticks * 0.05) * 2, 0);
-         }
+        // Boss logic: hover at top, move side to side
+        if (enemy.position.dy < 100) {
+          enemy.velocity = const Offset(0, 1);
+        } else {
+          enemy.velocity = Offset(sin(_ticks * 0.05) * 2, 0);
+        }
       } else if (enemy.enemyType == EnemyType.sine) {
         // Sine wave movement
         double newY = enemy.position.dy + enemy.velocity.dy;
@@ -155,11 +160,34 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
         }
       }
     }
-    
+
     for (final bullet in bullets) {
       bullet.update();
-      if (bullet.position.dy < -50 || bullet.position.dy > screenSize.height + 50 ||
-          bullet.position.dx < -50 || bullet.position.dx > screenSize.width + 50) {
+
+      if (bullet.isTracking && bullet.isPlayerBullet) {
+        Enemy? closestEnemy;
+        double minDistance = double.infinity;
+        for (final enemy in enemies) {
+          if (enemy.position.dy < bullet.position.dy) {
+            final distance = (enemy.position - bullet.position).distance;
+            if (distance < minDistance) {
+              minDistance = distance;
+              closestEnemy = enemy;
+            }
+          }
+        }
+
+        if (closestEnemy != null) {
+          final direction =
+              (closestEnemy.position - bullet.position).normalized();
+          bullet.velocity = direction * 10;
+        }
+      }
+
+      if (bullet.position.dy < -50 ||
+          bullet.position.dy > screenSize.height + 50 ||
+          bullet.position.dx < -50 ||
+          bullet.position.dx > screenSize.width + 50) {
         bullet.shouldRemove = true;
       }
     }
@@ -184,7 +212,9 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
     for (final bullet in bullets.where((b) => b.isPlayerBullet)) {
       for (final enemy in enemies) {
         if (bullet.rect.overlaps(enemy.rect)) {
-          bullet.shouldRemove = true;
+          if (!bullet.isPiercing) {
+            bullet.shouldRemove = true;
+          }
           enemy.hp -= bullet.damage;
           if (enemy.hp <= 0) {
             enemy.shouldRemove = true;
@@ -192,8 +222,8 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
             _tryDropItem(enemy, items);
             _spawnExplosion(particles, enemy.position, enemy.color, 20);
           } else {
-             enemy.lastHitTick = _ticks;
-             _spawnExplosion(particles, bullet.position, Colors.white, 5);
+            enemy.lastHitTick = _ticks;
+            _spawnExplosion(particles, bullet.position, Colors.white, 5);
           }
         }
       }
@@ -265,7 +295,7 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
 
   void _spawnEnemy(List<Enemy> enemies, Size screenSize, int wave) {
     if (screenSize.isEmpty) return;
-    
+
     double x = _random.nextDouble() * (screenSize.width - 40);
     EnemyType type = EnemyType.normal;
     double hp = 20.0 + wave * 5;
@@ -320,34 +350,88 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
   }
 
   void _fireBullet(Player player, List<Bullet> bullets) {
-    // Simple straight shot
-    bullets.add(Bullet(
-      position: player.position + Offset(player.size.width / 2 - 5, -10),
-      size: const Size(10, 20),
-      velocity: const Offset(0, -10),
-      color: const Color(0xFF00FFFF), // Cyan
-      damage: 10.0 + player.weaponLevel * 2,
-      isPlayerBullet: true,
-    ));
+    const double bulletDamage = 20.0;
+    const Color bulletColor = Color(0xFF00FFFF);
+    const Size bulletSize = Size(10, 20);
 
-    // Spread shot for higher levels
-    if (player.weaponLevel >= 3) {
-       bullets.add(Bullet(
-        position: player.position + Offset(player.size.width / 2 - 5, -10),
-        size: const Size(10, 20),
-        velocity: const Offset(-2, -9),
-        color: const Color(0xFF00FFFF),
-        damage: 10.0 + player.weaponLevel * 2,
-        isPlayerBullet: true,
-      ));
-      bullets.add(Bullet(
-        position: player.position + Offset(player.size.width / 2 - 5, -10),
-        size: const Size(10, 20),
-        velocity: const Offset(2, -9),
-        color: const Color(0xFF00FFFF),
-        damage: 10.0 + player.weaponLevel * 2,
-        isPlayerBullet: true,
-      ));
+    switch (player.weaponType) {
+      case WeaponType.single:
+        bullets.add(Bullet(
+          position: player.position + Offset(player.size.width / 2 - 5, -10),
+          size: bulletSize,
+          velocity: const Offset(0, -10),
+          color: bulletColor,
+          damage: bulletDamage,
+          isPlayerBullet: true,
+        ));
+        break;
+      case WeaponType.doubleGun:
+        bullets.add(Bullet(
+          position: player.position + Offset(player.size.width / 4 - 5, -10),
+          size: bulletSize,
+          velocity: const Offset(0, -10),
+          color: bulletColor,
+          damage: bulletDamage,
+          isPlayerBullet: true,
+        ));
+        bullets.add(Bullet(
+          position:
+              player.position + Offset(player.size.width * 3 / 4 - 5, -10),
+          size: bulletSize,
+          velocity: const Offset(0, -10),
+          color: bulletColor,
+          damage: bulletDamage,
+          isPlayerBullet: true,
+        ));
+        break;
+      case WeaponType.shotgun:
+        bullets.add(Bullet(
+          position: player.position + Offset(player.size.width / 2 - 5, -10),
+          size: bulletSize,
+          velocity: const Offset(0, -10),
+          color: bulletColor,
+          damage: bulletDamage,
+          isPlayerBullet: true,
+        ));
+        bullets.add(Bullet(
+          position: player.position + Offset(player.size.width / 2 - 5, -10),
+          size: bulletSize,
+          velocity: const Offset(-3, -9),
+          color: bulletColor,
+          damage: bulletDamage,
+          isPlayerBullet: true,
+        ));
+        bullets.add(Bullet(
+          position: player.position + Offset(player.size.width / 2 - 5, -10),
+          size: bulletSize,
+          velocity: const Offset(3, -9),
+          color: bulletColor,
+          damage: bulletDamage,
+          isPlayerBullet: true,
+        ));
+        break;
+      case WeaponType.piercing:
+        bullets.add(Bullet(
+          position: player.position + Offset(player.size.width / 2 - 5, -10),
+          size: bulletSize,
+          velocity: const Offset(0, -12),
+          color: Colors.yellow,
+          damage: bulletDamage,
+          isPlayerBullet: true,
+          isPiercing: true,
+        ));
+        break;
+      case WeaponType.tracking:
+        bullets.add(Bullet(
+          position: player.position + Offset(player.size.width / 2 - 5, -10),
+          size: bulletSize,
+          velocity: const Offset(0, -5),
+          color: Colors.greenAccent,
+          damage: bulletDamage,
+          isPlayerBullet: true,
+          isTracking: true,
+        ));
+        break;
     }
   }
 
@@ -358,7 +442,8 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
     direction = direction / distance;
 
     bullets.add(Bullet(
-      position: enemy.position + Offset(enemy.size.width / 2 - 5, enemy.size.height),
+      position:
+          enemy.position + Offset(enemy.size.width / 2 - 5, enemy.size.height),
       size: const Size(10, 10),
       velocity: direction * 5,
       color: enemy.color,
@@ -368,13 +453,43 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
   }
 
   void _tryDropItem(Enemy enemy, List<Item> items) {
-    if (_random.nextInt(100) < 10) { // 10% chance
-      ItemType type = ItemType.values[_random.nextInt(ItemType.values.length)];
+    if (_random.nextInt(100) < 15) {
+      // 15% chance
+      ItemType type;
+      WeaponType? weaponType;
       Color color = Colors.white;
-      switch (type) {
-        case ItemType.weapon: color = Colors.orange; break;
-        case ItemType.shield: color = Colors.blue; break;
-        case ItemType.heal: color = Colors.green; break;
+
+      int roll = _random.nextInt(100);
+      if (roll < 70) {
+        // 70% of drops are weapons
+        type = ItemType.weapon;
+        weaponType =
+            WeaponType.values[_random.nextInt(WeaponType.values.length)];
+        switch (weaponType) {
+          case WeaponType.doubleGun:
+            color = Colors.cyanAccent;
+            break;
+          case WeaponType.shotgun:
+            color = Colors.redAccent;
+            break;
+          case WeaponType.piercing:
+            color = Colors.yellowAccent;
+            break;
+          case WeaponType.tracking:
+            color = Colors.greenAccent;
+            break;
+          default:
+            color = Colors.orange;
+            break;
+        }
+      } else if (roll < 85) {
+        // 15% are shields
+        type = ItemType.shield;
+        color = Colors.blue;
+      } else {
+        // 15% are heals
+        type = ItemType.heal;
+        color = Colors.green;
       }
 
       items.add(Item(
@@ -383,6 +498,7 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
         velocity: const Offset(0, 2),
         color: color,
         itemType: type,
+        weaponType: weaponType,
       ));
     }
   }
@@ -390,7 +506,9 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
   void _applyItemEffect(Player player, Item item) {
     switch (item.itemType) {
       case ItemType.weapon:
-        player.weaponLevel = (player.weaponLevel + 1).clamp(1, 5);
+        if (item.weaponType != null) {
+          player.weaponType = item.weaponType!;
+        }
         break;
       case ItemType.shield:
         player.shieldTime = 10.0; // 10 seconds
@@ -401,7 +519,8 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
     }
   }
 
-  void _spawnExplosion(List<Particle> particles, Offset position, Color color, int count) {
+  void _spawnExplosion(
+      List<Particle> particles, Offset position, Color color, int count) {
     for (int i = 0; i < count; i++) {
       double angle = _random.nextDouble() * 2 * pi;
       double speed = 1.0 + _random.nextDouble() * 3.0;
@@ -415,5 +534,12 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
       ));
     }
   }
-  
+}
+
+extension on Offset {
+  Offset normalized() {
+    final d = distance;
+    if (d == 0) return Offset.zero;
+    return this / d;
+  }
 }
