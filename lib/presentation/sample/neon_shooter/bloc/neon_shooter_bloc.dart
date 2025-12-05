@@ -220,7 +220,7 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
             enemy.shouldRemove = true;
             player.score += enemy.scoreValue;
             _tryDropItem(enemy, items);
-            _spawnExplosion(particles, enemy.position, enemy.color, 20);
+            _spawnEnemyDeathEffect(particles, enemy);
           } else {
             enemy.lastHitTick = _ticks;
             _spawnExplosion(particles, bullet.position, Colors.white, 5);
@@ -425,7 +425,7 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
         bullets.add(Bullet(
           position: player.position + Offset(player.size.width / 2 - 5, -10),
           size: bulletSize,
-          velocity: const Offset(0, -5),
+          velocity: const Offset(0, -8),
           color: Colors.greenAccent,
           damage: bulletDamage,
           isPlayerBullet: true,
@@ -531,6 +531,41 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
         color: color,
         life: 1.0,
         decay: 0.05 + _random.nextDouble() * 0.05,
+      ));
+    }
+  }
+
+  void _spawnEnemyDeathEffect(List<Particle> particles, Enemy enemy) {
+    final center = enemy.rect.center;
+    final color = enemy.color;
+
+    // Outer ring shockwave
+    const ringParticleCount = 20;
+    for (int i = 0; i < ringParticleCount; i++) {
+      final angle = (i / ringParticleCount) * 2 * pi;
+      final speed = 3.0 + _random.nextDouble() * 2.0;
+      particles.add(Particle(
+        position: center,
+        size: const Size(3, 3),
+        velocity: Offset(cos(angle) * speed, sin(angle) * speed),
+        color: color,
+        life: 0.6,
+        decay: 0.03,
+      ));
+    }
+
+    // Inner core explosion
+    const coreParticleCount = 30;
+    for (int i = 0; i < coreParticleCount; i++) {
+      final angle = _random.nextDouble() * 2 * pi;
+      final speed = _random.nextDouble() * 3.0; // Slower particles
+      particles.add(Particle(
+        position: center,
+        size: const Size(2, 2),
+        velocity: Offset(cos(angle) * speed, sin(angle) * speed),
+        color: Colors.white,
+        life: 1.2,
+        decay: 0.04 + _random.nextDouble() * 0.04,
       ));
     }
   }
