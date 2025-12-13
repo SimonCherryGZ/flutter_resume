@@ -260,7 +260,9 @@ class NeonPainter extends CustomPainter {
 
   void _drawParticle(Canvas canvas, Particle particle) {
     final paint = Paint()
-      ..color = particle.color.withOpacity(particle.life)
+      // 透明度要在 0 到 1，否则会报错：
+      // 'dart:ui/painting.dart': Failed assertion: line 183 pos 12: '<optimized out>': is not true.
+      ..color = particle.color.withOpacity(particle.life.clamp(0.0, 1.0))
       ..style = PaintingStyle.fill;
     
     canvas.drawCircle(particle.position, particle.size.width, paint);
