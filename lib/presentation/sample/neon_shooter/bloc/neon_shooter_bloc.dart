@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../model/game_entity.dart';
+import '../audio/neon_audio_controller.dart';
 
 part 'neon_shooter_event.dart';
 
@@ -12,6 +13,7 @@ part 'neon_shooter_state.dart';
 class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
   Timer? _gameTimer;
   final Random _random = Random();
+  final NeonAudioController _audioController = NeonAudioController();
   int _ticks = 0;
 
   NeonShooterBloc() : super(NeonShooterState.initial()) {
@@ -25,6 +27,7 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
   @override
   Future<void> close() {
     _gameTimer?.cancel();
+    _audioController.dispose();
     return super.close();
   }
 
@@ -51,6 +54,7 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
     // No, full screen is better.
     // Let's assume the View will set the screen size in the state soon.
 
+    _audioController.init().then((_) => _audioController.playBgm());
     _startGameLoop(emit);
   }
 
@@ -112,6 +116,7 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
     // 2. Player Fire
     if (_ticks % 15 == 0) {
       _fireBullet(player, bullets);
+      _audioController.playShoot();
     }
 
     // 3. Enemy Fire
@@ -221,9 +226,11 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
             player.score += enemy.scoreValue;
             _tryDropItem(enemy, items);
             _spawnEnemyDeathEffect(particles, enemy);
+            _audioController.playExplosion();
           } else {
             enemy.lastHitTick = _ticks;
             _spawnExplosion(particles, bullet.position, Colors.white, 5);
+            _audioController.playHit();
           }
         }
       }
@@ -237,6 +244,7 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
           player.hp -= bullet.damage;
           player.lastHitTick = _ticks;
           _spawnExplosion(particles, bullet.position, Colors.red, 5);
+          _audioController.playHit();
         }
       }
       for (final enemy in enemies) {
@@ -245,6 +253,7 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
           player.hp -= 20; // Collision damage
           player.lastHitTick = _ticks;
           _spawnExplosion(particles, enemy.position, Colors.red, 10);
+          _audioController.playHit();
         }
       }
     }
@@ -254,6 +263,7 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
       if (item.rect.overlaps(player.rect)) {
         item.shouldRemove = true;
         _applyItemEffect(player, item);
+        _audioController.playItem();
       }
     }
 
