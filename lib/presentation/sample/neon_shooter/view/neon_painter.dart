@@ -243,17 +243,39 @@ class NeonPainter extends CustomPainter {
       textDirection: TextDirection.ltr,
     );
     
-    String symbol = '';
-    switch (item.itemType) {
-      case ItemType.weapon: symbol = 'W'; break;
-      case ItemType.shield: symbol = 'S'; break;
-      case ItemType.heal: symbol = 'H'; break;
+    if (item.itemType == ItemType.weapon) {
+      String letter = 'W';
+      switch (item.weaponType) {
+        case WeaponType.doubleGun: letter = 'D'; break;
+        case WeaponType.shotgun: letter = 'S'; break;
+        case WeaponType.piercing: letter = 'P'; break;
+        case WeaponType.tracking: letter = 'T'; break;
+        default: letter = 'W'; break;
+      }
+      textPainter.text = TextSpan(
+        text: letter,
+        style: TextStyle(color: item.color, fontSize: 14, fontWeight: FontWeight.bold),
+      );
+    } else {
+      IconData icon;
+      if (item.itemType == ItemType.heal) {
+        icon = Icons.local_hospital;
+      } else {
+        // Shield
+        icon = Icons.shield;
+      }
+      
+      textPainter.text = TextSpan(
+        text: String.fromCharCode(icon.codePoint),
+        style: TextStyle(
+          color: item.color, 
+          fontSize: 16, 
+          fontFamily: icon.fontFamily,
+          package: icon.fontPackage,
+        ),
+      );
     }
 
-    textPainter.text = TextSpan(
-      text: symbol,
-      style: TextStyle(color: item.color, fontSize: 12, fontWeight: FontWeight.bold),
-    );
     textPainter.layout();
     textPainter.paint(canvas, center - Offset(textPainter.width / 2, textPainter.height / 2));
   }

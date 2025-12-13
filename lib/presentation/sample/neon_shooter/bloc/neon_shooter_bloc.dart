@@ -473,8 +473,8 @@ class NeonShooterBloc extends Bloc<NeonShooterEvent, NeonShooterState> {
       if (roll < 70) {
         // 70% of drops are weapons
         type = ItemType.weapon;
-        weaponType =
-            WeaponType.values[_random.nextInt(WeaponType.values.length)];
+        final availableWeapons = WeaponType.values.where((w) => w != WeaponType.single).toList();
+        weaponType = availableWeapons[_random.nextInt(availableWeapons.length)];
         switch (weaponType) {
           case WeaponType.doubleGun:
             color = Colors.cyanAccent;
