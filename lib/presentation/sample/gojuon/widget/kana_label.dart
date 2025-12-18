@@ -32,8 +32,6 @@ class KanaLabel extends StatelessWidget {
             final random = GojuonBloc.of(context).getRandomValue();
             label = (random % 2 == 1) ? kana.hiragana : kana.katakana;
             break;
-          default:
-            label = 'unknown';
         }
         return Text(
           isAskRomaji ? kana.romaji : label,

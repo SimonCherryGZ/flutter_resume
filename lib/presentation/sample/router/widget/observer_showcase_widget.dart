@@ -86,7 +86,7 @@ class _ObserverLogWidgetState extends State<_ObserverLogWidget> {
       width: screenSize.width * 0.8,
       height: 300.ss(),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.5),
+        color: Colors.black.withValues(alpha: 0.5),
       ),
       child: Column(
         children: [

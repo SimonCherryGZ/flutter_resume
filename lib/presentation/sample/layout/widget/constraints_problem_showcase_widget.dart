@@ -60,7 +60,7 @@ class ConstraintsProblemShowcaseWidget extends StatelessWidget {
                   height: containerSize,
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Colors.red.withOpacity(0.5),
+                      color: Colors.red.withValues(alpha: 0.5),
                       width: 4,
                     ),
                   ),
@@ -75,7 +75,7 @@ class ConstraintsProblemShowcaseWidget extends StatelessWidget {
                       right: 4,
                       bottom: 4,
                     ),
-                    color: Colors.red.withOpacity(0.5),
+                    color: Colors.red.withValues(alpha: 0.5),
                     child: const Text(
                       'w=$containerSize, h=$containerSize',
                       style: TextStyle(color: Colors.white),

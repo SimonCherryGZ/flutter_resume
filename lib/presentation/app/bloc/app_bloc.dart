@@ -19,7 +19,17 @@ class AppCubit extends Cubit<AppState> {
     emit(state.copyWith(
       signedInUser: user,
       themeColor: color != null
-          ? Colors.primaries.where((e) => e.value == color.value).first
+          ? Colors.primaries.where((e) {
+              final eArgb = ((e.a * 255).round() << 24) |
+                  ((e.r * 255).round() << 16) |
+                  ((e.g * 255).round() << 8) |
+                  (e.b * 255).round();
+              final colorArgb = ((color.a * 255).round() << 24) |
+                  ((color.r * 255).round() << 16) |
+                  ((color.g * 255).round() << 8) |
+                  (color.b * 255).round();
+              return eArgb == colorArgb;
+            }).first
           : Colors.purple,
       locale: locale ?? const Locale('zh', 'CN'),
     ));

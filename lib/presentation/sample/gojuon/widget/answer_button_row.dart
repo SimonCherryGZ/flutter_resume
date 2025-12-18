@@ -82,8 +82,6 @@ class _AnswerButton extends StatelessWidget {
             case KanaType.both:
               label = (random % 2 == 1) ? kana.hiragana : kana.katakana;
               break;
-            default:
-              label = 'unknown';
           }
           final isWrongAnswer = bloc.isWrongAnswer(kana);
           return Container(

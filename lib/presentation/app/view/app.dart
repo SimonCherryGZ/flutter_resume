@@ -82,9 +82,9 @@ class MyApp extends StatelessWidget {
             ),
             elevatedButtonTheme: ElevatedButtonThemeData(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(themeColor),
-                foregroundColor: MaterialStateProperty.all(Colors.white),
-                textStyle: MaterialStateProperty.all(const TextStyle(
+                backgroundColor: WidgetStateProperty.all(themeColor),
+                foregroundColor: WidgetStateProperty.all(Colors.white),
+                textStyle: WidgetStateProperty.all(const TextStyle(
                   color: Colors.white,
                 )),
                 // Add more customizations as needed

@@ -32,6 +32,10 @@ class SettingRepositoryImpl implements SettingRepository {
   @override
   Future<void> saveThemeColor(Color themeColor) async {
     final sp = await SpUtil.getInstance();
-    await sp.putString('themeColor', themeColor.value.toString());
+    final argb = ((themeColor.a * 255).round() << 24) |
+        ((themeColor.r * 255).round() << 16) |
+        ((themeColor.g * 255).round() << 8) |
+        (themeColor.b * 255).round();
+    await sp.putString('themeColor', argb.toString());
   }
 }

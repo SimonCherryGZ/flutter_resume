@@ -17,7 +17,10 @@ class AlbumScreen extends StatelessWidget {
           final bloc = context.read<AlbumBloc>();
           return PopScope(
             canPop: false,
-            onPopInvoked: (_) async {
+            onPopInvokedWithResult: (didPop, _) async {
+              if (didPop) {
+                return;
+              }
               final showAlbums = bloc.state.showAlbums;
               if (showAlbums) {
                 bloc.add(ToggleAlbums());

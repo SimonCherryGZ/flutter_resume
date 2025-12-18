@@ -53,7 +53,7 @@ class _WelcomeAdSkipButtonState extends State<WelcomeAdSkipButton> {
       height: 30.ss(),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(15.ss())),
-        color: Colors.black.withOpacity(0.5),
+        color: Colors.black.withValues(alpha: 0.5),
       ),
       child: StreamBuilder(
         stream: _counterStream,

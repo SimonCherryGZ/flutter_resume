@@ -52,7 +52,7 @@ class _ActionTipsWidgetState extends State<ActionTipsWidget>
               ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.ss()),
-                color: Colors.black.withOpacity(0.75),
+                color: Colors.black.withValues(alpha: 0.75),
               ),
               child: const Center(
                 child: Text(
@@ -69,7 +69,7 @@ class _ActionTipsWidgetState extends State<ActionTipsWidget>
             height: 6.ss(),
             child: CustomPaint(
               painter: _TrianglePainter(
-                strokeColor: Colors.black.withOpacity(0.75),
+                strokeColor: Colors.black.withValues(alpha: 0.75),
                 paintingStyle: PaintingStyle.fill,
               ),
             ),

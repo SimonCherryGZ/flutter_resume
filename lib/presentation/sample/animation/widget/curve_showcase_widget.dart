@@ -61,7 +61,7 @@ class _CurveShowcaseWidgetState extends State<CurveShowcaseWidget>
                   width: gridPaperSize,
                   height: gridPaperSize,
                   child: GridPaper(
-                    color: Colors.black.withOpacity(0.5),
+                    color: Colors.black.withValues(alpha: 0.5),
                     divisions: 1,
                     subdivisions: 5,
                     child: ValueListenableBuilder(

@@ -9,10 +9,11 @@ class PlayerComponent extends PositionComponent {
   final NeonShooterGame game;
   int lastHitTick = 0;
 
-  PlayerComponent(this.entity, this.game) : super(
-    position: Vector2(entity.position.dx, entity.position.dy),
-    size: Vector2(entity.size.width, entity.size.height),
-  );
+  PlayerComponent(this.entity, this.game)
+      : super(
+          position: Vector2(entity.position.dx, entity.position.dy),
+          size: Vector2(entity.size.width, entity.size.height),
+        );
 
   @override
   void render(Canvas canvas) {
@@ -45,16 +46,18 @@ class PlayerComponent extends PositionComponent {
     // Shield
     if (entity.hasShield) {
       final shieldPaint = Paint()
-        ..color = Colors.cyan.withOpacity(0.3)
+        ..color = Colors.cyan.withValues(alpha: 0.3)
         ..style = PaintingStyle.fill
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5);
-      canvas.drawCircle(Offset(center.x, center.y), max(halfW, halfH) + 10, shieldPaint);
-      
+      canvas.drawCircle(
+          Offset(center.x, center.y), max(halfW, halfH) + 10, shieldPaint);
+
       final shieldBorderPaint = Paint()
         ..color = Colors.cyan
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2;
-      canvas.drawCircle(Offset(center.x, center.y), max(halfW, halfH) + 10, shieldBorderPaint);
+      canvas.drawCircle(Offset(center.x, center.y), max(halfW, halfH) + 10,
+          shieldBorderPaint);
     }
   }
 

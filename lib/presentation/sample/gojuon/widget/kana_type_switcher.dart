@@ -40,8 +40,6 @@ class KanaTypeSwitcher extends StatelessWidget {
                 case KanaType.both:
                   label = 'あ + ア';
                   break;
-                default:
-                  label = 'unknown';
               }
               return Text(
                 label,

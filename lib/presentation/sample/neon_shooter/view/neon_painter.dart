@@ -49,11 +49,12 @@ class NeonPainter extends CustomPainter {
     // Draw Starfield
     final random = Random(42); // Fixed seed for consistent star positions
     const int starCount = 100;
-    
+
     for (int i = 0; i < starCount; i++) {
       double x = random.nextDouble() * size.width;
       double y = random.nextDouble() * size.height;
-      double speed = 1.0 + random.nextDouble() * 4.0; // Different speeds for parallax
+      double speed =
+          1.0 + random.nextDouble() * 4.0; // Different speeds for parallax
       double sizeVal = 1.0 + random.nextDouble() * 2.0;
       double opacity = 0.1 + random.nextDouble() * 0.3;
 
@@ -61,20 +62,20 @@ class NeonPainter extends CustomPainter {
       y = (y + state.ticks * speed) % size.height;
 
       final starPaint = Paint()
-        ..color = Colors.white.withOpacity(opacity)
+        ..color = Colors.white.withValues(alpha: opacity)
         ..style = PaintingStyle.fill;
-      
+
       canvas.drawCircle(Offset(x, y), sizeVal, starPaint);
     }
 
     // Grid (Moving)
     final gridPaint = Paint()
-      ..color = Colors.purple.withOpacity(0.2)
+      ..color = Colors.purple.withValues(alpha: 0.2)
       ..strokeWidth = 1;
-    
+
     const double gridSize = 50;
     double gridOffsetY = (state.ticks * 2.0) % gridSize;
-    
+
     for (double x = 0; x < size.width; x += gridSize) {
       canvas.drawLine(Offset(x, 0), Offset(x, size.height), gridPaint);
     }
@@ -99,7 +100,8 @@ class NeonPainter extends CustomPainter {
       ..maskFilter = const MaskFilter.blur(BlurStyle.solid, 5);
 
     final path = Path();
-    final center = player.position + Offset(player.size.width / 2, player.size.height / 2);
+    final center =
+        player.position + Offset(player.size.width / 2, player.size.height / 2);
     final halfW = player.size.width / 2;
     final halfH = player.size.height / 2;
 
@@ -115,11 +117,11 @@ class NeonPainter extends CustomPainter {
     // Shield
     if (player.hasShield) {
       final shieldPaint = Paint()
-        ..color = Colors.cyan.withOpacity(0.3)
+        ..color = Colors.cyan.withValues(alpha: 0.3)
         ..style = PaintingStyle.fill
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5);
       canvas.drawCircle(center, max(halfW, halfH) + 10, shieldPaint);
-      
+
       final shieldBorderPaint = Paint()
         ..color = Colors.cyan
         ..style = PaintingStyle.stroke
@@ -140,7 +142,8 @@ class NeonPainter extends CustomPainter {
       ..strokeWidth = 2
       ..maskFilter = const MaskFilter.blur(BlurStyle.solid, 5);
 
-    final center = enemy.position + Offset(enemy.size.width / 2, enemy.size.height / 2);
+    final center =
+        enemy.position + Offset(enemy.size.width / 2, enemy.size.height / 2);
     final halfW = enemy.size.width / 2;
     final halfH = enemy.size.height / 2;
 
@@ -179,9 +182,12 @@ class NeonPainter extends CustomPainter {
         // Wave shape
         final path = Path();
         path.moveTo(center.dx - halfW, center.dy - halfH);
-        path.quadraticBezierTo(center.dx, center.dy, center.dx + halfW, center.dy - halfH);
-        path.quadraticBezierTo(center.dx, center.dy, center.dx - halfW, center.dy + halfH);
-        path.quadraticBezierTo(center.dx, center.dy, center.dx + halfW, center.dy + halfH);
+        path.quadraticBezierTo(
+            center.dx, center.dy, center.dx + halfW, center.dy - halfH);
+        path.quadraticBezierTo(
+            center.dx, center.dy, center.dx - halfW, center.dy + halfH);
+        path.quadraticBezierTo(
+            center.dx, center.dy, center.dx + halfW, center.dy + halfH);
         canvas.drawPath(path, paint);
         break;
       case EnemyType.tracker:
@@ -192,7 +198,7 @@ class NeonPainter extends CustomPainter {
         path.lineTo(center.dx, center.dy - halfH * 0.5);
         path.lineTo(center.dx + halfW, center.dy - halfH);
         path.close();
-        
+
         // Rotate towards velocity
         canvas.save();
         canvas.translate(center.dx, center.dy);
@@ -207,12 +213,8 @@ class NeonPainter extends CustomPainter {
     // HP Bar for Boss
     if (enemy.enemyType == EnemyType.boss) {
       final hpPercent = enemy.hp / enemy.maxHp;
-      final hpBarRect = Rect.fromLTWH(
-        enemy.position.dx, 
-        enemy.position.dy - 10, 
-        enemy.size.width * hpPercent, 
-        5
-      );
+      final hpBarRect = Rect.fromLTWH(enemy.position.dx, enemy.position.dy - 10,
+          enemy.size.width * hpPercent, 5);
       canvas.drawRect(hpBarRect, Paint()..color = Colors.red);
     }
   }
@@ -222,7 +224,7 @@ class NeonPainter extends CustomPainter {
       ..color = bullet.color
       ..style = PaintingStyle.fill
       ..maskFilter = const MaskFilter.blur(BlurStyle.solid, 3);
-    
+
     canvas.drawOval(bullet.rect, paint);
   }
 
@@ -233,7 +235,8 @@ class NeonPainter extends CustomPainter {
       ..strokeWidth = 2
       ..maskFilter = const MaskFilter.blur(BlurStyle.solid, 5);
 
-    final center = item.position + Offset(item.size.width / 2, item.size.height / 2);
+    final center =
+        item.position + Offset(item.size.width / 2, item.size.height / 2);
     final radius = item.size.width / 2;
 
     canvas.drawCircle(center, radius, paint);
@@ -242,19 +245,30 @@ class NeonPainter extends CustomPainter {
     final textPainter = TextPainter(
       textDirection: TextDirection.ltr,
     );
-    
+
     if (item.itemType == ItemType.weapon) {
       String letter = 'W';
       switch (item.weaponType) {
-        case WeaponType.doubleGun: letter = 'D'; break;
-        case WeaponType.shotgun: letter = 'S'; break;
-        case WeaponType.piercing: letter = 'P'; break;
-        case WeaponType.tracking: letter = 'T'; break;
-        default: letter = 'W'; break;
+        case WeaponType.doubleGun:
+          letter = 'D';
+          break;
+        case WeaponType.shotgun:
+          letter = 'S';
+          break;
+        case WeaponType.piercing:
+          letter = 'P';
+          break;
+        case WeaponType.tracking:
+          letter = 'T';
+          break;
+        default:
+          letter = 'W';
+          break;
       }
       textPainter.text = TextSpan(
         text: letter,
-        style: TextStyle(color: item.color, fontSize: 14, fontWeight: FontWeight.bold),
+        style: TextStyle(
+            color: item.color, fontSize: 14, fontWeight: FontWeight.bold),
       );
     } else {
       IconData icon;
@@ -264,12 +278,12 @@ class NeonPainter extends CustomPainter {
         // Shield
         icon = Icons.shield;
       }
-      
+
       textPainter.text = TextSpan(
         text: String.fromCharCode(icon.codePoint),
         style: TextStyle(
-          color: item.color, 
-          fontSize: 16, 
+          color: item.color,
+          fontSize: 16,
           fontFamily: icon.fontFamily,
           package: icon.fontPackage,
         ),
@@ -277,16 +291,17 @@ class NeonPainter extends CustomPainter {
     }
 
     textPainter.layout();
-    textPainter.paint(canvas, center - Offset(textPainter.width / 2, textPainter.height / 2));
+    textPainter.paint(
+        canvas, center - Offset(textPainter.width / 2, textPainter.height / 2));
   }
 
   void _drawParticle(Canvas canvas, Particle particle) {
     final paint = Paint()
       // 透明度要在 0 到 1，否则会报错：
       // 'dart:ui/painting.dart': Failed assertion: line 183 pos 12: '<optimized out>': is not true.
-      ..color = particle.color.withOpacity(particle.life.clamp(0.0, 1.0))
+      ..color = particle.color.withValues(alpha: particle.life.clamp(0.0, 1.0))
       ..style = PaintingStyle.fill;
-    
+
     canvas.drawCircle(particle.position, particle.size.width, paint);
   }
 

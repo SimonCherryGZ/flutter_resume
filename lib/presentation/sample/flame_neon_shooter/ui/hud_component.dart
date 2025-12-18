@@ -33,7 +33,7 @@ class HUDComponent extends Component {
 
     // 绘制 HUD 背景（可选，半透明黑色条）
     final bgPaint = Paint()
-      ..color = Colors.black.withOpacity(0.3)
+      ..color = Colors.black.withValues(alpha: 0.3)
       ..style = PaintingStyle.fill;
     canvas.drawRect(
       Rect.fromLTWH(0, 0, size.x, hudHeight),

@@ -27,8 +27,9 @@ class LoginConfirmButton extends StatelessWidget {
             height: 40.ss(),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.ss()),
-              color:
-                  Theme.of(context).primaryColor.withOpacity(enable ? 1 : 0.3),
+              color: Theme.of(context)
+                  .primaryColor
+                  .withValues(alpha: enable ? 1 : 0.3),
             ),
             child: Center(
               child: Text(

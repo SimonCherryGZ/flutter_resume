@@ -23,7 +23,7 @@ class SwitchWidget extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 10.ss()),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15.ss()),
-            color: Colors.black.withOpacity(0.3),
+            color: Colors.black.withValues(alpha: 0.3),
           ),
           child: Center(
             child: Text(

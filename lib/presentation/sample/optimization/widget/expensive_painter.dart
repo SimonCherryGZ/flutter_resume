@@ -21,7 +21,8 @@ class ExpensivePainter extends CustomPainter {
       canvas.drawCircle(
         Offset(x, y),
         radius,
-        paint..color = colors[rand.nextInt(colors.length)].withOpacity(0.2),
+        paint
+          ..color = colors[rand.nextInt(colors.length)].withValues(alpha: 0.2),
       );
     }
   }

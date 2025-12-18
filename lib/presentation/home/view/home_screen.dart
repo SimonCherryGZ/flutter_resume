@@ -74,7 +74,10 @@ class _HomeScreenContentState extends State<_HomeScreenContent> {
     final bloc = context.read<HomeBloc>();
     return PopScope(
       canPop: false,
-      onPopInvoked: (_) async {
+      onPopInvokedWithResult: (didPop, _) async {
+        if (didPop) {
+          return;
+        }
         final canPop = await _showExitConfirmDialog(context);
         if (canPop) {
           SystemNavigator.pop();

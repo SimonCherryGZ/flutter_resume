@@ -30,7 +30,7 @@ class BackgroundComponent extends Component {
   @override
   void render(Canvas canvas) {
     final size = game.size;
-    
+
     // Draw black background
     final bgPaint = Paint()
       ..color = Colors.black
@@ -46,20 +46,20 @@ class BackgroundComponent extends Component {
       double y = (star.y * size.y + _ticks * star.speed) % size.y;
 
       final starPaint = Paint()
-        ..color = Colors.white.withOpacity(star.opacity)
+        ..color = Colors.white.withValues(alpha: star.opacity)
         ..style = PaintingStyle.fill;
-      
+
       canvas.drawCircle(Offset(x, y), star.size, starPaint);
     }
 
     // Draw grid
     final gridPaint = Paint()
-      ..color = Colors.purple.withOpacity(0.2)
+      ..color = Colors.purple.withValues(alpha: 0.2)
       ..strokeWidth = 1;
-    
+
     const double gridSize = 50;
     double gridOffsetY = (_ticks * 2.0) % gridSize;
-    
+
     for (double x = 0; x < size.x; x += gridSize) {
       canvas.drawLine(Offset(x, 0), Offset(x, size.y), gridPaint);
     }

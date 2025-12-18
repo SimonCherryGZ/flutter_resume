@@ -70,13 +70,13 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                         height: 60.ss(),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.black.withOpacity(0.5),
+                          color: Colors.black.withValues(alpha: 0.5),
                         ),
                         child: Center(
                           child: Icon(
                             Icons.play_arrow,
                             size: 50.ss(),
-                            color: Colors.white.withOpacity(0.75),
+                            color: Colors.white.withValues(alpha: 0.75),
                           ),
                         ),
                       );

@@ -52,11 +52,13 @@ class SampleTextToImageScreenState extends State<SampleTextToImageScreen> {
         filename: title,
         title: title,
       );
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("保存成功")),
       );
     } catch (e) {
       debugPrint("保存图片时发生错误：$e");
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("保存失败：$e")),
       );

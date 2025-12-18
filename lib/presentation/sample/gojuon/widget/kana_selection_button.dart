@@ -16,7 +16,7 @@ class KanaSelectionButton extends StatelessWidget {
       onTap: () async {
         await showDialog(
           context: context,
-          barrierColor: Colors.black.withOpacity(0.5),
+          barrierColor: Colors.black.withValues(alpha: 0.5),
           barrierDismissible: true,
           builder: (context) {
             return KanaSelectionDialog(
