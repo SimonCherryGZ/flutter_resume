@@ -52,8 +52,9 @@ class NeonShooterGame extends FlameGame with HasCollisionDetection {
     collisionSystem = CollisionSystem(this);
     weaponSystem = WeaponSystem(this);
 
-    // Add HUD
-    hudComponent = HUDComponent();
+    // Add HUD (设置高优先级，确保显示在最上层)
+    hudComponent = HUDComponent(this);
+    hudComponent.priority = 1000; // 高优先级，确保 HUD 显示在所有游戏元素之上
     add(hudComponent);
 
     // Start game
@@ -84,6 +85,8 @@ class NeonShooterGame extends FlameGame with HasCollisionDetection {
     ticks = 0;
     wave = 1;
     status = NeonShooterGameStatus.playing;
+    // 隐藏游戏结束 overlay
+    overlays.remove('GameOver');
 
     // Create player
     if (player != null) {
@@ -166,6 +169,8 @@ class NeonShooterGame extends FlameGame with HasCollisionDetection {
     if (player != null && player!.entity.hp <= 0) {
       status = NeonShooterGameStatus.gameOver;
       audioController.stopBgm();
+      // 显示游戏结束 overlay
+      overlays.add('GameOver');
     }
 
     // Update HUD
@@ -174,7 +179,6 @@ class NeonShooterGame extends FlameGame with HasCollisionDetection {
       player?.entity.hp ?? 0,
       player?.entity.maxHp ?? 100,
       wave,
-      status == NeonShooterGameStatus.gameOver,
     );
   }
 
