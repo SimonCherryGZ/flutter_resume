@@ -9,13 +9,13 @@ class NeonAudioController {
 
   Future<void> init() async {
     try {
-      await _bgmPlayer.setAsset('assets/audios/neon_shooter/bgm.mp3');
+      await _bgmPlayer.setAsset('assets/audio/neon_shooter/bgm.mp3');
       await _bgmPlayer.setLoopMode(LoopMode.one);
       
-      await _shootPlayer.setAsset('assets/audios/neon_shooter/shoot.mp3');
-      await _hitPlayer.setAsset('assets/audios/neon_shooter/been_hit.mp3');
-      await _explosionPlayer.setAsset('assets/audios/neon_shooter/enemy_explosion.mp3');
-      await _itemPlayer.setAsset('assets/audios/neon_shooter/obtain_item.mp3');
+      await _shootPlayer.setAsset('assets/audio/neon_shooter/shoot.mp3');
+      await _hitPlayer.setAsset('assets/audio/neon_shooter/been_hit.mp3');
+      await _explosionPlayer.setAsset('assets/audio/neon_shooter/enemy_explosion.mp3');
+      await _itemPlayer.setAsset('assets/audio/neon_shooter/obtain_item.mp3');
     } catch (e) {
       print('Error loading audio assets: $e');
     }

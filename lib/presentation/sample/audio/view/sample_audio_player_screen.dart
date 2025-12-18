@@ -24,10 +24,10 @@ class _AudioPlayerScreenContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final audios = [
-      const MapEntry('SFX-1', 'assets/audios/sample_sfx_1.mp3'),
-      const MapEntry('SFX-2', 'assets/audios/sample_sfx_2.mp3'),
-      const MapEntry('BGM-1', 'assets/audios/sample_bgm_1.mp3'),
-      const MapEntry('BGM-2', 'assets/audios/sample_bgm_2.mp3'),
+      const MapEntry('SFX-1', 'assets/audio/sample_sfx_1.mp3'),
+      const MapEntry('SFX-2', 'assets/audio/sample_sfx_2.mp3'),
+      const MapEntry('BGM-1', 'assets/audio/sample_bgm_1.mp3'),
+      const MapEntry('BGM-2', 'assets/audio/sample_bgm_2.mp3'),
     ];
     return Column(
       children: [

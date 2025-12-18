@@ -24,3 +24,4 @@ export 'rust/rust.dart';
 export 'text_to_image/text_to_image.dart';
 export 'minesweeper/minesweeper.dart';
 export 'neon_shooter/neon_shooter.dart';
+export 'flame_neon_shooter/flame_neon_shooter.dart';

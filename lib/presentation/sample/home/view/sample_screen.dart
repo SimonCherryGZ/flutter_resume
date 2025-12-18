@@ -46,6 +46,7 @@ class SampleScreen extends StatelessWidget {
     'Text to Image': AppRouter.sampleTextToImage,
     'Minesweeper': AppRouter.sampleMinesweeper,
     'Shooter': AppRouter.sampleShooter,
+    'Flame Shooter': AppRouter.sampleFlameShooter,
   };
 
   @override
