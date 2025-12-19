@@ -53,26 +53,26 @@ class SettingView extends StatelessWidget {
             SettingSelection(
               title: l10n.settingOptionLanguage,
               initSelection: localeNames.nameOf(currentLocale.toString())!,
-              onPerformAction: <String>(value) async {
+              onPerformAction: <T>(value) async {
                 final result = await _showLocaleSelection(context);
                 if (result == null) {
                   return value;
                 }
                 bloc.add(ChangeLocale(result));
                 return SynchronousFuture(
-                    localeNames.nameOf(result.toString()) as String);
+                    localeNames.nameOf(result.toString()) as T);
               },
             ),
             SettingSelection(
               title: l10n.settingOptionThemeColor,
               initSelection: _getColorName(currentThemeColor, l10n),
-              onPerformAction: <String>(value) async {
+              onPerformAction: <T>(value) async {
                 final result = await _showThemeColorSelection(context, l10n);
                 if (result == null) {
                   return value;
                 }
                 bloc.add(ChangeThemeColor(result));
-                return SynchronousFuture(_getColorName(result, l10n) as String);
+                return SynchronousFuture(_getColorName(result, l10n) as T);
               },
             ),
           ],
@@ -102,7 +102,7 @@ class SettingView extends StatelessWidget {
             SettingSwitch(
               title: '测试占位1',
               initValue: false,
-              onPerformAction: <bool>(value) async {
+              onPerformAction: <T>(value) async {
                 // todo
                 showToast('TODO: 测试1 - $value');
                 return value;
@@ -111,7 +111,7 @@ class SettingView extends StatelessWidget {
             SettingSwitch(
               title: '测试占位2',
               initValue: false,
-              onPerformAction: <bool>(value) async {
+              onPerformAction: <T>(value) async {
                 // todo
                 showToast('TODO: 测试2 - $value');
                 return value;

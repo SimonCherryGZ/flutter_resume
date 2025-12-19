@@ -8,9 +8,7 @@ class SampleShaderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Shader'),
-      ),
+      appBar: AppBar(title: const Text('Shader')),
       body: _SampleShaderScreenContent(),
     );
   }
@@ -52,9 +50,11 @@ class _SampleShaderScreenContentState
         _BoxFitRadioGroupWidget(
           fit: _fit,
           onChanged: (fit) {
-            setState(() {
-              _fit = fit;
-            });
+            if (fit != null) {
+              setState(() {
+                _fit = fit;
+              });
+            }
           },
         ),
         SizedBox(height: 20.ss()),
@@ -64,10 +64,7 @@ class _SampleShaderScreenContentState
 }
 
 class _ImageItemWidget extends StatefulWidget {
-  const _ImageItemWidget({
-    required this.assetImagePath,
-    required this.fit,
-  });
+  const _ImageItemWidget({required this.assetImagePath, required this.fit});
 
   final String assetImagePath;
   final BoxFit fit;
@@ -111,10 +108,7 @@ class _ImageItemWidgetState extends State<_ImageItemWidget> {
         assetImagePath: widget.assetImagePath,
         fit: _fit,
         filterBuilder: (image) {
-          _filter ??= PixelationFilter(
-            image: image,
-            pixels: 50,
-          );
+          _filter ??= PixelationFilter(image: image, pixels: 50);
           return _filter!;
         },
       ),
@@ -123,68 +117,39 @@ class _ImageItemWidgetState extends State<_ImageItemWidget> {
 }
 
 class _BoxFitRadioGroupWidget extends StatelessWidget {
-  const _BoxFitRadioGroupWidget({
-    required this.fit,
-    required this.onChanged,
-  });
+  const _BoxFitRadioGroupWidget({required this.fit, required this.onChanged});
 
   final BoxFit fit;
-  final void Function(BoxFit fit) onChanged;
+  final void Function(BoxFit? fit) onChanged;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        _BoxFitRadioWidget(
-          fit: BoxFit.contain,
-          groupValue: fit,
-          onChanged: onChanged,
-        ),
-        _BoxFitRadioWidget(
-          fit: BoxFit.cover,
-          groupValue: fit,
-          onChanged: onChanged,
-        ),
-        _BoxFitRadioWidget(
-          fit: BoxFit.fill,
-          groupValue: fit,
-          onChanged: onChanged,
-        ),
-      ],
+    return RadioGroup<BoxFit>(
+      groupValue: fit,
+      onChanged: onChanged,
+      child: const Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _BoxFitRadioWidget(fit: BoxFit.contain),
+          _BoxFitRadioWidget(fit: BoxFit.cover),
+          _BoxFitRadioWidget(fit: BoxFit.fill),
+        ],
+      ),
     );
   }
 }
 
 class _BoxFitRadioWidget extends StatelessWidget {
-  const _BoxFitRadioWidget({
-    required this.fit,
-    required this.groupValue,
-    required this.onChanged,
-  });
+  const _BoxFitRadioWidget({required this.fit});
 
   final BoxFit fit;
-  final BoxFit groupValue;
-  final void Function(BoxFit value) onChanged;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          fit.name,
-          style: const TextStyle(
-            color: Colors.black,
-          ),
-        ),
-        Radio(
-          value: fit,
-          groupValue: groupValue,
-          onChanged: (value) {
-            if (value == null) return;
-            onChanged(value);
-          },
-        ),
+        Text(fit.name, style: const TextStyle(color: Colors.black)),
+        Radio<BoxFit>(value: fit),
       ],
     );
   }

@@ -56,9 +56,11 @@ class _HitTestBehaviourShowcaseWidgetState
             _HitTestBehaviourRadioGroupWidget(
               hitTestBehavior: _blueBoxHitTestBehaviour,
               onChanged: (hitTestBehaviour) {
-                setState(() {
-                  _blueBoxHitTestBehaviour = hitTestBehaviour;
-                });
+                if (hitTestBehaviour != null) {
+                  setState(() {
+                    _blueBoxHitTestBehaviour = hitTestBehaviour;
+                  });
+                }
               },
             ),
             SizedBox(height: 10.ss()),
@@ -202,12 +204,7 @@ class _LabeledColoredBox extends StatelessWidget {
         Positioned(
           left: 5.ss(),
           top: 2.ss(),
-          child: Text(
-            label,
-            style: const TextStyle(
-              color: Colors.white,
-            ),
-          ),
+          child: Text(label, style: const TextStyle(color: Colors.white)),
         ),
       ],
     );
@@ -221,62 +218,40 @@ class _HitTestBehaviourRadioGroupWidget extends StatelessWidget {
   });
 
   final HitTestBehavior hitTestBehavior;
-  final void Function(HitTestBehavior value) onChanged;
+  final void Function(HitTestBehavior? value) onChanged;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        _HitTestBehaviourRadioWidget(
-          hitTestBehavior: HitTestBehavior.deferToChild,
-          groupValue: hitTestBehavior,
-          onChanged: onChanged,
-        ),
-        _HitTestBehaviourRadioWidget(
-          hitTestBehavior: HitTestBehavior.opaque,
-          groupValue: hitTestBehavior,
-          onChanged: onChanged,
-        ),
-        _HitTestBehaviourRadioWidget(
-          hitTestBehavior: HitTestBehavior.translucent,
-          groupValue: hitTestBehavior,
-          onChanged: onChanged,
-        ),
-      ],
+    return RadioGroup<HitTestBehavior>(
+      groupValue: hitTestBehavior,
+      onChanged: onChanged,
+      child: const Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _HitTestBehaviourRadioWidget(
+            hitTestBehavior: HitTestBehavior.deferToChild,
+          ),
+          _HitTestBehaviourRadioWidget(hitTestBehavior: HitTestBehavior.opaque),
+          _HitTestBehaviourRadioWidget(
+            hitTestBehavior: HitTestBehavior.translucent,
+          ),
+        ],
+      ),
     );
   }
 }
 
 class _HitTestBehaviourRadioWidget extends StatelessWidget {
-  const _HitTestBehaviourRadioWidget({
-    required this.hitTestBehavior,
-    required this.groupValue,
-    required this.onChanged,
-  });
+  const _HitTestBehaviourRadioWidget({required this.hitTestBehavior});
 
   final HitTestBehavior hitTestBehavior;
-  final HitTestBehavior groupValue;
-  final void Function(HitTestBehavior value) onChanged;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          hitTestBehavior.name,
-          style: const TextStyle(
-            color: Colors.black,
-          ),
-        ),
-        Radio(
-          value: hitTestBehavior,
-          groupValue: groupValue,
-          onChanged: (value) {
-            if (value == null) return;
-            onChanged(value);
-          },
-        ),
+        Text(hitTestBehavior.name, style: const TextStyle(color: Colors.black)),
+        Radio<HitTestBehavior>(value: hitTestBehavior),
       ],
     );
   }
@@ -300,12 +275,7 @@ class _HitTestResultWidget extends StatelessWidget {
       height: 40.ss(),
       color: beHit ? color : Colors.grey.shade300,
       child: Center(
-        child: Text(
-          label,
-          style: const TextStyle(
-            color: Colors.white,
-          ),
-        ),
+        child: Text(label, style: const TextStyle(color: Colors.white)),
       ),
     );
   }

@@ -3,6 +3,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:vector_math/vector_math_64.dart';
 import '../sticker.dart';
 
 const double MIN_SCALE_FACTOR = 0.3; // 最小缩放倍数
@@ -56,7 +57,7 @@ abstract class WsElement {
   Widget buildTransform() {
     Matrix4 matrix4 = Matrix4.translationValues(mMoveX, mMoveY, 0);
     matrix4.rotateZ(mRotate);
-    matrix4.scale(mScale, mScale, 1);
+    matrix4.scaleByVector3(Vector3(mScale, mScale, 1));
     if (mIsFlip) {
       matrix4.rotateY(math.pi);
     }

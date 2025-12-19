@@ -3,6 +3,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:vector_math/vector_math_64.dart' hide Colors;
 import 'ws_element.dart';
 
 abstract class DecorationElement extends WsElement {
@@ -49,7 +50,7 @@ abstract class DecorationElement extends WsElement {
     if (mIsFlip) {
       matrix4Scale.rotateY(math.pi);
     }
-    matrix4Scale.scale(mScale, mScale, 1);
+    matrix4Scale.scaleByVector3(Vector3(mScale, mScale, 1));
     Rect originContentRect = getOriginContentRect();
     Rect contentRect = getContentRect();
     double contentChangeWidth = contentRect.width - originContentRect.width;
@@ -61,7 +62,7 @@ abstract class DecorationElement extends WsElement {
         (getOriginContentRect().width +
             2 * mRedundantAreaLeftRight -
             ELEMENT_BUTTON_WIDTH);
-    matrix4ScaleForBox.scale(boxScale, boxScale, 1);
+    matrix4ScaleForBox.scaleByVector3(Vector3(boxScale, boxScale, 1));
     return Transform(
       alignment: Alignment.center,
       transform: matrix4,
