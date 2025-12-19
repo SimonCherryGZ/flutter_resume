@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_resume/config/constants.dart';
 import 'package:flutter_resume/domain/domain.dart';
+import 'package:flutter_resume/l10n/arb/app_localizations.dart';
 import 'package:flutter_resume/l10n/l10n.dart';
 import 'package:flutter_resume/presentation/setting/setting.dart';
 import 'package:flutter_resume/utils/utils.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingView extends StatelessWidget {
   const SettingView({

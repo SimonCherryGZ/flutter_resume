@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+
+import 'arb/app_localizations.dart';
 
 // 使用说明:
 // https://docs.flutter.dev/ui/accessibility-and-localization/internationalization
